@@ -1,19 +1,18 @@
 {
-  "name": "lower-case-dashed-name-of-project",
-  "repository": "REPOSITORY-NAME-AS-IT-APPEARS-IN-GITHUB-URL",
+  "name": "hello-world",
+  "repository": "hello-world",
   "version": "0.1.0",
-  "title": "PROJECT TITLE HERE",
-  "description": "SHORT DESCRIPTION OF PROJECT HERE. ONE TO TWO SENTENCES MAX",
+  "title": "Hello, World!",
+  "description": "You are a nature photographer on the hunt for the perfect pictures. Snap a picture when a wild animal is aligned in frame!",
   "keywords": [
     "Princeton",
     "graphics",
     "three.js",
     "COS 426",
-    "ivy league",
-    "keyword1",
-    "keyword2",
-    "...",
-    "this last entry CANNOT have a comma after it ->"
+    "nature",
+    "animals",
+    "photography",
+    "game"
   ],
   "scripts": {
     "start": "webpack-dev-server --mode development --output-public-path \"\"",
@@ -40,7 +39,7 @@
     "raw-loader": "^4.0.1",
     "rimraf": "^3.0.2",
     "webpack": "^4.43.0",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.2"
   },
   "engines": {
     "node": ">=8.0.0"
