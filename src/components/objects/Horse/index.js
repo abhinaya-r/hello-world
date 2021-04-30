@@ -1,1 +1,1 @@
-export { default as Horse } from './Horse.js';
+export { default as Horse } from "./Horse.js";
