@@ -1,7 +1,7 @@
-const path = require('path');
-const pkg = require('./package.json');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const buildPath = './build/';
+const path = require("path");
+const pkg = require("./package.json");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const buildPath = "./build/";
 
 module.exports = {
     entry: ['./src/app.js'],
@@ -43,15 +43,17 @@ module.exports = {
                 ],
             },
         ],
-    },
-    resolve: {
-        alias: {
-            lights$: path.resolve(__dirname, 'src/components/lights'),
-            objects$: path.resolve(__dirname, 'src/components/objects'),
-            scenes$: path.resolve(__dirname, 'src/components/scenes'),
-        },
-    },
-    plugins: [
-        new HtmlWebpackPlugin({ title: pkg.title, favicon: 'src/favicon.ico' }),
+      },
     ],
+  },
+  resolve: {
+    alias: {
+      lights$: path.resolve(__dirname, "src/components/lights"),
+      objects$: path.resolve(__dirname, "src/components/objects"),
+      scenes$: path.resolve(__dirname, "src/components/scenes"),
+    },
+  },
+  plugins: [
+    new HtmlWebpackPlugin({ title: pkg.title, favicon: "src/favicon.ico" }),
+  ],
 };
