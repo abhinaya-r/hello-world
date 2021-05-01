@@ -1,6 +1,6 @@
 import * as Dat from "dat.gui";
 import { Scene, Color } from "three";
-import { Flower, Land, Bear, Deer, PineTree} from "objects";
+import { Flower, Land, Bear, Deer, PineTree } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
 // import { PineTree } from "../objects/PineTree";
@@ -67,7 +67,6 @@ class SeedScene extends Scene {
     const bear = new Bear(this);
     // const deer = new Deer(this);
     const pine = new PineTree(this);
-    const lights = new BasicLights();
     this.add(lights, bear, pine);
 
     // Populate GUI
