@@ -33,7 +33,7 @@ class SeedScene extends Scene {
     // ground mesh
     ground.geometry = new THREE.PlaneBufferGeometry(20000, 20000);
     ground.mesh = new THREE.Mesh(ground.geometry, ground.material);
-    ground.mesh.position.y = -20; // -249 - 1;
+    ground.mesh.position.y = 0; // -249 - 1;
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
 

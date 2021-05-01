@@ -22,9 +22,9 @@ class Deer extends Group {
 
     this.name = "deer";
     loader.load(MODEL, (gltf) => {
-      this.scale.set(0.05, 0.05, 0.05);
-      this.position.set(0, 0, 0);
-      this.rotation.set(0, Math.PI + 1.5, 0);
+      this.scale.set(0.02, 0.02, 0.02);
+      this.position.set(-10, 1.35, 0);
+      this.rotation.set(0, -(Math.PI + 1.5), 0);
       this.add(gltf.scene.children[0]);
     });
 
@@ -69,9 +69,9 @@ class Deer extends Group {
     // }
 
     // Advance tween animations, if any exist
-    this.position.y = Math.abs(0.5 * Math.sin(timeStamp / 300));
+    this.position.y = Math.abs(0.5 * Math.sin(timeStamp / 300)) + 1.35;
     // let vec = THREE.Vector3(0, 0, 0);
-    this.position.x -= 0.1;
+    this.position.x += 0.1;
     TWEEN.update();
   }
 }
