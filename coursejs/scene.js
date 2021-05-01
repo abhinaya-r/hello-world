@@ -2,9 +2,8 @@
 
 var Scene = Scene || {};
 
-Scene.init = function() {
+Scene.init = function () {
   Scene.loader = new THREE.TextureLoader();
-
 
   // Make a canvas to draw your simulation on
   Scene.container = Scene.buildContainer();
@@ -29,45 +28,50 @@ Scene.init = function() {
   Scene.ground = Scene.buildGround();
 
   Scene.update();
-}
+};
 
-Scene.buildContainer = function() {
+Scene.buildContainer = function () {
   let container = document.createElement("div");
   document.body.appendChild(container);
 
   return container;
-}
+};
 
-Scene.buildStats = function() {
+Scene.buildStats = function () {
   // This gives us stats on how well the simulation is running
   let stats = new Stats();
   Scene.container.appendChild(stats.domElement);
 
   return stats;
-}
+};
 
-Scene.buildScene = function() {
+Scene.buildScene = function () {
   let scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0xcce0ff, 500, 10000);
 
   return scene;
-}
+};
 
-Scene.buildCamera = function() {
-  let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 10000);
+Scene.buildCamera = function () {
+  let camera = new THREE.PerspectiveCamera(
+    30,
+    window.innerWidth / window.innerHeight,
+    1,
+    10000
+  );
   camera.position.y = 450;
   camera.position.z = 1500;
   Scene.scene.add(camera);
 
   return camera;
-}
+};
 
-Scene.buildRenderer = function() {
+Scene.buildRenderer = function () {
   let renderer = new THREE.WebGLRenderer({
     antialias: true,
     devicePixelRatio: 1,
     preserveDrawingBuffer: true, // save drawing frames for screenshots
-   });
+  });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(Scene.scene.fog.color);
 
@@ -77,18 +81,21 @@ Scene.buildRenderer = function() {
   renderer.shadowMap.enabled = true;
 
   return renderer;
-}
+};
 
 // mouse controls (so you can look around the scene)
-Scene.buildControls = function() {
+Scene.buildControls = function () {
   // controls = new THREE.TrackballControls(camera, renderer.domElement);
-  let controls = new THREE.OrbitControls(Scene.camera, Scene.renderer.domElement);
+  let controls = new THREE.OrbitControls(
+    Scene.camera,
+    Scene.renderer.domElement
+  );
   controls.update();
 
   return controls;
-}
+};
 
-Scene.buildLights = function() {
+Scene.buildLights = function () {
   let light = new THREE.DirectionalLight(0xdfebff, 1.75);
   Scene.scene.add(new THREE.AmbientLight(0x666666));
   light.position.set(50, 200, 100);
@@ -107,9 +114,9 @@ Scene.buildLights = function() {
 
   Scene.scene.add(light);
   return light;
-}
+};
 
-Scene.buildGround = function() {
+Scene.buildGround = function () {
   let ground = {};
   ground.textures = {};
 
@@ -121,7 +128,7 @@ Scene.buildGround = function() {
   });
 
   // ground mesh
-  ground.geometry = new THREE.PlaneBufferGeometry(20000, 20000)
+  ground.geometry = new THREE.PlaneBufferGeometry(20000, 20000);
   ground.mesh = new THREE.Mesh(ground.geometry, ground.material);
   ground.mesh.position.y = SceneParams.groundY - 1;
   ground.mesh.rotation.x = -Math.PI / 2;
@@ -138,21 +145,21 @@ Scene.buildGround = function() {
   Scene.scene.add(ground.mesh); // add ground to scene
 
   return ground;
-}
+};
 
-Scene.createConstraintLine = function(constraint) {
+Scene.createConstraintLine = function (constraint) {
   if (!Scene.constraintMaterials) {
     let mats = [];
-    mats.push(new THREE.LineBasicMaterial({color: 0xff0000}));
-    mats.push(new THREE.LineBasicMaterial({color: 0x00ff00}));
-    mats.push(new THREE.LineBasicMaterial({color: 0x0000ff}));
-    mats.push(new THREE.LineBasicMaterial({color: 0x000000}));
+    mats.push(new THREE.LineBasicMaterial({ color: 0xff0000 }));
+    mats.push(new THREE.LineBasicMaterial({ color: 0x00ff00 }));
+    mats.push(new THREE.LineBasicMaterial({ color: 0x0000ff }));
+    mats.push(new THREE.LineBasicMaterial({ color: 0x000000 }));
     Scene.constraintMaterials = mats;
   }
 
   let line = {};
   let points = [constraint.p1.position, constraint.p2.position];
-  line.geometry = new THREE.BufferGeometry().setFromPoints( points );
+  line.geometry = new THREE.BufferGeometry().setFromPoints(points);
 
   // figure out materials
   let mats = Scene.constraintMaterials;
@@ -161,28 +168,33 @@ Scene.createConstraintLine = function(constraint) {
   let rest = SceneParams.restDistance;
   let restB = rest * SceneParams.restDistanceB;
   let restS = rest * SceneParams.restDistanceS;
-  if      (d == rest)   mat = mats[0];
-  else if (d == restS)  mat = mats[1];
-  else if (d == restB)  mat = mats[2];
+  if (d == rest) mat = mats[0];
+  else if (d == restS) mat = mats[1];
+  else if (d == restB) mat = mats[2];
 
   line.mesh = new THREE.Line(line.geometry, mat);
   // Scene.scene.add(line.mesh);
   return line;
-}
+};
 
-Scene.buildGroundTexture = function(imgName) {
-  let fallback = function() {
+Scene.buildGroundTexture = function (imgName) {
+  let fallback = function () {
     Scene.updateGroundTexture("404.png");
     Scene.ground.textures[imgName] = Scene.ground.textures["404.png"];
   };
-  let texture = Scene.loader.load(`textures/terrain/${imgName}`, undefined, undefined, fallback);
+  let texture = Scene.loader.load(
+    `textures/terrain/${imgName}`,
+    undefined,
+    undefined,
+    fallback
+  );
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set( 25, 25 );
+  texture.repeat.set(25, 25);
   texture.anisotropy = 16;
   return texture;
-}
+};
 
-Scene.updateGroundTexture = function(imgName) {
+Scene.updateGroundTexture = function (imgName) {
   Scene.ground.material.needsUpdate = true;
   // Hide texture if we are disabling it
   if (!SceneParams.showGroundTexture) {
@@ -204,9 +216,9 @@ Scene.updateGroundTexture = function(imgName) {
 
   Scene.ground.material.map = texture;
   Scene.ground.textures[imgName] = texture;
-}
+};
 
-Scene.update = function() {
+Scene.update = function () {
   // Repair broken SceneParams colors
   Params.repairColors();
 
@@ -216,4 +228,4 @@ Scene.update = function() {
 
   Scene.scene.fog.color.setHex(SceneParams.fogColor);
   Scene.renderer.setClearColor(Scene.scene.fog.color);
-}
+};
