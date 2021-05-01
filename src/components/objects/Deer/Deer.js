@@ -5,7 +5,7 @@ import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import MODEL from "./out.glb";
 
 class Deer extends Group {
-  constructor(parent) {
+  constructor(parent, x, z, speed, visibleTime, stopTime) {
     // Call parent Group() constructor
     super();
 
@@ -23,10 +23,16 @@ class Deer extends Group {
     this.name = "deer";
     loader.load(MODEL, (gltf) => {
       this.scale.set(0.02, 0.02, 0.02);
-      this.position.set(-10, 1.35, 0);
+      this.position.set(x - 10, 1.35, z);
       this.rotation.set(0, -(Math.PI + 1.5), 0);
       this.add(gltf.scene.children[0]);
     });
+
+    // set speed of deer
+    this.speed = speed;
+
+    this.visibleTime = visibleTime;
+    this.stopTime = stopTime;
 
     // Add self to parent's update list
     parent.addToUpdateList(this);
@@ -71,7 +77,33 @@ class Deer extends Group {
     // Advance tween animations, if any exist
     this.position.y = Math.abs(0.5 * Math.sin(timeStamp / 300)) + 1.35;
     // let vec = THREE.Vector3(0, 0, 0);
-    this.position.x += 0.1;
+
+    // console.log("timeStamp: ", Math.floor(timeStamp));
+    // console.log("visibleTime: ", this.visibleTime);
+    if (Math.floor(timeStamp) - this.visibleTime == 0) {
+      let x = Math.random() * 20 - 80;
+      let z = Math.random() * 50 - 50;
+      this.position.set(x, 1, z);
+    }
+
+    if (Math.floor(timeStamp) == Math.floor(this.stopTime)) {
+      this.position.set(Infinity, Infinity, Infinity);
+    }
+
+    // console.log("x:", Math.floor(this.position.x));
+    if (this.position.x != Infinity && Math.floor(this.position.x) >= 100) {
+      // let x = Math.random() * 50 - 50;
+      // let z = Math.random() * 10 - 12;
+      // this.position.set(x, 1, z);
+      this.rotation.set(0, Math.PI + 1.5, 0);
+    }
+
+    if (Math.floor(this.position.x) <= -100) {
+      this.rotation.set(0, -(Math.PI + 1.5), 0);
+    }
+
+    if (this.rotation.y == -(Math.PI + 1.5)) this.position.x += this.speed;
+    else this.position.x -= this.speed;
     TWEEN.update();
   }
 }

@@ -37,14 +37,37 @@ class SeedScene extends Scene {
     ground.mesh.position.y = 0; // -249 - 1;
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
-
     this.add(ground.mesh); // add ground to scene
 
-    // this.fog = new THREE.Fog(0xffffff, 0, 100);
+    const lights = new BasicLights();
+    this.add(lights);
 
-    // Add meshes to scene
-    // const land = new Land();
-    // const flower = new Flower(this);
+    // DEER
+    let allDeer = [];
+    for (let i = 0; i < 100; i++) {
+      let speed = Math.random() * 0.3;
+      let visibleTime = Math.floor(Math.random() * 10000);
+      let stopTime = visibleTime + Math.floor(Math.random() * 100);
+      let x = Infinity;
+      let z = Infinity;
+      let deer = new Deer(this, x, z, speed, visibleTime, stopTime);
+      this.add(deer);
+      allDeer.push(deer);
+    }
+
+    // BEAR
+    // let allBears = [];
+    // for (let i = 0; i < 100; i++) {
+    //   let speed = Math.random() * 0.1;
+    //   let visibleTime = Math.floor(Math.random() * 10000);
+    //   let stopTime = visibleTime + Math.floor(Math.random() * 100);
+    //   let x = Infinity;
+    //   let z = Infinity;
+    //   let bear = new Bear(this, x, z, speed, visibleTime, stopTime);
+    //   this.add(bear);
+    //   allBears.push(bear);
+    // }
+
     const bear = new Bear(this);
     const deer = new Deer(this);
     for (let i = 0; i < 20; i++) {
@@ -84,6 +107,8 @@ class SeedScene extends Scene {
   update(timeStamp) {
     const { rotationSpeed, updateList } = this.state;
     this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+
+    // let rand = Math.random();
 
     // Call update for each object in the updateList
     for (const obj of updateList) {
