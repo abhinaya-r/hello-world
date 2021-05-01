@@ -1,7 +1,7 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import MODEL from './PineTree.glb';
+import MODEL from './PineTree2.glb';
 
 class Pinetree extends Group {
     constructor(parent) {
@@ -19,8 +19,8 @@ class Pinetree extends Group {
 
         this.name = 'pinetree';
         loader.load(MODEL, (gltf) => {
-            // this.scale.set(0.25, 0.25, 0.25);
-            this.position.set(0, 0, -5)
+            this.scale.set(0.4, 0.4, 0.4);
+            // this.position.set(5, 1, -12)
             this.rotation.set(0, Math.PI-0.5, 0)
             this.add(gltf.scene);
         });
@@ -53,6 +53,11 @@ class Pinetree extends Group {
     //     // Start animation
     //     jumpUp.start();
     // }
+    setPos(x, y, z){
+        this.position.x = x;
+        this.position.y = y;
+        this.position.z = z;
+    }
 
     update(timeStamp) {
         // if (this.state.bob) {

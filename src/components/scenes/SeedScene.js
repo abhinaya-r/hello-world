@@ -1,6 +1,6 @@
 import * as Dat from "dat.gui";
 import { Scene, Color } from "three";
-import { Flower, Land, Bear, Deer, PineTree} from "objects";
+import { Flower, Land, Bear, Deer, PineTree, OakTree, ElmTree } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
 // import { PineTree } from "../objects/PineTree";
@@ -26,7 +26,7 @@ class SeedScene extends Scene {
 
     // ground material
     ground.material = new THREE.MeshStandardMaterial({
-      color: 0x006400, //0x3c3c3c,
+      color: 0x295e10, //0x3c3c3c,
       // specular: 0x404761, //0x3c3c3c//,
       metalness: 0.3,
     });
@@ -47,9 +47,31 @@ class SeedScene extends Scene {
     // const flower = new Flower(this);
     const bear = new Bear(this);
     const deer = new Deer(this);
-    const pine = new PineTree(this);
+    for (let i = 0; i < 20; i++) {
+        let pine = new PineTree(this);
+        let x = Math.random()*50-25;
+        let z = Math.random()*10-20
+        pine.position.set(x, 0, z)
+        this.add(pine);
+    }
+    for (let i = 0; i < 20; i++) {
+        let oak = new OakTree(this);
+        let x = Math.random()*60-25;
+        let z = Math.random()*5-7
+        oak.position.set(x, 0, z)
+        this.add(oak);
+    }
+    for (let i = 0; i < 10; i++) {
+        let elm = new ElmTree(this);
+        let x = Math.random()*60-25;
+        let z = Math.random()*7-30
+        elm.position.set(x, 0, z)
+        this.add(elm);
+    }
+
+    // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
-    this.add(lights, bear, deer, pine);
+    this.add(lights, bear, deer);
 
     // Populate GUI
     // this.state.gui.add(this.state, "rotationSpeed", -5, 5);
