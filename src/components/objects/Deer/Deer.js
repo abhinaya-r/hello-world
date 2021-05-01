@@ -90,7 +90,7 @@ class Deer extends Group {
       this.position.set(Infinity, Infinity, Infinity);
     }
 
-    console.log("x:", Math.floor(this.position.x));
+    // console.log("x:", Math.floor(this.position.x));
     if (this.position.x != Infinity && Math.floor(this.position.x) >= 100) {
       // let x = Math.random() * 50 - 50;
       // let z = Math.random() * 10 - 12;

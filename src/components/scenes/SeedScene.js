@@ -37,37 +37,42 @@ class SeedScene extends Scene {
     ground.mesh.position.y = 0; // -249 - 1;
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
-
     this.add(ground.mesh); // add ground to scene
 
-    // this.fog = new THREE.Fog(0xffffff, 0, 100);
-
-    // Add meshes to scene
-    // const land = new Land();
-    // const flower = new Flower(this);
-    // const bear = new Bear(this);
-
     const lights = new BasicLights();
-    // this.add(lights, bear, deer);
     this.add(lights);
-    // this.add(deer);
+
+    // DEER
+    let allDeer = [];
     for (let i = 0; i < 100; i++) {
-      // let rand = Math.floor(Math.random() * 100);
-      // if (rand % 7 == 0) this.add(deer);
       let speed = Math.random() * 0.3;
       let visibleTime = Math.floor(Math.random() * 10000);
       let stopTime = visibleTime + Math.floor(Math.random() * 100);
       let x = Infinity;
       let z = Infinity;
-
       let deer = new Deer(this, x, z, speed, visibleTime, stopTime);
-      // deer.position.set(x, 1, z);
       this.add(deer);
+      allDeer.push(deer);
     }
+
+    // BEAR
+    // let allBears = [];
+    // for (let i = 0; i < 100; i++) {
+    //   let speed = Math.random() * 0.1;
+    //   let visibleTime = Math.floor(Math.random() * 10000);
+    //   let stopTime = visibleTime + Math.floor(Math.random() * 100);
+    //   let x = Infinity;
+    //   let z = Infinity;
+    //   let bear = new Bear(this, x, z, speed, visibleTime, stopTime);
+    //   this.add(bear);
+    //   allBears.push(bear);
+    // }
+
     const bear = new Bear(this);
-    // const deer = new Deer(this);
     const pine = new PineTree(this);
-    this.add(lights, bear, pine);
+    this.add(lights, pine, bear);
+
+    // console.log(allDeer);
 
     // Populate GUI
     // this.state.gui.add(this.state, "rotationSpeed", -5, 5);

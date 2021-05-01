@@ -4,6 +4,7 @@ import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import MODEL from "./bear.glb";
 
 class Bear extends Group {
+  // constructor(parent, x, z, speed, visibleTime, stopTime) {
   constructor(parent) {
     // Call parent Group() constructor
     super();
@@ -20,11 +21,18 @@ class Bear extends Group {
     this.name = "bear";
     loader.load(MODEL, (gltf) => {
       this.scale.set(0.25, 0.25, 0.25);
+      // this.position.set(x - 10, 0, z - 5);
       this.position.set(-10, 0, -5);
       this.rotation.set(0, -(Math.PI + 1.5), 0);
       //   this.rotation.set(0, Math.PI - 0.5, 0);
       this.add(gltf.scene);
     });
+
+    // speed of bear
+    // this.speed = speed;
+
+    // this.visibleTime = visibleTime;
+    // this.stopTime = stopTime;
 
     // Add self to parent's update list
     parent.addToUpdateList(this);
@@ -65,6 +73,31 @@ class Bear extends Group {
     //     this.state.twirl -= Math.PI / 8;
     //     this.rotation.y += Math.PI / 8;
     // }
+
+    // // Advance tween animations, if any exist
+    // this.position.y = Math.abs(0.5 * Math.sin(timeStamp / 300)) + 1.35;
+
+    // if (Math.floor(timeStamp) - this.visibleTime == 0) {
+    //   let x = Math.random() * 20 - 80;
+    //   let z = Math.random() * 50 - 50;
+    //   this.position.set(x, 0, z);
+    // }
+
+    // if (Math.floor(timeStamp) == Math.floor(this.stopTime)) {
+    //   this.position.set(Infinity, Infinity, Infinity);
+    // }
+
+    // if (this.position.x != Infinity && Math.floor(this.position.x) >= 100) {
+    //   this.rotation.set(0, Math.PI + 1.5, 0);
+    // }
+
+    // if (Math.floor(this.position.x) <= -100) {
+    //   this.rotation.set(0, -(Math.PI + 1.5), 0);
+    // }
+
+    // if (this.rotation.y == -(Math.PI + 1.5)) this.position.x += this.speed;
+    // else this.position.x -= this.speed;
+    // TWEEN.update();
 
     // Advance tween animations, if any exist
     this.position.x += 0.02;
