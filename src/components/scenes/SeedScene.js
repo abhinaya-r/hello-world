@@ -44,10 +44,25 @@ class SeedScene extends Scene {
     // Add meshes to scene
     // const land = new Land();
     // const flower = new Flower(this);
-    const bear = new Bear(this);
-    const deer = new Deer(this);
+    // const bear = new Bear(this);
+
     const lights = new BasicLights();
-    this.add(lights, bear, deer);
+    // this.add(lights, bear, deer);
+    this.add(lights);
+    // this.add(deer);
+    for (let i = 0; i < 100; i++) {
+      // let rand = Math.floor(Math.random() * 100);
+      // if (rand % 7 == 0) this.add(deer);
+      let speed = Math.random() * 0.3;
+      let visibleTime = Math.floor(Math.random() * 10000);
+      let stopTime = visibleTime + Math.floor(Math.random() * 100);
+      let x = Infinity;
+      let z = Infinity;
+
+      let deer = new Deer(this, x, z, speed, visibleTime, stopTime);
+      // deer.position.set(x, 1, z);
+      this.add(deer);
+    }
 
     // Populate GUI
     // this.state.gui.add(this.state, "rotationSpeed", -5, 5);
@@ -60,6 +75,8 @@ class SeedScene extends Scene {
   update(timeStamp) {
     const { rotationSpeed, updateList } = this.state;
     this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+
+    // let rand = Math.random();
 
     // Call update for each object in the updateList
     for (const obj of updateList) {
