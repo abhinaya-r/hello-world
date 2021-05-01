@@ -18,15 +18,14 @@ class SeedScene extends Scene {
     };
 
     // Set background to a nice color
-    this.background = new Color(0x7ec0ee);
-    this.fog = new THREE.Fog(0xcce0ff, 500, 10000);
+    this.background = new Color(0x7ddffe);
 
     let ground = {};
     ground.textures = {};
 
     // ground material
     ground.material = new THREE.MeshStandardMaterial({
-      color: 0x404761, //0x3c3c3c,
+      color: 0x006400, //0x3c3c3c,
       // specular: 0x404761, //0x3c3c3c//,
       metalness: 0.3,
     });
@@ -34,11 +33,13 @@ class SeedScene extends Scene {
     // ground mesh
     ground.geometry = new THREE.PlaneBufferGeometry(20000, 20000);
     ground.mesh = new THREE.Mesh(ground.geometry, ground.material);
-    ground.mesh.position.y = -249 - 1;
+    ground.mesh.position.y = -20; // -249 - 1;
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
 
     this.add(ground.mesh); // add ground to scene
+
+    // this.fog = new THREE.Fog(0xffffff, 0, 100);
 
     // Add meshes to scene
     // const land = new Land();
