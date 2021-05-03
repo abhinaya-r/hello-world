@@ -19,7 +19,7 @@ class ElmTree extends Group {
 
         this.name = 'elmtree';
         loader.load(MODEL, (gltf) => {
-            this.scale.set(0.5, 0.5, 0.5);
+            // this.scale.set(0.5, 0.5, 0.5);
             // this.position.set(5, 1, -12)
             this.rotation.set(0, Math.PI-0.5, 0)
             this.add(gltf.scene);

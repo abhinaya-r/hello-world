@@ -19,7 +19,7 @@ class OakTree extends Group {
 
         this.name = 'oaktree';
         loader.load(MODEL, (gltf) => {
-            this.scale.set(0.3, 0.4, 0.3);
+            this.scale.set(1, 2, 1);
             // this.position.set(5, 1, -12)
             this.rotation.set(0, Math.PI-0.5, 0)
             this.add(gltf.scene);

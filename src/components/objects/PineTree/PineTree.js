@@ -19,7 +19,7 @@ class Pinetree extends Group {
 
         this.name = 'pinetree';
         loader.load(MODEL, (gltf) => {
-            this.scale.set(0.4, 0.4, 0.4);
+            // this.scale.set(0.4, 0.4, 0.4);
             // this.position.set(5, 1, -12)
             this.rotation.set(0, Math.PI-0.5, 0)
             this.add(gltf.scene);
