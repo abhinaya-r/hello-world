@@ -40,8 +40,8 @@ class SeedScene extends Scene {
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
 
-    const lights = new BasicLights();
-    this.add(lights);
+    // const lights = new BasicLights();
+    // this.add(lights);
 
     // DEER
     let allDeer = [];
@@ -71,27 +71,6 @@ class SeedScene extends Scene {
 
     const bear = new Bear(this);
     const deer = new Deer(this);
-    for (let i = 0; i < 20; i++) {
-      let pine = new PineTree(this);
-      let x = Math.random() * 50 - 25;
-      let z = Math.random() * 10 - 20;
-      pine.position.set(x, 0, z);
-      this.add(pine);
-    }
-    for (let i = 0; i < 20; i++) {
-      let oak = new OakTree(this);
-      let x = Math.random() * 60 - 25;
-      let z = Math.random() * 5 - 7;
-      oak.position.set(x, 0, z);
-      this.add(oak);
-    }
-    for (let i = 0; i < 10; i++) {
-      let elm = new ElmTree(this);
-      let x = Math.random() * 60 - 25;
-      let z = Math.random() * 7 - 30;
-      elm.position.set(x, 0, z);
-      this.add(elm);
-    }
 
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
