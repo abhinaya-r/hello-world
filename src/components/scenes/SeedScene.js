@@ -1,5 +1,5 @@
 import * as Dat from "dat.gui";
-import { Scene, Color, Fog } from "three";
+import { Scene, Color, Fog, Vector3 } from "three";
 import { Flower, Land, Bear, Deer, PineTree, OakTree, ElmTree } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -7,7 +7,7 @@ import * as THREE from "three";
 // import Scene from "../../../coursejs/scene.js";
 
 class SeedScene extends Scene {
-  constructor() {
+  constructor(camera) {
     // Call parent Scene() constructor
     super();
 
@@ -31,7 +31,6 @@ class SeedScene extends Scene {
       // specular: 0x404761, //0x3c3c3c//,
       metalness: 0.3,
     });
-
     // ground mesh
     ground.geometry = new THREE.PlaneBufferGeometry(20000, 20000);
     ground.mesh = new THREE.Mesh(ground.geometry, ground.material);
@@ -40,67 +39,79 @@ class SeedScene extends Scene {
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
 
-    // const lights = new BasicLights();
-    // this.add(lights);
-
     // DEER
     let allDeer = [];
-    for (let i = 0; i < 100; i++) {
-      let speed = Math.random() * 0.3;
-      let visibleTime = Math.floor(Math.random() * 10000);
-      let stopTime = visibleTime + Math.floor(Math.random() * 100);
-      let x = Infinity;
-      let z = Infinity;
-      let deer = new Deer(this, x, z, speed, visibleTime, stopTime);
+    for (let i = 0; i < 50; i++) {
+      // let visibleTime = Math.floor(Math.random() * 10000 - 3000);
+      // let stopTime = visibleTime + Math.floor(Math.random() * 100);
+      // let x = Math.random() * 10000 - 5000;
+      // let z = Math.random() * 10000 - 5000;
+      let x = Math.random() * 1000 - 500;
+      let z = Math.random() * 1000 - 500;
+      let speed = Math.random() * 0.1;
+      let position = new THREE.Vector3(x, 0, z);
+      let randPoint = new THREE.Vector3(
+        Math.random() * 100 - 50,
+        0,
+        Math.random() * 100 - 50
+      );
+      let direction = randPoint.clone().sub(position);
+
+      let deer = new Deer(this, x, z, speed, direction);
+      deer.lookAt(direction);
+
       this.add(deer);
       allDeer.push(deer);
     }
 
     // BEAR
-    // let allBears = [];
-    // for (let i = 0; i < 100; i++) {
-    //   let speed = Math.random() * 0.1;
-    //   let visibleTime = Math.floor(Math.random() * 10000);
-    //   let stopTime = visibleTime + Math.floor(Math.random() * 100);
-    //   let x = Infinity;
-    //   let z = Infinity;
-    //   let bear = new Bear(this, x, z, speed, visibleTime, stopTime);
-    //   this.add(bear);
-    //   allBears.push(bear);
-    // }
+    let allBears = [];
+    for (let i = 0; i < 100; i++) {
+      // let x = Math.random() * 10000 - 5000;
+      // let z = Math.random() * 10000 - 5000;
+      let x = Math.random() * 1000 - 500;
+      let z = Math.random() * 1000 - 500;
+      let speed = Math.random() * 0.05;
+      let position = new THREE.Vector3(x, 0, z);
+      let randPoint = new THREE.Vector3(
+        Math.random() * 100 - 50,
+        0,
+        Math.random() * 100 - 50
+      );
+      let direction = randPoint.clone().sub(position);
 
-    const bear = new Bear(this);
-    const deer = new Deer(this);
+      let bear = new Bear(this, x, z, speed, direction);
+      bear.lookAt(direction);
+
+      this.add(bear);
+      allBears.push(bear);
+    }
 
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
-    this.add(lights, bear, deer);
+    this.add(lights);
     // const deer = new Deer(this);
     for (let i = 0; i < 30; i++) {
-        let pine = new PineTree(this);
-        let x = Math.random()*100-50;
-        let z = Math.random()*150-60
-        pine.position.set(x, 0, z)
-        this.add(pine);
+      let pine = new PineTree(this);
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 150 - 60;
+      pine.position.set(x, 0, z);
+      this.add(pine);
     }
     for (let i = 0; i < 30; i++) {
-        let oak = new OakTree(this);
-        let x = Math.random()*100-50;
-        let z = Math.random()*200-50
-        oak.position.set(x, 0, z)
-        this.add(oak);
+      let oak = new OakTree(this);
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 200 - 50;
+      oak.position.set(x, 0, z);
+      this.add(oak);
     }
     for (let i = 0; i < 30; i++) {
-        let elm = new ElmTree(this);
-        let x = Math.random()*100-50;
-        let z = Math.random()*100-30
-        elm.position.set(x, 0, z)
-        this.add(elm);
+      let elm = new ElmTree(this);
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 100 - 30;
+      elm.position.set(x, 0, z);
+      this.add(elm);
     }
-    this.add(bear);
-
-    // Populate GUI
-    // this.state.gui.add(this.state, "rotationSpeed", -5, 5);
   }
 
   addToUpdateList(object) {
@@ -119,6 +130,5 @@ class SeedScene extends Scene {
     }
   }
 }
-
 
 export default SeedScene;
