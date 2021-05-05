@@ -21,8 +21,8 @@ var photoStorage = 15;
 // var album = [];
 // var inAlbum = false;
 // var currentPhoto = 0;
-var doc = app.activeDocument;
-var parentF = newFoler(doc.path.parent);
+// var doc = app.activeDocument;
+// var parentF = newFoler(doc.path.parent);
 
 
 // Set up camera
