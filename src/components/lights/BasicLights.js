@@ -1,4 +1,4 @@
-import { Group, SpotLight, AmbientLight, HemisphereLight } from 'three';
+import { Group, SpotLight, AmbientLight, HemisphereLight, SpotlightHelper } from 'three';
 
 class BasicLights extends Group {
     constructor(...args) {
