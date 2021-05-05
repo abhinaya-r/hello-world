@@ -1,6 +1,6 @@
 import * as Dat from "dat.gui";
-import { Scene, Color, Fog, Vector3 } from "three";
-import { Bear, Deer, Stork, Fox, PineTree, OakTree, ElmTree } from "objects";
+import { Scene, Color, Fog, Vector3, MeshLambertMaterial } from "three";
+import { Flower, Land, Bear, Deer, Stork, Fox, PineTree, OakTree, ElmTree, Grass, Mushroom } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
 // import { PineTree } from "../objects/PineTree";
@@ -31,6 +31,7 @@ class SeedScene extends Scene {
       // specular: 0x404761, //0x3c3c3c//,
       metalness: 0.3,
     });
+
     // ground mesh
     ground.geometry = new THREE.PlaneBufferGeometry(20000, 20000);
     ground.mesh = new THREE.Mesh(ground.geometry, ground.material);
@@ -38,6 +39,7 @@ class SeedScene extends Scene {
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
+
 
     // DEER
     let allDeer = [];
@@ -157,6 +159,23 @@ class SeedScene extends Scene {
       let z = Math.random() * 100 - 30;
       elm.position.set(x, 0, z);
       this.add(elm);
+    }
+    for (let i = 0; i < 50; i++) {
+        let x = Math.random() * 50 - 20;
+        let z = Math.random() * 50 - 20;
+        let rot = Math.random() * 2 * Math.PI;
+        let grass = new Grass(this, rot);
+        grass.position.set(x, -0.1, z);
+        this.add(grass);
+    }
+    for (let i = 0; i < 10; i++) {
+        let x = Math.random() * 50 - 20;
+        let z = Math.random() * 50 - 20;
+        let rot = Math.random() * 2 * Math.PI;
+        let sc = Math.random() * 0.03 + 0.05;
+        let mush = new Mushroom(this, rot, sc);
+        mush.position.set(x, 0, z);
+        this.add(mush);
     }
   }
 
