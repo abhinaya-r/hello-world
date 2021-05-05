@@ -39,6 +39,8 @@ class SeedScene extends Scene {
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
 
+    this.animals = [];
+
     // DEER
     let allDeer = [];
     for (let i = 0; i < 50; i++) {
@@ -63,6 +65,7 @@ class SeedScene extends Scene {
       this.add(deer);
       allDeer.push(deer);
     }
+    this.animals.push(allDeer);
 
     // BEAR
     let allBears = [];
@@ -86,6 +89,7 @@ class SeedScene extends Scene {
       this.add(bear);
       allBears.push(bear);
     }
+    this.animals.push(allBears);
 
     // Stork
     // let stork = new Stork(this, 0, 0, 0.5, new Vector3(0, 0, 0));
@@ -109,6 +113,7 @@ class SeedScene extends Scene {
       this.add(stork);
       allStorks.push(stork);
     }
+    this.animals.push(allStorks);
 
     // Fox
     // let allFoxes = [];
