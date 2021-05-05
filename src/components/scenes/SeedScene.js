@@ -1,6 +1,6 @@
 import * as Dat from "dat.gui";
 import { Scene, Color, Fog, Vector3, MeshLambertMaterial } from "three";
-import { Flower, Land, Bear, Deer, PineTree, OakTree, ElmTree, Grass, Mushroom } from "objects";
+import { Flower, Land, Bear, Deer, Stork, Fox, PineTree, OakTree, ElmTree, Grass, Mushroom } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
 // import { PineTree } from "../objects/PineTree";
@@ -50,7 +50,7 @@ class SeedScene extends Scene {
       // let z = Math.random() * 10000 - 5000;
       let x = Math.random() * 1000 - 500;
       let z = Math.random() * 1000 - 500;
-      let speed = Math.random() * 0.1;
+      let speed = Math.random() * 0.1 + 0.01;
       let position = new THREE.Vector3(x, 0, z);
       let randPoint = new THREE.Vector3(
         Math.random() * 100 - 50,
@@ -89,10 +89,56 @@ class SeedScene extends Scene {
       allBears.push(bear);
     }
 
+    // Stork
+    // let stork = new Stork(this, 0, 0, 0.5, new Vector3(0, 0, 0));
+    // this.add(stork);
+    let allStorks = [];
+    for (let i = 0; i < 20; i++) {
+      let x = Math.random() * 100 - 50;
+      let y = Math.random() * 10;
+      let z = Math.random() * 100 - 50;
+      let speed = Math.random() * 0.1;
+      let position = new THREE.Vector3(x, y, z);
+      let randPoint = new THREE.Vector3(
+        Math.random() * 50 - 25,
+        Math.random() * 10,
+        Math.random() * 50 - 25
+      );
+      let direction = randPoint.clone().sub(position);
+
+      let stork = new Stork(this, x, y, z, speed, direction);
+      stork.lookAt(direction);
+      this.add(stork);
+      allStorks.push(stork);
+    }
+
+    // Fox
+    // let allFoxes = [];
+    // for (let i = 0; i < 20; i++) {
+    //   // let x = Math.random() * 1000 - 500;
+    //   // let y = 0;
+    //   // let z = Math.random() * 1000 - 500;
+    //   let x = 0;
+    //   let y = 0;
+    //   let z = 10;
+    //   let speed = Math.random() * 0.08 + 0.02;
+    //   let position = new THREE.Vector3(x, y, z);
+    //   let randPoint = new THREE.Vector3(
+    //     Math.random() * 100 - 50,
+    //     y,
+    //     Math.random() * 100 - 50
+    //   );
+    //   let direction = randPoint.clone().sub(position);
+    //   // console.log("direction: ", direction);
+    //   let fox = new Fox(this, x, y, z, speed, direction);
+    //   fox.lookAt(direction);
+    //   this.add(fox);
+    //   allFoxes.push(fox);
+    // }
+
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
     this.add(lights);
-    // const deer = new Deer(this);
     for (let i = 0; i < 30; i++) {
       let pine = new PineTree(this);
       let x = Math.random() * 100 - 50;
