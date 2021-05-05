@@ -1,6 +1,18 @@
 import * as Dat from "dat.gui";
 import { Scene, Color, Fog, Vector3, MeshLambertMaterial } from "three";
-import { Flower, Land, Bear, Deer, Stork, Fox, PineTree, OakTree, ElmTree, Grass, Mushroom } from "objects";
+import {
+  Flower,
+  Land,
+  Bear,
+  Deer,
+  Stork,
+  Fox,
+  PineTree,
+  OakTree,
+  ElmTree,
+  Grass,
+  Mushroom,
+} from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
 // import { PineTree } from "../objects/PineTree";
@@ -40,7 +52,6 @@ class SeedScene extends Scene {
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
 
-
     // DEER
     let allDeer = [];
     for (let i = 0; i < 50; i++) {
@@ -68,7 +79,7 @@ class SeedScene extends Scene {
 
     // BEAR
     let allBears = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       // let x = Math.random() * 10000 - 5000;
       // let z = Math.random() * 10000 - 5000;
       let x = Math.random() * 5000 - 2500;
@@ -146,37 +157,37 @@ class SeedScene extends Scene {
       pine.position.set(x, 0, z);
       this.add(pine);
     }
-    for (let i = 0; i < 30; i++) {
-      let oak = new OakTree(this);
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 200 - 50;
-      oak.position.set(x, 0, z);
-      this.add(oak);
-    }
-    for (let i = 0; i < 30; i++) {
-      let elm = new ElmTree(this);
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 100 - 30;
-      elm.position.set(x, 0, z);
-      this.add(elm);
-    }
-    for (let i = 0; i < 50; i++) {
-        let x = Math.random() * 50 - 20;
-        let z = Math.random() * 50 - 20;
-        let rot = Math.random() * 2 * Math.PI;
-        let grass = new Grass(this, rot);
-        grass.position.set(x, -0.1, z);
-        this.add(grass);
-    }
-    for (let i = 0; i < 10; i++) {
-        let x = Math.random() * 50 - 20;
-        let z = Math.random() * 50 - 20;
-        let rot = Math.random() * 2 * Math.PI;
-        let sc = Math.random() * 0.03 + 0.05;
-        let mush = new Mushroom(this, rot, sc);
-        mush.position.set(x, 0, z);
-        this.add(mush);
-    }
+    // for (let i = 0; i < 30; i++) {
+    //   let oak = new OakTree(this);
+    //   let x = Math.random() * 100 - 50;
+    //   let z = Math.random() * 200 - 50;
+    //   oak.position.set(x, 0, z);
+    //   this.add(oak);
+    // }
+    // for (let i = 0; i < 30; i++) {
+    //   let elm = new ElmTree(this);
+    //   let x = Math.random() * 100 - 50;
+    //   let z = Math.random() * 100 - 30;
+    //   elm.position.set(x, 0, z);
+    //   this.add(elm);
+    // }
+    // for (let i = 0; i < 50; i++) {
+    //   let x = Math.random() * 50 - 20;
+    //   let z = Math.random() * 50 - 20;
+    //   let rot = Math.random() * 2 * Math.PI;
+    //   let grass = new Grass(this, rot);
+    //   grass.position.set(x, -0.1, z);
+    //   this.add(grass);
+    // }
+    // for (let i = 0; i < 10; i++) {
+    //   let x = Math.random() * 50 - 20;
+    //   let z = Math.random() * 50 - 20;
+    //   let rot = Math.random() * 2 * Math.PI;
+    //   let sc = Math.random() * 0.03 + 0.05;
+    //   let mush = new Mushroom(this, rot, sc);
+    //   mush.position.set(x, 0, z);
+    //   this.add(mush);
+    // }
   }
 
   addToUpdateList(object) {
@@ -185,7 +196,7 @@ class SeedScene extends Scene {
 
   update(timeStamp) {
     const { rotationSpeed, updateList } = this.state;
-    this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+    // this.rotation.y = (rotationSpeed * timeStamp) / 10000;
 
     // let rand = Math.random();
 
