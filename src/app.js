@@ -110,53 +110,6 @@ photo = function(filename) {
   // window.open(url);
 };
 
-
-  if(event.key == "a") {
-    //canvas.restore();
-    if(inAlbum) {
-      // close the album
-    }
-    else {
-      //console.log(album);
-      if(album.length > 0) {
-        //album[currentPhoto].draw();
-      }
-    }
-  }
-
-  if(event.key = "ArrowLeft") {
-    if(inAlbum) {
-      if(currentPhoto > 0) {
-        //album[--currentPhoto].draw();
-      }
-      else {
-        //album[album.length - 1].draw();
-        //currentPhoto = album.length -1;
-      }
-    }
-  }
-
-  if(event.key = "ArrowRight") {
-    if(inAlbum) {
-      if(currentPhoto < album.length - 1) {
-        //album[++currentPhoto].draw();
-      }
-      else {
-        //album[0].draw();
-        //currentPhoto = 0;
-      }
-    }
-  }
-
-  // if 'I' was released, download the image
-  if (event.key == "i") {
-    document.getElementById("recIcon").classList.add("Rec");
-    document.getElementById("recIcon").classList.remove("notRec");
-    setTimeout(() => {photo();
-                      document.getElementById("recIcon").classList.add("notRec");
-                      document.getElementById("recIcon").classList.remove("Rec");},1000);
-  }
-
   // add event listener for screen capture and recording
 window.addEventListener("keyup", function(event) {
   // Ignore keypresses typed into a text box
