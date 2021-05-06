@@ -6,9 +6,12 @@
  * handles window resizes.
  *
  */
+//import React, {useState} from 'react';
 import { WebGLRenderer, PerspectiveCamera, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SeedScene } from "scenes";
+
+//import "./app.css";
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -21,9 +24,8 @@ var photoStorage = 15;
 // var album = [];
 // var inAlbum = false;
 // var currentPhoto = 0;
-// var doc = app.activeDocument;
-// var parentF = newFoler(doc.path.parent);
-
+// var doc = document;
+// var parentF = newFolder(doc.path.parent);
 
 // Set up camera
 // camera.position.set(6, 3, -10);
@@ -66,7 +68,7 @@ windowResizeHandler();
 window.addEventListener("resize", windowResizeHandler, false);
 
 /* take photo */
-photo = function(filename) {
+const photo = function(filename) {
   // get the image data
 
   // take the photo
@@ -105,6 +107,10 @@ photo = function(filename) {
   link.href = dataURL;
   link.click();
 
+  // var exportFolder = Folder ((app.activeDocument.path.parent) + "/PNG")
+  // if (!exportFolder.exists) exportFolder.create ()
+  // app.activeDocument.exportDocument (File(exportFolder + "/" + app.activeDocument.name + ".png"),ExportType.SAVEFORWEB, link )  
+
   // this will force downloading data as an image (rather than open in new window)
   // const url = dataURL.replace(/^data:image\/[^;]/, "data:application/octet-stream");
   // window.open(url);
@@ -115,42 +121,42 @@ window.addEventListener("keyup", function(event) {
   // Ignore keypresses typed into a text box
   if (event.target.tagName == "INPUT") return;
 
-  if(event.key == "a") {
-    //canvas.restore();
-    if(inAlbum) {
-      // close the album
-    }
-    else {
-      //console.log(album);
-      if(album.length > 0) {
-        //album[currentPhoto].draw();
-      }
-    }
-  }
+  // if(event.key == "a") {
+  //   //canvas.restore();
+  //   if(inAlbum) {
+  //     // close the album
+  //   }
+  //   else {
+  //     //console.log(album);
+  //     if(album.length > 0) {
+  //       //album[currentPhoto].draw();
+  //     }
+  //   }
+  // }
 
-  if(event.key = "ArrowLeft") {
-    if(inAlbum) {
-      if(currentPhoto > 0) {
-        //album[--currentPhoto].draw();
-      }
-      else {
-        //album[album.length - 1].draw();
-        //currentPhoto = album.length -1;
-      }
-    }
-  }
+  // if(event.key = "ArrowLeft") {
+  //   if(inAlbum) {
+  //     if(currentPhoto > 0) {
+  //       //album[--currentPhoto].draw();
+  //     }
+  //     else {
+  //       //album[album.length - 1].draw();
+  //       //currentPhoto = album.length -1;
+  //     }
+  //   }
+  // }
 
-  if(event.key = "ArrowRight") {
-    if(inAlbum) {
-      if(currentPhoto < album.length - 1) {
-        //album[++currentPhoto].draw();
-      }
-      else {
-        //album[0].draw();
-        //currentPhoto = 0;
-      }
-    }
-  }
+  // if(event.key = "ArrowRight") {
+  //   if(inAlbum) {
+  //     if(currentPhoto < album.length - 1) {
+  //       //album[++currentPhoto].draw();
+  //     }
+  //     else {
+  //       //album[0].draw();
+  //       //currentPhoto = 0;
+  //     }
+  //   }
+  // }
 
   // if 'I' was released, download the image
   if (event.key == "i") {
