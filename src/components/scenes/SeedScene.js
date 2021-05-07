@@ -193,6 +193,11 @@ class SeedScene extends Scene {
     //   mush.position.set(x, 0, z);
     //   this.add(mush);
     // }
+
+    const { rotationSpeed, updateList } = this.state;
+    for (const obj of updateList) {
+      console.log(obj.frustumCulled);
+    }
   }
 
   addToUpdateList(object) {
@@ -207,6 +212,7 @@ class SeedScene extends Scene {
 
     // Call update for each object in the updateList
     for (const obj of updateList) {
+      // obj.frustumCulled = true;
       obj.update(timeStamp);
     }
   }
