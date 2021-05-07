@@ -12,6 +12,7 @@ import {
   ElmTree,
   Grass,
   Mushroom,
+  Music,
 } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -51,6 +52,10 @@ class SeedScene extends Scene {
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
+
+    // MUSIC
+    let music = new Music(this, camera);
+    this.add(music);
 
     // DEER
     let allDeer = [];
@@ -150,13 +155,13 @@ class SeedScene extends Scene {
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
     this.add(lights);
-    for (let i = 0; i < 30; i++) {
-      let pine = new PineTree(this);
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 150 - 60;
-      pine.position.set(x, 0, z);
-      this.add(pine);
-    }
+    // for (let i = 0; i < 30; i++) {
+    //   let pine = new PineTree(this);
+    //   let x = Math.random() * 100 - 50;
+    //   let z = Math.random() * 150 - 60;
+    //   pine.position.set(x, 0, z);
+    //   this.add(pine);
+    // }
     // for (let i = 0; i < 30; i++) {
     //   let oak = new OakTree(this);
     //   let x = Math.random() * 100 - 50;
