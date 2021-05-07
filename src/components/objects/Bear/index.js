@@ -1,1 +1,0 @@
-export { default as Bear } from './Bear.js';
