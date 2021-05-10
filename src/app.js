@@ -18,10 +18,11 @@ let html = '<style type="text/css">' +
 // console.log(document.head.innerHTML);
 document.body.innerHTML += html;
 var score = 0;
-var photoStorage = 5;
+var photoStorage = 8;
 var inAlbum = false;
 var currentPhoto = 0;
 var album = [];
+var targetAnimal;
 // var sc = document.getElementById('displayscore');
 // sc.innerHTML = "SCORE<br>" + score;
 
@@ -36,6 +37,52 @@ let html2 = '<style type="text/css">' +
 '<div class="dot" id="cameradot"></div> ';
 document.body.innerHTML += html2;
 
+let html3 = '<style type="text/css">' + 
+'.targetanimal { text-align: right; position: absolute; top: 5%; right: 5%; width: 40%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>' + 
+ '<div class="targetanimal" id="target"></div> ';
+document.body.innerHTML += html3;
+
+const setTargetAnimal = function() {
+  // var n = Math.floor(Math.random()*3);
+  // if (n == 0) {
+  //   targetAnimal = "stork";
+  // }
+  // else if (n == 1) {
+  //   targetAnimal = "deer";
+  // }
+  // else {
+  //   targetAnimal = "bear";
+  // }
+  var n = Math.floor(Math.random()*2);
+  if(targetAnimal === "stork") {
+    if (n == 0) {
+      targetAnimal = "deer";
+    }
+    else if (n == 1) {
+      targetAnimal = "bear";
+    }
+  }
+  else if (targetAnimal === "deer") {
+    if (n == 0) {
+      targetAnimal = "stork";
+    }
+    else if (n == 1) {
+      targetAnimal = "bear";
+    }
+  }
+  else {
+    if (n == 0) {
+      targetAnimal = "stork";
+    }
+    else if (n == 1) {
+      targetAnimal = "deer";
+    }
+  }
+  var ta = document.getElementById('target');
+  ta.innerHTML = "TARGET ANIMAL<br>" + targetAnimal;
+  // potentially increment photo storage here
+}
+setTargetAnimal();
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -140,10 +187,6 @@ const inFrame = function(animal) {
 
   var cDir = new THREE.Vector3();
   controls.getDirection(cDir);
-  // neutral is 0,0,-1
-  // var dX = cDir.x + 1;
-  // var dY = cDir.y + 1;
-  // var dZ = cDir.z + 2;
   var aX = animal.position.x;
   var aY = animal.position.y;
   var aZ = animal.position.z;
@@ -174,8 +217,10 @@ const inFrame = function(animal) {
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
     // console.log(cosT);
-    //console.log(axis);
-    // console.log(angle);
+    console.log("axis");
+    console.log(axis);
+    console.log("angle");
+    console.log(angle);
     // var sinT = Math.sqrt(1-cosT*cosT);
     // const C = 1-cosT;
     // const rotMat = new Matrix3();
@@ -243,6 +288,7 @@ const photo = function(filename) {
 
   //var animals = scene.getAnimals();
   var animals = scene.animals;
+  var targetFound = false;
   //console.log(camera.getFilmWidth());
   for (var i = 0; i < animals.length; i++) {
     var currentAnimals = animals[i];
@@ -258,16 +304,35 @@ const photo = function(filename) {
         var dist = animal.position.distanceTo(camera.position);
         console.log("distance: ")
         console.log(dist);
+
+        var s = 0;
+        if(animal.name === "stork") {
+          s += 10;
+        }
+        if(animal.name === "deer") {
+          s += 50;
+        }
+        if(animal.name === "bear") {
+          s += 100;
+        }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
-          score += Math.floor(h - dist) * 10;
+          s += Math.floor(h - dist) * 10;
           // console.log(currentAnimals[j]);
           // console.log(dist);
           // console.log(h);
         }
+        if (animal.name === targetAnimal) {
+          s *= 3;
+          targetFound = true;
+        }
+        score += s;
       }
     }
   }
+  if(targetFound) setTargetAnimal();
+
+
   //console.log(score);
   var sc = document.getElementById('displayscore');
   sc.innerHTML = "SCORE<br>" + score;
