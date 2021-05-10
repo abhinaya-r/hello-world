@@ -45,6 +45,9 @@ class Stork extends Group {
     this.position.y += norm.y * this.speed;
     this.position.z += norm.z * this.speed;
     var delta = this.clock.getDelta(); // clock is an instance of THREE.Clock
+    if (this.position.y < 0) {
+      this.remove(this);
+    }
     if (this.mixer) this.mixer.update(delta);
     // TWEEN.update();
   }

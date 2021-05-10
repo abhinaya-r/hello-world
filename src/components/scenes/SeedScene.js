@@ -216,8 +216,8 @@ class SeedScene extends Scene {
   }
 }
 
-SeedScene.getAnimals = function() {
+SeedScene.getAnimals = function () {
   return this.animals;
-}
+};
 
 export default SeedScene;
