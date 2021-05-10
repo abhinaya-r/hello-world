@@ -55,7 +55,6 @@ class SeedScene extends Scene {
 
     // MUSIC
     let music = new Music(this, camera);
-    this.add(music);
 
     // DEER
     let allDeer = [];
@@ -193,6 +192,9 @@ class SeedScene extends Scene {
     //   mush.position.set(x, 0, z);
     //   this.add(mush);
     // }
+
+    let grass = new Grass(this, 0);
+    this.add(grass);
 
     const { rotationSpeed, updateList } = this.state;
     for (const obj of updateList) {
