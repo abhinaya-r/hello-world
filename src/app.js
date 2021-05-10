@@ -6,15 +6,22 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3, Matrix3, Box2 } from "three";
+import {
+  WebGLRenderer,
+  PerspectiveCamera,
+  Vector3,
+  Matrix3,
+  Box2,
+} from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SeedScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 
-let html = '<style type="text/css">' +
-'.score { position: absolute; top: 5%; left: 5%; width: 10%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>' +
- '<div class="score" id="displayscore"> SCORE<br>0</div> ';
+let html =
+  '<style type="text/css">' +
+  ".score { position: absolute; top: 5%; left: 5%; width: 10%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>" +
+  '<div class="score" id="displayscore"> SCORE<br>0</div> ';
 // console.log(document.head.innerHTML);
 document.body.innerHTML += html;
 var score = 0;
@@ -32,17 +39,19 @@ var targetAnimal;
 // '#recIcon.notRec{background-color: darkred;}' +
 // '#recIcon {width: 30px;height: 30px;margin: 0px;font-size: 0;background-color: red;border: 0;border-radius: 35px;outline: none;position: fixed;left: 95px;top: 15px;}' +
 // '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>'
-let html2 = '<style type="text/css">' +
-'.dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>' +
-'<div class="dot" id="cameradot"></div> ';
+let html2 =
+  '<style type="text/css">' +
+  ".dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>" +
+  '<div class="dot" id="cameradot"></div> ';
 document.body.innerHTML += html2;
 
-let html3 = '<style type="text/css">' +
-'.targetanimal { text-align: right; position: absolute; top: 5%; right: 5%; width: 40%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>' +
- '<div class="targetanimal" id="target"></div> ';
+let html3 =
+  '<style type="text/css">' +
+  ".targetanimal { text-align: right; position: absolute; top: 5%; right: 5%; width: 40%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>" +
+  '<div class="targetanimal" id="target"></div> ';
 document.body.innerHTML += html3;
 
-const setTargetAnimal = function() {
+const setTargetAnimal = function () {
   // var n = Math.floor(Math.random()*3);
   // if (n == 0) {
   //   targetAnimal = "stork";
@@ -53,35 +62,30 @@ const setTargetAnimal = function() {
   // else {
   //   targetAnimal = "bear";
   // }
-  var n = Math.floor(Math.random()*2);
-  if(targetAnimal === "stork") {
+  var n = Math.floor(Math.random() * 2);
+  if (targetAnimal === "stork") {
     if (n == 0) {
       targetAnimal = "deer";
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       targetAnimal = "bear";
     }
-  }
-  else if (targetAnimal === "deer") {
+  } else if (targetAnimal === "deer") {
     if (n == 0) {
       targetAnimal = "stork";
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       targetAnimal = "bear";
     }
-  }
-  else {
+  } else {
     if (n == 0) {
       targetAnimal = "stork";
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       targetAnimal = "deer";
     }
   }
-  var ta = document.getElementById('target');
+  var ta = document.getElementById("target");
   ta.innerHTML = "TARGET ANIMAL<br>" + targetAnimal;
   // potentially increment photo storage here
-}
+};
 setTargetAnimal();
 
 // Initialize core ThreeJS components
@@ -101,21 +105,24 @@ let head = document.getElementsByTagName("head")[0];
 let link = document.createElement("link");
 link.type = "text/css";
 link.rel = "stylesheet";
-link.href = "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap";
+link.href =
+  "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap";
 head.appendChild(link);
 
 // BODY
 // faded bg
 let menu = document.createElement("div");
 menu.id = "menu";
-menu.style = "width: 100vw; height: 100vh; background: #d1effe77; position: absolute;";
+menu.style =
+  "width: 100vw; height: 100vh; background: #d1effe77; position: absolute;";
 
-let style = '<style type="text/css">' +
-'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #244514 }' +
-'hr { border: 1px solid #377618; width: 80% }' +
-'button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #377618; color: #9dff66; font-family: inherit; cursor: pointer; }' +
-'.hidden { visibility: hidden; width: 0px; height: 0px;}' +
-'</style>';
+let style =
+  '<style type="text/css">' +
+  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #244514 }' +
+  "hr { border: 1px solid #377618; width: 80% }" +
+  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #377618; color: #9dff66; font-family: inherit; cursor: pointer; }" +
+  ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
+  "</style>";
 
 document.body.innerHTML = style;
 document.body.appendChild(menu);
@@ -123,13 +130,15 @@ document.body.appendChild(menu);
 // menu box
 let container = document.createElement("div");
 container.id = "container";
-container.style = "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #9dff66; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
-container.innerHTML = '<br/>' +
-'<h1 style="font-size: 2rem">Hello, World!</h1>' +
-'<h3>a generative, open-world game made in ThreeJS</h3><br/><hr/><br/>' +
-'<h2>GAMEPLAY:<h2>' +
-'<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Each round, you are given a creature (e.g., a deer) that you must photograph. Find it! Capture it! You\'ll get a score based on how close the creature is to the center of your viewport.</h2><br/><hr/><br/>' +
-'<h2>CONTROLS:</h2>';
+container.style =
+  "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #9dff66; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
+container.innerHTML =
+  "<br/>" +
+  '<h1 style="font-size: 2rem">Hello, World!</h1>' +
+  "<h3>a generative, open-world game made in ThreeJS</h3><br/><hr/><br/>" +
+  "<h2>GAMEPLAY:<h2>" +
+  '<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Each round, you are given a creature (e.g., a deer) that you must photograph. Find it! Capture it! You\'ll get a score based on how close the creature is to the center of your viewport.</h2><br/><hr/><br/>' +
+  "<h2>CONTROLS:</h2>";
 
 menu.appendChild(container);
 
@@ -137,13 +146,14 @@ menu.appendChild(container);
 let ctrls = document.createElement("div");
 ctrls.id = "ctrls";
 ctrls.style = "display: flex; flex-direction: column; text-align: left;";
-ctrls.innerHTML = '<h2>UP ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>' +
-'<h2>DOWN ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>' +
-'<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>' +
-'<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>' +
-'<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>' +
-'<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>' +
-'<br/><br/>';
+ctrls.innerHTML =
+  "<h2>UP ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>" +
+  "<h2>DOWN ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>" +
+  "<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
+  "<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
+  "<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>" +
+  "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
+  "<br/><br/>";
 
 container.appendChild(ctrls);
 
@@ -158,23 +168,24 @@ container.appendChild(startButton);
 let menuButton = document.createElement("button");
 menuButton.id = "menuButton";
 menuButton.className = "hidden";
-menuButton.style = "position: absolute; bottom: 2vh; right: 2vw; font-size: 1rem;";
+menuButton.style =
+  "position: absolute; bottom: 2vh; right: 2vw; font-size: 1rem;";
 menuButton.innerHTML = "Menu";
 
 document.body.appendChild(menuButton);
 
 // click startButton to start, menuButton to return to menu
-window.onload = function() {
-  startButton.addEventListener("click", function() {
+window.onload = function () {
+  startButton.addEventListener("click", function () {
     menu.className = "hidden";
     menuButton.className = "";
-  })
-  menuButton.addEventListener("click", function() {
+  });
+  menuButton.addEventListener("click", function () {
     menuButton.className = "hidden";
     menu.className = "";
     startButton.innerHTML = "Return to Game";
-  })
-}
+  });
+};
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -183,8 +194,6 @@ canvas.style.display = "block"; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = "hidden"; // Fix scrolling
 document.body.appendChild(canvas);
-
-
 
 // Set up controls
 // const controls = new OrbitControls(camera, canvas);
@@ -264,8 +273,7 @@ window.addEventListener("onmousemove", handleControls, false);
 window.addEventListener("pointerlockchange", handleControls, false);
 window.addEventListener("pointerlockerror", handleControls, false);
 
-const inFrame = function(animal) {
-
+const inFrame = function (animal) {
   var cDir = new THREE.Vector3();
   controls.getDirection(cDir);
   var aX = animal.position.x;
@@ -276,25 +284,29 @@ const inFrame = function(animal) {
   var cZ = camera.position.z;
   var cH = camera.getFilmHeight();
   var cW = camera.getFilmWidth();
-  var minVals = new THREE.Vector3(cX-(cW/2), cY-(cH/2), cZ-(1.5*camera.getFocalLength()));
-  var maxVals = new THREE.Vector3(cX+(cW/2), cY+(cH/2), cZ);
+  var minVals = new THREE.Vector3(
+    cX - cW / 2,
+    cY - cH / 2,
+    cZ - 1.5 * camera.getFocalLength()
+  );
+  var maxVals = new THREE.Vector3(cX + cW / 2, cY + cH / 2, cZ);
 
-  if (cDir.equals(oDir)) { // if no rotation happened
-    if(aX < minVals.x || aX > maxVals.x) {
+  if (cDir.equals(oDir)) {
+    // if no rotation happened
+    if (aX < minVals.x || aX > maxVals.x) {
       return false;
     }
-    if(aY < minVals.y || aY > maxVals.y) {
+    if (aY < minVals.y || aY > maxVals.y) {
       return false;
     }
     if (aZ < minVals.z || aZ > maxVals.z) {
       return false;
     }
     console.log(cDir);
-  }
-  else {
+  } else {
     // console.log(oDir);
     // console.log(cDir);
-    var cosT = oDir.dot(cDir)/(oDir.length() * cDir.length());
+    var cosT = oDir.dot(cDir) / (oDir.length() * cDir.length());
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
     // console.log(cosT);
@@ -306,37 +318,33 @@ const inFrame = function(animal) {
     // const C = 1-cosT;
     // const rotMat = new Matrix3();
     // rotMat.set();
-    minVals.applyAxisAngle(axis,angle);
-    maxVals.applyAxisAngle(axis,angle);
-
+    minVals.applyAxisAngle(axis, angle);
+    maxVals.applyAxisAngle(axis, angle);
 
     if (minVals.x < maxVals.x) {
-      if(aX < minVals.x || aX > maxVals.x) {
+      if (aX < minVals.x || aX > maxVals.x) {
         return false;
       }
-    }
-    else {
-      if(aX < maxVals.x || aX > minVals.x) {
+    } else {
+      if (aX < maxVals.x || aX > minVals.x) {
         return false;
       }
     }
     if (minVals.y < maxVals.y) {
-      if(aY < minVals.y || aY > maxVals.y) {
+      if (aY < minVals.y || aY > maxVals.y) {
         return false;
       }
-    }
-    else {
-      if(aY < maxVals.y || aY > minVals.y) {
+    } else {
+      if (aY < maxVals.y || aY > minVals.y) {
         return false;
       }
     }
     if (minVals.z < maxVals.z) {
-      if(aZ < minVals.z || aZ > maxVals.z) {
+      if (aZ < minVals.z || aZ > maxVals.z) {
         return false;
       }
-    }
-    else {
-      if(aZ < maxVals.z || aZ > minVals.z) {
+    } else {
+      if (aZ < maxVals.z || aZ > minVals.z) {
         return false;
       }
     }
@@ -348,17 +356,17 @@ const inFrame = function(animal) {
   console.log("max vals: ");
   console.log(maxVals);
   return true;
-}
+};
 
 /* take photo */
-const photo = function(filename) {
+const photo = function (filename) {
   // get the image data
 
   // take the photo
-    // stretch goal: save and display the photo
-    // save the screenshots that you've taken in some folder!
-    // album icon in menu that when you click on it you can see
-    // all the images in that folder
+  // stretch goal: save and display the photo
+  // save the screenshots that you've taken in some folder!
+  // album icon in menu that when you click on it you can see
+  // all the images in that folder
 
   // try {
   //   var dataURL = Scene.renderer.domElement.toDataURL();
@@ -376,24 +384,24 @@ const photo = function(filename) {
     for (var j = 0; j < currentAnimals.length; j++) {
       // if animal is in view of the camera (within the x/y coords of camera view) then grade by distance from center
       var animal = currentAnimals[j];
-      if(inFrame(animal)) {
+      if (inFrame(animal)) {
         console.log(animal);
         console.log("animal position: ");
         console.log(animal.position);
         console.log("camera position: ");
         console.log(camera.position);
         var dist = animal.position.distanceTo(camera.position);
-        console.log("distance: ")
+        console.log("distance: ");
         console.log(dist);
 
         var s = 0;
-        if(animal.name === "stork") {
+        if (animal.name === "stork") {
           s += 10;
         }
-        if(animal.name === "deer") {
+        if (animal.name === "deer") {
           s += 50;
         }
-        if(animal.name === "bear") {
+        if (animal.name === "bear") {
           s += 100;
         }
         var h = camera.getFilmHeight();
@@ -411,11 +419,10 @@ const photo = function(filename) {
       }
     }
   }
-  if(targetFound) setTargetAnimal();
-
+  if (targetFound) setTargetAnimal();
 
   //console.log(score);
-  var sc = document.getElementById('displayscore');
+  var sc = document.getElementById("displayscore");
   sc.innerHTML = "SCORE<br>" + score;
 
   photoStorage--;
@@ -448,24 +455,22 @@ const photo = function(filename) {
   // window.open(url);
 };
 
-
-window.addEventListener("keydown", function(event) {
+window.addEventListener("keydown", function (event) {
   // Ignore keypresses typed into a text box
   if (event.target.tagName == "INPUT") return;
 
-  if(event.key == "a") {
+  if (event.key == "a") {
     //canvas.restore();
-    if(inAlbum) {
+    if (inAlbum) {
       // close the album
-    }
-    else {
+    } else {
       //console.log(album);
-      if(album.length > 0) {
+      if (album.length > 0) {
         var c = album[currentPhoto];
-        var ctx = canvas.getContext('2d');
+        var ctx = canvas.getContext("2d");
         console.log(album[currentPhoto]);
         console.log(ctx);
-        ctx.drawImage(c,0,0);
+        ctx.drawImage(c, 0, 0);
         inAlbum = true;
       }
     }
