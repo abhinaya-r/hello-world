@@ -12,6 +12,7 @@ import {
   ElmTree,
   Grass,
   Mushroom,
+  Music,
 } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -51,6 +52,9 @@ class SeedScene extends Scene {
     ground.mesh.rotation.x = -Math.PI / 2;
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
+
+    // MUSIC
+    let music = new Music(this, camera);
 
     // DEER
     let allDeer = [];
@@ -202,6 +206,7 @@ class SeedScene extends Scene {
 
     // Call update for each object in the updateList
     for (const obj of updateList) {
+      // obj.frustumCulled = true;
       obj.update(timeStamp);
     }
   }

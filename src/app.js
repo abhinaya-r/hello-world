@@ -6,11 +6,12 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from "three";
+import { WebGLRenderer, PerspectiveCamera, Vector3, Box2 } from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SeedScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
+
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -22,6 +23,87 @@ const renderer = new WebGLRenderer({ antialias: true });
 // camera.position.set(6, 3, -10);
 camera.position.set(0, 1, 10);
 // camera.lookAt(new Vector3(0, 1, 10));
+
+// HTML INTRO PAGE
+// HEAD
+let head = document.getElementsByTagName("head")[0];
+let link = document.createElement("link");
+link.type = "text/css";
+link.rel = "stylesheet";
+link.href = "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap";
+head.appendChild(link);
+
+// BODY
+// faded bg
+let menu = document.createElement("div");
+menu.id = "menu";
+menu.style = "width: 100vw; height: 100vh; background: #d1effe77; position: absolute;";
+
+let style = '<style type="text/css">' + 
+'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #244514 }' +
+'hr { border: 1px solid #377618; width: 80% }' +
+'button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #377618; color: #9dff66; font-family: inherit; cursor: pointer; }' +
+'.hidden { visibility: hidden; width: 0px; height: 0px;}' +
+'</style>';
+
+document.body.innerHTML = style;
+document.body.appendChild(menu);
+
+// menu box
+let container = document.createElement("div");
+container.id = "container";
+container.style = "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #9dff66; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
+container.innerHTML = '<br/>' + 
+'<h1 style="font-size: 2rem">Hello, World!</h1>' + 
+'<h3>a generative, open-world game made in ThreeJS</h3><br/><hr/><br/>' + 
+'<h2>GAMEPLAY:<h2>' +
+'<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Each round, you are given a creature (e.g., a deer) that you must photograph. Find it! Capture it! You\'ll get a score based on how close the creature is to the center of your viewport.</h2><br/><hr/><br/>' +
+'<h2>CONTROLS:</h2>';
+
+menu.appendChild(container);
+
+// controls box
+let ctrls = document.createElement("div");
+ctrls.id = "ctrls";
+ctrls.style = "display: flex; flex-direction: column; text-align: left;";
+ctrls.innerHTML = '<h2>UP ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>' +
+'<h2>DOWN ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>' +
+'<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>' +
+'<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>' +
+'<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>' +
+'<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>' +
+'<br/><br/>';
+
+container.appendChild(ctrls);
+
+// start button
+let startButton = document.createElement("button");
+startButton.id = "startButton";
+startButton.innerHTML = "Start Game";
+
+container.appendChild(startButton);
+
+// access menu mid-game button
+let menuButton = document.createElement("button");
+menuButton.id = "menuButton";
+menuButton.className = "hidden";
+menuButton.style = "position: absolute; bottom: 2vh; right: 2vw; font-size: 1rem;";
+menuButton.innerHTML = "Menu";
+
+document.body.appendChild(menuButton);
+
+// click startButton to start, menuButton to return to menu
+window.onload = function() {
+  startButton.addEventListener("click", function() {
+    menu.className = "hidden";
+    menuButton.className = "";
+  })
+  menuButton.addEventListener("click", function() {
+    menuButton.className = "hidden";
+    menu.className = "";
+    startButton.innerHTML = "Return to Game";
+  })
+}
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
