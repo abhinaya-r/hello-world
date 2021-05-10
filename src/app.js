@@ -57,7 +57,7 @@ container.innerHTML = '<br/>' +
 '<h1 style="font-size: 2rem">Hello, World!</h1>' + 
 '<h3>a generative, open-world game made in ThreeJS</h3><br/><hr/><br/>' + 
 '<h2>GAMEPLAY:<h2>' +
-'<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Each round, you are given a creature (e.g., a deer) that you must photograph. Find it! Capture it! You\'ll get a score based on how close the creature is to the center of your viewport.</h2><br/><hr/><br/>' +
+'<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Take photographs of any animal you wish--but you are also given a bonus animal for each round, which will earn you more points. Find it! Capture it! You\'ll get a score based on how close the animal is to the center of your viewport.</h2><br/><hr/><br/>' +
 '<h2>CONTROLS:</h2>';
 
 menu.appendChild(container);
@@ -71,8 +71,9 @@ ctrls.innerHTML = '<h2>UP ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nb
 '<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>' +
 '<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>' +
 '<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>' +
+'<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>' + 
 '<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>' +
-'<br/><br/>';
+'<br/>';
 
 container.appendChild(ctrls);
 
