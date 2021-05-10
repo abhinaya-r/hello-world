@@ -6,7 +6,7 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from "three";
+import { WebGLRenderer, PerspectiveCamera, Vector3, Matrix3 } from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SeedScene } from "scenes";
 import * as THREE from "three";
@@ -68,6 +68,9 @@ controls.connect();
 // // controls.minDistance = 4;
 // // controls.maxDistance = 16;
 // controls.update();
+
+var oDir = new THREE.Vector3(); // original direction of controls
+controls.getDirection(oDir);
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
@@ -134,6 +137,13 @@ window.addEventListener("pointerlockchange", handleControls, false);
 window.addEventListener("pointerlockerror", handleControls, false);
 
 const inFrame = function(animal) {
+
+  var cDir = new THREE.Vector3();
+  controls.getDirection(cDir);
+  // neutral is 0,0,-1
+  // var dX = cDir.x + 1;
+  // var dY = cDir.y + 1;
+  // var dZ = cDir.z + 2;
   var aX = animal.position.x;
   var aY = animal.position.y;
   var aZ = animal.position.z;
@@ -142,16 +152,75 @@ const inFrame = function(animal) {
   var cZ = camera.position.z;
   var cH = camera.getFilmHeight();
   var cW = camera.getFilmWidth();
+  var minVals = new THREE.Vector3(cX-(cW/2), cY-(cH/2), cZ-(1.5*camera.getFocalLength()));
+  var maxVals = new THREE.Vector3(cX+(cW/2), cY+(cH/2), cZ);
   
-  if(aX < cX - (cW/2) || aX > cX + (cW/2)) {
-    return false;
+  if (cDir.equals(oDir)) { // if no rotation happened
+    if(aX < minVals.x || aX > maxVals.x) {
+      return false;
+    }
+    if(aY < minVals.y || aY > maxVals.y) {
+      return false;
+    }
+    if (aZ < minVals.z || aZ > maxVals.z) {
+      return false;
+    }
+    console.log(cDir);
   }
-  if(aY < cY - (cH/2) || aY > cY + (cH/2)) {
-    return false;
+  else {
+    // console.log(oDir);
+    // console.log(cDir);
+    var cosT = oDir.dot(cDir)/(oDir.length() * cDir.length());
+    var axis = oDir.clone().cross(cDir).normalize();
+    var angle = Math.acos(cosT);
+    // console.log(cosT);
+    //console.log(axis);
+    // console.log(angle);
+    // var sinT = Math.sqrt(1-cosT*cosT);
+    // const C = 1-cosT;
+    // const rotMat = new Matrix3();
+    // rotMat.set();
+    minVals.applyAxisAngle(axis,angle);
+    maxVals.applyAxisAngle(axis,angle);
+    
+    
+    if (minVals.x < maxVals.x) {
+      if(aX < minVals.x || aX > maxVals.x) {
+        return false;
+      }
+    }
+    else {
+      if(aX < maxVals.x || aX > minVals.x) {
+        return false;
+      }
+    }
+    if (minVals.y < maxVals.y) {
+      if(aY < minVals.y || aY > maxVals.y) {
+        return false;
+      }
+    }
+    else {
+      if(aY < maxVals.y || aY > minVals.y) {
+        return false;
+      }
+    }
+    if (minVals.z < maxVals.z) {
+      if(aZ < minVals.z || aZ > maxVals.z) {
+        return false;
+      }
+    }
+    else {
+      if(aZ < maxVals.z || aZ > minVals.z) {
+        return false;
+      }
+    }
   }
-  if (aZ > cZ || aZ < cZ-(1.5*camera.getFocalLength())) {
-    return false;
-  }
+  console.log("camera direction: ");
+  console.log(cDir);
+  console.log("min vals: ");
+  console.log(minVals);
+  console.log("max vals: ");
+  console.log(maxVals);
   return true;
 }
 
@@ -174,7 +243,7 @@ const photo = function(filename) {
 
   //var animals = scene.getAnimals();
   var animals = scene.animals;
-  console.log(camera.getFilmWidth());
+  //console.log(camera.getFilmWidth());
   for (var i = 0; i < animals.length; i++) {
     var currentAnimals = animals[i];
     for (var j = 0; j < currentAnimals.length; j++) {
@@ -182,9 +251,13 @@ const photo = function(filename) {
       var animal = currentAnimals[j];
       if(inFrame(animal)) {
         console.log(animal);
+        console.log("animal position: ");
         console.log(animal.position);
+        console.log("camera position: ");
         console.log(camera.position);
         var dist = animal.position.distanceTo(camera.position);
+        console.log("distance: ")
+        console.log(dist);
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
           score += Math.floor(h - dist) * 10;
