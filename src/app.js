@@ -18,23 +18,30 @@ import { SeedScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 
+// STYLE ELEMENTS
+let style =
+  '<style type="text/css">' +
+  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #244514 }' +
+  "hr { border: 1px solid #377618; width: 80% }" +
+  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #377618; color: #9dff66; font-family: inherit; cursor: pointer; }" +
+  ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
+  "</style>";
+
+document.body.innerHTML += style;
+
 // make container for game display
 let display = document.createElement("div");
 display.id = "display"
 display.style = "width: 100vw; height: 100vh; position: absolute;";
 document.body.appendChild(display);
 
-let html =
-  '<style type="text/css">' +
-  ".score { position: absolute; top: 2vh; left: 2vw; width: 15vw; height:15vh; font-size: 2rem; color: yellow; text-align: left; -webkit-test-stroke: 2px white}</style>";
 let displayScore = document.createElement("div");
-displayScore.className = "score";
 displayScore.id = "displayscore";
+displayScore.style = "position: absolute; top: 2vh; left: 2vw; width: 15vw; height:15vh; font-size: 2rem; text-align: left; color: #9dff66; -webkit-text-stroke: 1px #377618";
 displayScore.innerHTML = "SCORE<br>0";
 display.appendChild(displayScore);
 
 // console.log(document.head.innerHTML);
-display.innerHTML += html;
 var score = 0;
 var photoStorage = 8;
 var inAlbum = false;
@@ -50,22 +57,15 @@ var targetAnimal;
 // '#recIcon.notRec{background-color: darkred;}' +
 // '#recIcon {width: 30px;height: 30px;margin: 0px;font-size: 0;background-color: red;border: 0;border-radius: 35px;outline: none;position: fixed;left: 95px;top: 15px;}' +
 // '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>'
-let html2 =
-  '<style type="text/css">' +
-  ".dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>";
-display.innerHTML += html2;
+
 let cameraDot = document.createElement("div");
-cameraDot.className = "dot";
 cameraDot.id = "cameradot";
+cameraDot.style = "height: 10px; width: 10px;background-color: #9dff66; border-radius: 5px; box-shadow: 0 0 0 1px #377618; position:absolute;top:50%;left:50%";
 display.appendChild(cameraDot);
 
-let html3 =
-  '<style type="text/css">' +
-  ".targetanimal { text-align: right; position: absolute; top: 2vh; right: 2vw; width: 20vw; height:10vh; font-size: 2rem; color: yellow; text-align: right; -webkit-test-stroke: 2px white}</style>";
-display.innerHTML += html3;
 let target = document.createElement("div");
-target.className = "targetanimal";
 target.id = "target";
+target.style = "text-align: right; position: absolute; top: 2vh; right: 2vw; width: 20vw; height:10vh; font-size: 2rem; color: yellow; text-align: right; color: #9dff66; -webkit-text-stroke: 1px #377618";
 display.appendChild(target);
 
 const setTargetAnimal = function () {
@@ -132,16 +132,6 @@ let menu = document.createElement("div");
 menu.id = "menu";
 menu.style =
   "width: 100vw; height: 100vh; background: #d1effe77; position: absolute;";
-
-let style =
-  '<style type="text/css">' +
-  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #244514 }' +
-  "hr { border: 1px solid #377618; width: 80% }" +
-  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #377618; color: #9dff66; font-family: inherit; cursor: pointer; }" +
-  ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
-  "</style>";
-
-document.body.innerHTML += style;
 document.body.appendChild(menu);
 
 // menu box
@@ -154,7 +144,7 @@ container.innerHTML =
   '<h1 style="font-size: 2rem">Hello, World!</h1>' +
   "<h3>a generative, open-world game made in ThreeJS</h3><br/><hr/><br/>" +
   "<h2>GAMEPLAY:<h2>" +
-  '<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Each round, you are given a creature (e.g., a deer) that you must photograph. Find it! Capture it! You\'ll get a score based on how close the creature is to the center of your viewport.</h2><br/><hr/><br/>' +
+  '<h2>In "Hello, World!", you play as a nature photographer on the hunt for the best pictures! Take photographs of any animal you wish--but you are also given a bonus animal for each round. Find it! Capture it! You\'ll get a score based on how close the creature is to the center of your viewport.</h2><br/><hr/><br/>' +
   "<h2>CONTROLS:</h2>";
 
 menu.appendChild(container);
@@ -195,14 +185,26 @@ document.body.appendChild(menuButton);
 
 // hide game display at first
 display.className = "hidden";
+let wasHidden = false;
 
-// click startButton to start, menuButton to return to menu
+// toggle display
+const handleDisplay = (event) => {
+  if (event.keyCode === 68) {
+      display.className = wasHidden ? "" : "hidden";
+      wasHidden = !wasHidden;
+  }
+}
+window.addEventListener("keydown", handleDisplay, false);
+
+// button event handlers
 window.onload = function () {
+  // start/resume game
   startButton.addEventListener("click", function () {
     menu.className = "hidden";
-    display.className = "";
+    display.className = wasHidden ? "hidden" : "";
     menuButton.className = "";
   });
+  // goto menu
   menuButton.addEventListener("click", function () {
     menuButton.className = "hidden";
     display.className = "hidden";
