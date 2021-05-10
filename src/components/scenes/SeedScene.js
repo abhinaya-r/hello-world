@@ -58,7 +58,7 @@ class SeedScene extends Scene {
 
     // DEER
     let allDeer = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
       // let visibleTime = Math.floor(Math.random() * 10000 - 3000);
       // let stopTime = visibleTime + Math.floor(Math.random() * 100);
       // let x = Math.random() * 10000 - 5000;
@@ -83,11 +83,11 @@ class SeedScene extends Scene {
 
     // BEAR
     let allBears = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
       // let x = Math.random() * 10000 - 5000;
       // let z = Math.random() * 10000 - 5000;
-      let x = Math.random() * 5000 - 2500;
-      let z = Math.random() * 5000 - 2500;
+      let x = Math.random() * 2000 - 1000;
+      let z = Math.random() * 2000 - 1000;
       let speed = Math.random() * 0.05;
       let position = new THREE.Vector3(x, 0, z);
       let randPoint = new THREE.Vector3(
@@ -108,7 +108,7 @@ class SeedScene extends Scene {
     // let stork = new Stork(this, 0, 0, 0.5, new Vector3(0, 0, 0));
     // this.add(stork);
     let allStorks = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       let x = Math.random() * 100 - 50;
       let y = Math.random() * 10;
       let z = Math.random() * 100 - 50;
@@ -154,51 +154,43 @@ class SeedScene extends Scene {
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
     this.add(lights);
-    // for (let i = 0; i < 30; i++) {
-    //   let pine = new PineTree(this);
-    //   let x = Math.random() * 100 - 50;
-    //   let z = Math.random() * 150 - 60;
-    //   pine.position.set(x, 0, z);
-    //   this.add(pine);
-    // }
-    // for (let i = 0; i < 30; i++) {
-    //   let oak = new OakTree(this);
-    //   let x = Math.random() * 100 - 50;
-    //   let z = Math.random() * 200 - 50;
-    //   oak.position.set(x, 0, z);
-    //   this.add(oak);
-    // }
-    // for (let i = 0; i < 30; i++) {
-    //   let elm = new ElmTree(this);
-    //   let x = Math.random() * 100 - 50;
-    //   let z = Math.random() * 100 - 30;
-    //   elm.position.set(x, 0, z);
-    //   this.add(elm);
-    // }
-    // for (let i = 0; i < 50; i++) {
-    //   let x = Math.random() * 50 - 20;
-    //   let z = Math.random() * 50 - 20;
-    //   let rot = Math.random() * 2 * Math.PI;
-    //   let grass = new Grass(this, rot);
-    //   grass.position.set(x, -0.1, z);
-    //   this.add(grass);
-    // }
-    // for (let i = 0; i < 10; i++) {
-    //   let x = Math.random() * 50 - 20;
-    //   let z = Math.random() * 50 - 20;
-    //   let rot = Math.random() * 2 * Math.PI;
-    //   let sc = Math.random() * 0.03 + 0.05;
-    //   let mush = new Mushroom(this, rot, sc);
-    //   mush.position.set(x, 0, z);
-    //   this.add(mush);
-    // }
-
-    let grass = new Grass(this, 0);
-    this.add(grass);
-
-    const { rotationSpeed, updateList } = this.state;
-    for (const obj of updateList) {
-      console.log(obj.frustumCulled);
+    for (let i = 0; i < 20; i++) {
+      let pine = new PineTree(this);
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 150 - 60;
+      pine.position.set(x, 0, z);
+      this.add(pine);
+    }
+    for (let i = 0; i < 30; i++) {
+      let oak = new OakTree(this);
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 200 - 50;
+      oak.position.set(x, 0, z);
+      this.add(oak);
+    }
+    for (let i = 0; i < 30; i++) {
+      let elm = new ElmTree(this);
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 100 - 30;
+      elm.position.set(x, 0, z);
+      this.add(elm);
+    }
+    for (let i = 0; i < 5; i++) {
+      let x = Math.random() * 100 - 50;
+      let z = Math.random() * 100 - 30;
+      let rot = Math.random() * 2 * Math.PI;
+      let grass = new Grass(this, rot);
+      grass.position.set(x, -0.1, z);
+      this.add(grass);
+    }
+    for (let i = 0; i < 8; i++) {
+      let x = Math.random() * 50 - 20;
+      let z = Math.random() * 50 - 20;
+      let rot = Math.random() * 2 * Math.PI;
+      let sc = Math.random() * 0.03 + 0.05;
+      let mush = new Mushroom(this, rot, sc);
+      mush.position.set(x, 0, z);
+      this.add(mush);
     }
   }
 
