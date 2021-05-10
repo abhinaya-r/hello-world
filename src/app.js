@@ -12,9 +12,10 @@ import { SeedScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 
-let html = '<style type="text/css">' + 
-'.score { position: absolute; top: 5%; left: 5%; width: 10%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>' + 
- '<div class="score" id="displayscore"> SCORE<br>0</div> ';
+let html =
+  '<style type="text/css">' +
+  ".score { position: absolute; top: 5%; left: 5%; width: 10%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>" +
+  '<div class="score" id="displayscore"> SCORE<br>0</div> ';
 // console.log(document.head.innerHTML);
 document.body.innerHTML += html;
 var score = 0;
@@ -26,23 +27,25 @@ var targetAnimal;
 // var sc = document.getElementById('displayscore');
 // sc.innerHTML = "SCORE<br>" + score;
 
-// let html2 = '<style type="text/css">' + 
+// let html2 = '<style type="text/css">' +
 // 'button { font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;font-size: 14px;color: #eee;background: #222;text-align:center;margin:auto auto auto auto;border:1px solid #c4c5c6;  -webkit-border-radius: 8px; -moz-border-radius: 8px;border-radius: 8px;text-shadow: 1px 1px 0 rgba(255,255,255,0.3);background-color: #f2f5f6; background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#222)); background-image: -webkit-linear-gradient(top, #333, #222); background-image: -moz-linear-gradient(top, #333, #222); background-image: -ms-linear-gradient(top, #333, #222); background-image: -o-linear-gradient(top, #333, #222); background-image: linear-gradient(to bottom, #333, #222); filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#333, endColorstr=#222);}' +
-// '#recIcon.Rec{animation-name: pulse;animation-duration: 1.5s;animation-iteration-count: infinite;animation-timing-function: linear;}' + 
+// '#recIcon.Rec{animation-name: pulse;animation-duration: 1.5s;animation-iteration-count: infinite;animation-timing-function: linear;}' +
 // '#recIcon.notRec{background-color: darkred;}' +
 // '#recIcon {width: 30px;height: 30px;margin: 0px;font-size: 0;background-color: red;border: 0;border-radius: 35px;outline: none;position: fixed;left: 95px;top: 15px;}' +
-// '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>' 
-let html2 = '<style type="text/css">' + 
-'.dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>' +
-'<div class="dot" id="cameradot"></div> ';
+// '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>'
+let html2 =
+  '<style type="text/css">' +
+  ".dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>" +
+  '<div class="dot" id="cameradot"></div> ';
 document.body.innerHTML += html2;
 
-let html3 = '<style type="text/css">' + 
-'.targetanimal { text-align: right; position: absolute; top: 5%; right: 5%; width: 40%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>' + 
- '<div class="targetanimal" id="target"></div> ';
+let html3 =
+  '<style type="text/css">' +
+  ".targetanimal { text-align: right; position: absolute; top: 5%; right: 5%; width: 40%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>" +
+  '<div class="targetanimal" id="target"></div> ';
 document.body.innerHTML += html3;
 
-const setTargetAnimal = function() {
+const setTargetAnimal = function () {
   // var n = Math.floor(Math.random()*3);
   // if (n == 0) {
   //   targetAnimal = "stork";
@@ -53,35 +56,30 @@ const setTargetAnimal = function() {
   // else {
   //   targetAnimal = "bear";
   // }
-  var n = Math.floor(Math.random()*2);
-  if(targetAnimal === "stork") {
+  var n = Math.floor(Math.random() * 2);
+  if (targetAnimal === "stork") {
     if (n == 0) {
       targetAnimal = "deer";
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       targetAnimal = "bear";
     }
-  }
-  else if (targetAnimal === "deer") {
+  } else if (targetAnimal === "deer") {
     if (n == 0) {
       targetAnimal = "stork";
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       targetAnimal = "bear";
     }
-  }
-  else {
+  } else {
     if (n == 0) {
       targetAnimal = "stork";
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       targetAnimal = "deer";
     }
   }
-  var ta = document.getElementById('target');
+  var ta = document.getElementById("target");
   ta.innerHTML = "TARGET ANIMAL<br>" + targetAnimal;
   // potentially increment photo storage here
-}
+};
 setTargetAnimal();
 
 // Initialize core ThreeJS components
@@ -102,8 +100,6 @@ canvas.style.display = "block"; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = "hidden"; // Fix scrolling
 document.body.appendChild(canvas);
-
-
 
 // Set up controls
 // const controls = new OrbitControls(camera, canvas);
@@ -183,8 +179,7 @@ window.addEventListener("onmousemove", handleControls, false);
 window.addEventListener("pointerlockchange", handleControls, false);
 window.addEventListener("pointerlockerror", handleControls, false);
 
-const inFrame = function(animal) {
-
+const inFrame = function (animal) {
   var cDir = new THREE.Vector3();
   controls.getDirection(cDir);
   var aX = animal.position.x;
@@ -195,25 +190,29 @@ const inFrame = function(animal) {
   var cZ = camera.position.z;
   var cH = camera.getFilmHeight();
   var cW = camera.getFilmWidth();
-  var minVals = new THREE.Vector3(cX-(cW/2), cY-(cH/2), cZ-(1.5*camera.getFocalLength()));
-  var maxVals = new THREE.Vector3(cX+(cW/2), cY+(cH/2), cZ);
-  
-  if (cDir.equals(oDir)) { // if no rotation happened
-    if(aX < minVals.x || aX > maxVals.x) {
+  var minVals = new THREE.Vector3(
+    cX - cW / 2,
+    cY - cH / 2,
+    cZ - 1.5 * camera.getFocalLength()
+  );
+  var maxVals = new THREE.Vector3(cX + cW / 2, cY + cH / 2, cZ);
+
+  if (cDir.equals(oDir)) {
+    // if no rotation happened
+    if (aX < minVals.x || aX > maxVals.x) {
       return false;
     }
-    if(aY < minVals.y || aY > maxVals.y) {
+    if (aY < minVals.y || aY > maxVals.y) {
       return false;
     }
     if (aZ < minVals.z || aZ > maxVals.z) {
       return false;
     }
     console.log(cDir);
-  }
-  else {
+  } else {
     // console.log(oDir);
     // console.log(cDir);
-    var cosT = oDir.dot(cDir)/(oDir.length() * cDir.length());
+    var cosT = oDir.dot(cDir) / (oDir.length() * cDir.length());
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
     // console.log(cosT);
@@ -225,37 +224,33 @@ const inFrame = function(animal) {
     // const C = 1-cosT;
     // const rotMat = new Matrix3();
     // rotMat.set();
-    minVals.applyAxisAngle(axis,angle);
-    maxVals.applyAxisAngle(axis,angle);
-    
-    
+    minVals.applyAxisAngle(axis, angle);
+    maxVals.applyAxisAngle(axis, angle);
+
     if (minVals.x < maxVals.x) {
-      if(aX < minVals.x || aX > maxVals.x) {
+      if (aX < minVals.x || aX > maxVals.x) {
         return false;
       }
-    }
-    else {
-      if(aX < maxVals.x || aX > minVals.x) {
+    } else {
+      if (aX < maxVals.x || aX > minVals.x) {
         return false;
       }
     }
     if (minVals.y < maxVals.y) {
-      if(aY < minVals.y || aY > maxVals.y) {
+      if (aY < minVals.y || aY > maxVals.y) {
         return false;
       }
-    }
-    else {
-      if(aY < maxVals.y || aY > minVals.y) {
+    } else {
+      if (aY < maxVals.y || aY > minVals.y) {
         return false;
       }
     }
     if (minVals.z < maxVals.z) {
-      if(aZ < minVals.z || aZ > maxVals.z) {
+      if (aZ < minVals.z || aZ > maxVals.z) {
         return false;
       }
-    }
-    else {
-      if(aZ < maxVals.z || aZ > minVals.z) {
+    } else {
+      if (aZ < maxVals.z || aZ > minVals.z) {
         return false;
       }
     }
@@ -267,17 +262,17 @@ const inFrame = function(animal) {
   console.log("max vals: ");
   console.log(maxVals);
   return true;
-}
+};
 
 /* take photo */
-const photo = function(filename) {
+const photo = function (filename) {
   // get the image data
 
   // take the photo
-    // stretch goal: save and display the photo 
-    // save the screenshots that you've taken in some folder!
-    // album icon in menu that when you click on it you can see
-    // all the images in that folder
+  // stretch goal: save and display the photo
+  // save the screenshots that you've taken in some folder!
+  // album icon in menu that when you click on it you can see
+  // all the images in that folder
 
   // try {
   //   var dataURL = Scene.renderer.domElement.toDataURL();
@@ -295,24 +290,24 @@ const photo = function(filename) {
     for (var j = 0; j < currentAnimals.length; j++) {
       // if animal is in view of the camera (within the x/y coords of camera view) then grade by distance from center
       var animal = currentAnimals[j];
-      if(inFrame(animal)) {
+      if (inFrame(animal)) {
         console.log(animal);
         console.log("animal position: ");
         console.log(animal.position);
         console.log("camera position: ");
         console.log(camera.position);
         var dist = animal.position.distanceTo(camera.position);
-        console.log("distance: ")
+        console.log("distance: ");
         console.log(dist);
 
         var s = 0;
-        if(animal.name === "stork") {
+        if (animal.name === "stork") {
           s += 10;
         }
-        if(animal.name === "deer") {
+        if (animal.name === "deer") {
           s += 50;
         }
-        if(animal.name === "bear") {
+        if (animal.name === "bear") {
           s += 100;
         }
         var h = camera.getFilmHeight();
@@ -330,11 +325,10 @@ const photo = function(filename) {
       }
     }
   }
-  if(targetFound) setTargetAnimal();
-
+  if (targetFound) setTargetAnimal();
 
   //console.log(score);
-  var sc = document.getElementById('displayscore');
+  var sc = document.getElementById("displayscore");
   sc.innerHTML = "SCORE<br>" + score;
 
   photoStorage--;
@@ -360,31 +354,29 @@ const photo = function(filename) {
 
   // var exportFolder = Folder ((app.activeDocument.path.parent) + "/PNG")
   // if (!exportFolder.exists) exportFolder.create ()
-  // app.activeDocument.exportDocument (File(exportFolder + "/" + app.activeDocument.name + ".png"),ExportType.SAVEFORWEB, link )  
+  // app.activeDocument.exportDocument (File(exportFolder + "/" + app.activeDocument.name + ".png"),ExportType.SAVEFORWEB, link )
 
   // this will force downloading data as an image (rather than open in new window)
   // const url = dataURL.replace(/^data:image\/[^;]/, "data:application/octet-stream");
   // window.open(url);
 };
 
-
-window.addEventListener("keydown", function(event) {
+window.addEventListener("keydown", function (event) {
   // Ignore keypresses typed into a text box
   if (event.target.tagName == "INPUT") return;
 
-  if(event.key == "a") {
+  if (event.key == "a") {
     //canvas.restore();
-    if(inAlbum) {
+    if (inAlbum) {
       // close the album
-    }
-    else {
+    } else {
       //console.log(album);
-      if(album.length > 0) {
+      if (album.length > 0) {
         var c = album[currentPhoto];
-        var ctx = canvas.getContext('2d');
+        var ctx = canvas.getContext("2d");
         console.log(album[currentPhoto]);
         console.log(ctx);
-        ctx.drawImage(c,0,0);
+        ctx.drawImage(c, 0, 0);
         inAlbum = true;
       }
     }
