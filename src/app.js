@@ -37,7 +37,7 @@ document.body.appendChild(display);
 
 let displayScore = document.createElement("div");
 displayScore.id = "displayscore";
-displayScore.style = "position: absolute; top: 2vh; left: 2vw; width: 15vw; height:15vh; font-size: 2rem; text-align: left; color: #9dff66; -webkit-text-stroke: 1px #377618";
+displayScore.style = "position: absolute; top: 2vh; left: -3vw; width: 10vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #377618bb; color: #9dff66;";
 displayScore.innerHTML = "SCORE<br>0";
 display.appendChild(displayScore);
 
@@ -60,12 +60,12 @@ var targetAnimal;
 
 let cameraDot = document.createElement("div");
 cameraDot.id = "cameradot";
-cameraDot.style = "height: 10px; width: 10px;background-color: #9dff66; border-radius: 5px; box-shadow: 0 0 0 1px #377618; position:absolute;top:50%;left:50%";
+cameraDot.style = "height: 10px; width: 10px;background-color: #9dff66; border-radius: 10px; box-shadow: 0 0 0 1px #377618; position:absolute;top:50%;left:50%";
 display.appendChild(cameraDot);
 
 let target = document.createElement("div");
 target.id = "target";
-target.style = "text-align: right; position: absolute; top: 2vh; right: 2vw; width: 20vw; height:10vh; font-size: 2rem; color: yellow; text-align: right; color: #9dff66; -webkit-text-stroke: 1px #377618";
+target.style = "position: absolute; top: 2vh; right: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: right; padding-right: 5vw; border-radius: 5px; background: #377618bb; color: #9dff66;";
 display.appendChild(target);
 
 const setTargetAnimal = function () {
