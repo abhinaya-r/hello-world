@@ -18,12 +18,23 @@ import { SeedScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 
+// make container for game display
+let display = document.createElement("div");
+display.id = "display"
+display.style = "width: 100vw; height: 100vh; position: absolute;";
+document.body.appendChild(display);
+
 let html =
   '<style type="text/css">' +
-  ".score { position: absolute; top: 5%; left: 5%; width: 10%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>" +
-  '<div class="score" id="displayscore"> SCORE<br>0</div> ';
+  ".score { position: absolute; top: 2vh; left: 2vw; width: 15vw; height:15vh; font-size: 2rem; color: yellow; text-align: left; -webkit-test-stroke: 2px white}</style>";
+let displayScore = document.createElement("div");
+displayScore.className = "score";
+displayScore.id = "displayscore";
+displayScore.innerHTML = "SCORE<br>0";
+display.appendChild(displayScore);
+
 // console.log(document.head.innerHTML);
-document.body.innerHTML += html;
+display.innerHTML += html;
 var score = 0;
 var photoStorage = 8;
 var inAlbum = false;
@@ -41,15 +52,21 @@ var targetAnimal;
 // '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>'
 let html2 =
   '<style type="text/css">' +
-  ".dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>" +
-  '<div class="dot" id="cameradot"></div> ';
-document.body.innerHTML += html2;
+  ".dot {height: 10px; width: 10px;background-color: yellow;position:absolute;top:50%;left:50%}</style>";
+display.innerHTML += html2;
+let cameraDot = document.createElement("div");
+cameraDot.className = "dot";
+cameraDot.id = "cameradot";
+display.appendChild(cameraDot);
 
 let html3 =
   '<style type="text/css">' +
-  ".targetanimal { text-align: right; position: absolute; top: 5%; right: 5%; width: 40%; height:10%; z-index: 100000000; font-size: 40px; color: yellow; -webkit-test-stroke: 2px white}</style>" +
-  '<div class="targetanimal" id="target"></div> ';
-document.body.innerHTML += html3;
+  ".targetanimal { text-align: right; position: absolute; top: 2vh; right: 2vw; width: 20vw; height:10vh; font-size: 2rem; color: yellow; text-align: right; -webkit-test-stroke: 2px white}</style>";
+display.innerHTML += html3;
+let target = document.createElement("div");
+target.className = "targetanimal";
+target.id = "target";
+display.appendChild(target);
 
 const setTargetAnimal = function () {
   // var n = Math.floor(Math.random()*3);
@@ -82,8 +99,8 @@ const setTargetAnimal = function () {
       targetAnimal = "deer";
     }
   }
-  var ta = document.getElementById("target");
-  ta.innerHTML = "TARGET ANIMAL<br>" + targetAnimal;
+  // var ta = document.getElementById("target");
+  target.innerHTML = "TARGET ANIMAL<br>" + targetAnimal;
   // potentially increment photo storage here
 };
 setTargetAnimal();
@@ -124,7 +141,7 @@ let style =
   ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
   "</style>";
 
-document.body.innerHTML = style;
+document.body.innerHTML += style;
 document.body.appendChild(menu);
 
 // menu box
@@ -152,6 +169,8 @@ ctrls.innerHTML =
   "<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
   "<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
   "<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>" +
+  "<h2>D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
+  "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
   "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
   "<br/><br/>";
 
@@ -174,14 +193,19 @@ menuButton.innerHTML = "Menu";
 
 document.body.appendChild(menuButton);
 
+// hide game display at first
+display.className = "hidden";
+
 // click startButton to start, menuButton to return to menu
 window.onload = function () {
   startButton.addEventListener("click", function () {
     menu.className = "hidden";
+    display.className = "";
     menuButton.className = "";
   });
   menuButton.addEventListener("click", function () {
     menuButton.className = "hidden";
+    display.className = "hidden";
     menu.className = "";
     startButton.innerHTML = "Return to Game";
   });
