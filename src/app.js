@@ -11,7 +11,7 @@ import {
   PerspectiveCamera,
   Vector3,
   Matrix3,
-  Box2,
+  Box3,
 } from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SeedScene } from "scenes";
@@ -169,6 +169,10 @@ ctrls.innerHTML =
 
 container.appendChild(ctrls);
 
+const minVec = new THREE.Vector3(-80, -10, -80);
+const maxVec = new THREE.Vector3(80, 10, 200);
+const box = new THREE.Box3(minVec, maxVec);
+
 // start button
 let startButton = document.createElement("button");
 startButton.id = "startButton";
@@ -273,10 +277,18 @@ const handleImpactEvents = (event) => {
 
   if (event.key in keyMap) {
     const scale = 1;
+    if (camera.position.x > 79) camera.position.x = 79;
+    if (camera.position.x < -79) camera.position.x = -79;
+    if (camera.position.z > 199) camera.position.z = 199;
+    if (camera.position.z < -79) camera.position.z = -79;
     if (event.key == "ArrowUp" || event.key == "ArrowDown") {
-      controls.moveForward(keyMap[event.key]);
+      {
+        controls.moveForward(keyMap[event.key]);
+      }
     } else {
-      controls.moveRight(keyMap[event.key]);
+      if (box.containsPoint(camera.position)) {
+        controls.moveRight(keyMap[event.key]);
+      }
     }
   }
   if (event.code == "Space") {

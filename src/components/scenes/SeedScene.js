@@ -89,10 +89,8 @@ class SeedScene extends Scene {
     // BEAR
     let allBears = [];
     for (let i = 0; i < 30; i++) {
-      // let x = Math.random() * 10000 - 5000;
-      // let z = Math.random() * 10000 - 5000;
-      let x = Math.random() * 2000 - 1000;
-      let z = Math.random() * 2000 - 1000;
+      let x = Math.random() * 1000 - 500;
+      let z = Math.random() * 1000 - 500;
       let speed = Math.random() * 0.05;
       let position = new THREE.Vector3(x, 0, z);
       let randPoint = new THREE.Vector3(
