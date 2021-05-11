@@ -24,6 +24,9 @@ class SeedScene extends Scene {
     // Call parent Scene() constructor
     super();
 
+    this.animals = [];
+    // console.log(this.animals);
+
     // Init state
     this.state = {
       gui: new Dat.GUI(), // Create GUI for scene
@@ -80,6 +83,8 @@ class SeedScene extends Scene {
       this.add(deer);
       allDeer.push(deer);
     }
+    this.animals.push(allDeer);
+    // console.log(this.animals);
 
     // BEAR
     let allBears = [];
@@ -103,6 +108,8 @@ class SeedScene extends Scene {
       this.add(bear);
       allBears.push(bear);
     }
+    this.animals.push(allBears);
+    // console.log(this.animals);
 
     // Stork
     // let stork = new Stork(this, 0, 0, 0.5, new Vector3(0, 0, 0));
@@ -126,6 +133,8 @@ class SeedScene extends Scene {
       this.add(stork);
       allStorks.push(stork);
     }
+    this.animals.push(allStorks);
+    // console.log(this.animals);
 
     // Fox
     // let allFoxes = [];
@@ -211,5 +220,9 @@ class SeedScene extends Scene {
     }
   }
 }
+
+SeedScene.getAnimals = function () {
+  return this.animals;
+};
 
 export default SeedScene;
