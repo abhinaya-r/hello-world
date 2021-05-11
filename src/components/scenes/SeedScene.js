@@ -117,13 +117,13 @@ class SeedScene extends Scene {
     let allStorks = [];
     for (let i = 0; i < 10; i++) {
       let x = Math.random() * 100 - 50;
-      let y = Math.random() * 10;
+      let y = Math.random() * 6;
       let z = Math.random() * 100 - 50;
       let speed = Math.random() * 0.1;
       let position = new THREE.Vector3(x, y, z);
       let randPoint = new THREE.Vector3(
         Math.random() * 50 - 25,
-        Math.random() * 10,
+        Math.random() * 5 + 5,
         Math.random() * 50 - 25
       );
       let direction = randPoint.clone().sub(position);
