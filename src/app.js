@@ -103,7 +103,7 @@ const setTargetAnimal = function () {
     }
   }
   // var ta = document.getElementById("target");
-  target.innerHTML = "TARGET ANIMAL<br>" + targetAnimal;
+  target.innerHTML = "BONUS ANIMAL<br>" + targetAnimal;
   // potentially increment photo storage here
 };
 setTargetAnimal();
