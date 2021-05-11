@@ -1,0 +1,302 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 2940,
+      "max": [2939],
+      "min": [0],
+      "name": "buffer-0-accessor-indices-buffer-0-mesh-0",
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 2940,
+      "max": [0.6418910026550293, 3.838505029678345, 3.201848030090332],
+      "min": [-0.6418910026550293, 0, -3.233776092529297],
+      "name": "buffer-0-accessor-position-buffer-0-mesh-0",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 35280,
+      "componentType": 5126,
+      "count": 2940,
+      "max": [0.9994699954986572, 0.9868320226669312, 0.9762960076332092],
+      "min": [-0.9994699954986572, -1, -0.9445949792861938],
+      "name": "buffer-0-accessor-normal-buffer-0-mesh-0",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 2940,
+      "max": [0.9768059849739075, 0],
+      "min": [0, -0.9813519716262817],
+      "name": "buffer-0-accessor-texcoord-buffer-0-mesh-0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 0,
+      "max": [0, 0, 0, 0],
+      "min": [0, 0, 0, 0],
+      "name": "buffer-0-accessor-color-buffer-0-mesh-0",
+      "type": "VEC4"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "GOOGLE_processor_version": 293297437
+    },
+    "generator": "Obj2GltfConverter",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 5880,
+      "byteOffset": 0,
+      "byteStride": 0,
+      "name": "buffer-0-bufferview-ushort",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 23520,
+      "byteOffset": 5880,
+      "byteStride": 8,
+      "name": "buffer-0-bufferview-vec2",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 70560,
+      "byteOffset": 29400,
+      "byteStride": 12,
+      "name": "buffer-0-bufferview-vec3",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1,
+      "byteOffset": 0,
+      "name": "buffer-0-bufferview-vec4"
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 99968,
+      "name": "buffer-0",
+      "uri": "Fox.bin"
+    }
+  ],
+  "cameras": [
+    {
+      "perspective": {
+        "yfov": 0.7853981633974483,
+        "znear": 0.1000000014901161
+      },
+      "type": "perspective"
+    }
+  ],
+  "extensions": {
+    "KHR_lights_punctual": {
+      "lights": [
+        {
+          "color": [1, 0, 0],
+          "intensity": 0,
+          "name": "headLight",
+          "type": "directional"
+        },
+        {
+          "color": [1, 0, 0],
+          "intensity": 0,
+          "name": "keyLight",
+          "type": "directional"
+        }
+      ]
+    }
+  },
+  "extensionsUsed": [
+    "GOOGLE_backgrounds",
+    "GOOGLE_camera_settings",
+    "KHR_lights_punctual"
+  ],
+  "extras": {
+    "GOOGLE_initial_camera_motion": {
+      "motionPath": "FULL_ROTATION"
+    },
+    "GOOGLE_lighting_rig": {
+      "disableShadows": false
+    }
+  },
+  "images": [
+    {
+      "mimeType": "image/png",
+      "name": "Fox_Mat-image",
+      "uri": "Fox_BaseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "name": "Fox_Mat",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [1, 1, 1, 1],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.9699476628648295
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "buffer-0-mesh-0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 2,
+            "POSITION": 1,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "node-0"
+    },
+    {
+      "children": [2]
+    },
+    {
+      "children": [3],
+      "extras": {
+        "isTransformNode": 1
+      },
+      "translation": [
+        -0.01608906030654873,
+        1.831762003669088,
+        0.09484492159842775
+      ]
+    },
+    {
+      "children": [0],
+      "translation": [
+        0.01608906030654873,
+        -1.831762003669088,
+        -0.09484492159842775
+      ]
+    },
+    {
+      "camera": 0,
+      "children": [5],
+      "rotation": [
+        -0.08011986906707529,
+        -0.1566267359879087,
+        -0.01274881185708025,
+        0.9843202425789492
+      ],
+      "translation": [-2.664235402566868, 3.229728317331069, 8.204879838483143]
+    },
+    {
+      "extensions": {
+        "KHR_lights_punctual": {
+          "light": 0
+        }
+      },
+      "extras": {
+        "isHeadLight": 1
+      },
+      "name": "headLightNode",
+      "translation": [-4.217066278335943, 2.108533139167971, 2.108533139167971]
+    },
+    {
+      "extensions": {
+        "KHR_lights_punctual": {
+          "light": 1
+        }
+      },
+      "extras": {
+        "isKeyLight": 1
+      },
+      "name": "keyLightNode",
+      "rotation": [
+        -0.7505326882858236,
+        -0.3752663441429118,
+        0,
+        0.5439447166468927
+      ],
+      "scale": [0, 0, 4.259236941119302],
+      "translation": [-4.259243847229715, 10.20154101529832, -3.875788123667609]
+    }
+  ],
+  "samplers": [
+    {
+      "name": "Fox_Mat-sampler",
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "extensions": {
+        "GOOGLE_backgrounds": {
+          "color": [0.8627450980392157, 0.9058823529411765, 0.4588235294117647]
+        },
+        "GOOGLE_camera_settings": {}
+      },
+      "extras": {
+        "GOOGLE_camera_index": {
+          "cameraIndex": 0,
+          "nodeIndex": 4
+        },
+        "GOOGLE_geometry_data": {
+          "stats": {
+            "centroid": [
+              -6.906110413220463e-6,
+              1.683067133059712,
+              0.3834488174516936
+            ],
+            "radius": 4.217066278335943,
+            "stdev": 2.048178524012756
+          },
+          "visualCenterPoint": [
+            -0.01608906030654873,
+            1.831762003669088,
+            0.09484492159842775
+          ]
+        },
+        "GOOGLE_hemi_light": {
+          "groundColor": [0, 0, 0]
+        }
+      },
+      "name": "scene-0",
+      "nodes": [1, 4, 6]
+    }
+  ],
+  "textures": [
+    {
+      "name": "Fox_Mat-texture",
+      "sampler": 0,
+      "source": 0
+    }
+  ]
+}
