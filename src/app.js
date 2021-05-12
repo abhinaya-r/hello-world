@@ -21,9 +21,9 @@ import { PointerLockControls } from "three/examples/jsm/controls/PointerLockCont
 // STYLE ELEMENTS
 let style =
   '<style type="text/css">' +
-  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #244514 }' +
-  "hr { border: 1px solid #377618; width: 80% }" +
-  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #377618; color: #9dff66; font-family: inherit; cursor: pointer; }" +
+  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #9dff66 }' +
+  "hr { border: 1px solid #9dff66; width: 80% }" +
+  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #244514; color: #9dff66; font-family: inherit; cursor: pointer; }" +
   ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
   "</style>";
 
@@ -32,13 +32,13 @@ document.body.innerHTML += style;
 // make container for game display
 let display = document.createElement("div");
 display.id = "display";
-display.style = "width: 100vw; height: 100vh; position: absolute;";
+display.style = "width: 100vw; height: 100vh; position: absolute; background: radial-gradient(circle at 50%, #ffffff00 50vh, #000000dd 90vh)";
 document.body.appendChild(display);
 
 let displayScore = document.createElement("div");
 displayScore.id = "displayscore";
 displayScore.style =
-  "position: absolute; top: 2vh; left: -3vw; width: 10vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #377618bb; color: #9dff66;";
+  "position: absolute; top: 2vh; left: -3vw; width: 10vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #244514dd; color: #9dff66;";
 displayScore.innerHTML = "SCORE<br>0";
 display.appendChild(displayScore);
 
@@ -59,16 +59,42 @@ var targetAnimal;
 // '#recIcon {width: 30px;height: 30px;margin: 0px;font-size: 0;background-color: red;border: 0;border-radius: 35px;outline: none;position: fixed;left: 95px;top: 15px;}' +
 // '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>'
 
+// camera dot
 let cameraDot = document.createElement("div");
 cameraDot.id = "cameradot";
 cameraDot.style =
-  "height: 10px; width: 10px;background-color: #9dff66; border-radius: 10px; box-shadow: 0 0 0 1px #377618; position:absolute;top:50%;left:50%";
+  "height: 4px; width: 4px; background: white; border-radius: 4px; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);";
 display.appendChild(cameraDot);
+
+// little rectangle around camera dot
+// adapted from answer to https://stackoverflow.com/questions/14387690/how-can-i-show-only-corner-borders
+let rect = document.createElement("div");
+rect.id = "rect";
+rect.style = "position: absolute; width: 50px; height: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%);";
+rect.innerHTML = '<svg viewBox="0 0 100 100" width="50px"> \
+<path d="M25,2 L2,2 L2,25" fill="none" stroke="white" stroke-width="3" /> \
+<path d="M2,75 L2,98 L25,98" fill="none" stroke="white" stroke-width="3" /> \
+<path d="M75,98 L98,98 L98,75" fill="none" stroke="white" stroke-width="3" /> \
+<path d="M98,25 L98,2 L75,2" fill="none" stroke="white" stroke-width="3" /> \
+</svg>';
+display.appendChild(rect);
+
+// big rectangle around little rectangle
+let rectB = document.createElement("div");
+rectB.id = "rectB";
+rectB.style = "position: absolute; width: 60vw; height: 60vh; top: 50%; left: 50%; transform: translate(-50%, -50%);";
+rectB.innerHTML = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+<path d="M50,2 L2,2 L2,50" fill="none" stroke="white" stroke-width="5" /> \
+<path d="M2,670 L2,718 L50,718" fill="none" stroke="white" stroke-width="5" /> \
+<path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="white" stroke-width="5" /> \
+<path d="M1278,50 L1278,2 L1230,2" fill="none" stroke="white" stroke-width="5" /> \
+</svg>';
+display.appendChild(rectB);
 
 let target = document.createElement("div");
 target.id = "target";
 target.style =
-  "position: absolute; top: 2vh; right: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: right; padding-right: 5vw; border-radius: 5px; background: #377618bb; color: #9dff66;";
+  "position: absolute; top: 2vh; right: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: right; padding-right: 5vw; border-radius: 5px; background: #244514dd; color: #9dff66;";
 display.appendChild(target);
 
 const setTargetAnimal = function () {
@@ -126,7 +152,7 @@ let link = document.createElement("link");
 link.type = "text/css";
 link.rel = "stylesheet";
 link.href =
-  "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap";
+  "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;400;700&display=swap";
 head.appendChild(link);
 
 // BODY
@@ -141,7 +167,7 @@ document.body.appendChild(menu);
 let container = document.createElement("div");
 container.id = "container";
 container.style =
-  "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #9dff66; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
+  "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #244514dd; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
 container.innerHTML =
   "<br/>" +
   '<h1 style="font-size: 2rem">Hello, World!</h1>' +
