@@ -12,8 +12,8 @@ import {
   ElmTree,
   Grass,
   Mushroom,
-  Trees
-  Music,
+  Trees,
+  Music
 } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -211,15 +211,15 @@ class SeedScene extends Scene {
     //   grass.position.set(x, -0.1, z);
     //   this.add(grass); 
     // }
-    // let grass1 = new Grass(this, 0);
-    // grass1.position.set(0, -0.1, 0);
-    // this.add(grass1);
-    // let grass2 = new Grass(this, 0);
-    // grass2.position.set(-75, -0.1, 0);
-    // this.add(grass2);
-    // let grass3 = new Grass(this, 0);
-    // grass3.position.set(75, -0.1, 0);
-    // this.add(grass3);
+    let grass1 = new Grass(this, 0);
+    grass1.position.set(0, -0.1, 0);
+    this.add(grass1);
+    let grass2 = new Grass(this, 0);
+    grass2.position.set(-75, -0.1, 0);
+    this.add(grass2);
+    let grass3 = new Grass(this, 0);
+    grass3.position.set(75, -0.1, 0);
+    this.add(grass3);
 
     for (let i = 0; i < 5; i++) {
       let trees = new Trees(this);
