@@ -33,7 +33,8 @@ document.body.innerHTML += style;
 // make container for game display
 let display = document.createElement("div");
 display.id = "display";
-display.style = "width: 100vw; height: 100vh; position: absolute; background: radial-gradient(circle at 50%, #ffffff00 50vh, #000000dd 90vh)";
+display.style =
+  "width: 100vw; height: 100vh; position: absolute; background: radial-gradient(circle at 50%, #ffffff00 50vh, #000000dd 90vh)";
 document.body.appendChild(display);
 
 let displayScore = document.createElement("div");
@@ -71,8 +72,10 @@ display.appendChild(cameraDot);
 // adapted from answer to https://stackoverflow.com/questions/14387690/how-can-i-show-only-corner-borders
 let rect = document.createElement("div");
 rect.id = "rect";
-rect.style = "position: absolute; width: 50px; height: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-rect.innerHTML = '<svg viewBox="0 0 100 100" width="50px"> \
+rect.style =
+  "position: absolute; width: 50px; height: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%);";
+rect.innerHTML =
+  '<svg viewBox="0 0 100 100" width="50px"> \
 <path d="M25,2 L2,2 L2,25" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M2,75 L2,98 L25,98" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M75,98 L98,98 L98,75" fill="none" stroke="white" stroke-width="3" /> \
@@ -83,8 +86,10 @@ display.appendChild(rect);
 // big rectangle around little rectangle
 let rectB = document.createElement("div");
 rectB.id = "rectB";
-rectB.style = "position: absolute; width: 60vw; height: 60vh; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-rectB.innerHTML = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+rectB.style =
+  "position: absolute; width: 60vw; height: 60vh; top: 50%; left: 50%; transform: translate(-50%, -50%);";
+rectB.innerHTML =
+  '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
 <path d="M50,2 L2,2 L2,50" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M2,670 L2,718 L50,718" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="white" stroke-width="5" /> \
@@ -196,8 +201,8 @@ ctrls.innerHTML =
 
 container.appendChild(ctrls);
 
-const minVec = new THREE.Vector3(-80, -10, -80);
-const maxVec = new THREE.Vector3(80, 10, 200);
+const minVec = new THREE.Vector3(-80, -10, -60);
+const maxVec = new THREE.Vector3(80, 10, 100);
 const box = new THREE.Box3(minVec, maxVec);
 
 // start button
@@ -306,8 +311,8 @@ const handleImpactEvents = (event) => {
     const scale = 1;
     if (camera.position.x > 79) camera.position.x = 79;
     if (camera.position.x < -79) camera.position.x = -79;
-    if (camera.position.z > 199) camera.position.z = 199;
-    if (camera.position.z < -79) camera.position.z = -79;
+    if (camera.position.z > 99) camera.position.z = 99;
+    if (camera.position.z < -59) camera.position.z = -59;
     if (event.key == "ArrowUp" || event.key == "ArrowDown") {
       {
         controls.moveForward(keyMap[event.key]);
@@ -378,10 +383,10 @@ const inFrame = function (animal) {
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
     // console.log(cosT);
-    console.log("axis");
-    console.log(axis);
-    console.log("angle");
-    console.log(angle);
+    // console.log("axis");
+    // console.log(axis);
+    // console.log("angle");
+    // console.log(angle);
     // var sinT = Math.sqrt(1-cosT*cosT);
     // const C = 1-cosT;
     // const rotMat = new Matrix3();
@@ -417,12 +422,12 @@ const inFrame = function (animal) {
       }
     }
   }
-  console.log("camera direction: ");
-  console.log(cDir);
-  console.log("min vals: ");
-  console.log(minVals);
-  console.log("max vals: ");
-  console.log(maxVals);
+  // console.log("camera direction: ");
+  // console.log(cDir);
+  // console.log("min vals: ");
+  // console.log(minVals);
+  // console.log("max vals: ");
+  // console.log(maxVals);
   return true;
 };
 
