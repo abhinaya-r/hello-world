@@ -66,7 +66,7 @@ class ArcticScene extends Scene {
     // https://github.com/karenying/drivers-ed/blob/master/src/components/scenes/Washington.js
     this.night = 0;
     this.timeElapsed = -1;
-    this.threshold = 5;
+    this.threshold = 20;
 
     let ground = {};
     ground.textures = {};
