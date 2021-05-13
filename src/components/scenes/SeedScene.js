@@ -12,11 +12,20 @@ import {
   ElmTree,
   Grass,
   Mushroom,
+  Trees
 } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
 // import { PineTree } from "../objects/PineTree";
 // import Scene from "../../../coursejs/scene.js";
+// let currColor = null;
+// if (Math.random() < 0.5) {
+//   let currColor = "#b4cede";
+// }
+// else {
+//   currColor = "#7ec0ee";
+// }
+let currColor = "#b4cede";
 
 class SeedScene extends Scene {
   constructor(camera) {
@@ -28,11 +37,19 @@ class SeedScene extends Scene {
       gui: new Dat.GUI(), // Create GUI for scene
       rotationSpeed: 0,
       updateList: [],
+      startTime: null,
     };
 
     // Set background to a nice color
     this.background = new Color(0xb4cede);
     this.fog = new Fog(0xb4cede, 40, 60);
+    // this.background = new Color(0x131862);
+    // this.fog = new Fog(0x131862, 40, 60);
+
+    // for night mode
+    this.night = 0;
+    this.timeElapsed = -1;
+    this.threshold = 10;
 
     let ground = {};
     ground.textures = {};
@@ -150,35 +167,55 @@ class SeedScene extends Scene {
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
     this.add(lights);
-    for (let i = 0; i < 20; i++) {
-      let pine = new PineTree(this);
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 150 - 60;
-      pine.position.set(x, 0, z);
-      this.add(pine);
-    }
-    for (let i = 0; i < 30; i++) {
-      let oak = new OakTree(this);
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 200 - 50;
-      oak.position.set(x, 0, z);
-      this.add(oak);
-    }
-    for (let i = 0; i < 30; i++) {
-      let elm = new ElmTree(this);
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 100 - 30;
-      elm.position.set(x, 0, z);
-      this.add(elm);
-    }
+    // for (let i = 0; i < 20; i++) {
+    //   let pine = new PineTree(this);
+    //   let x = Math.random() * 100 - 50;
+    //   let z = Math.random() * 150 - 60;
+    //   pine.position.set(x, 0, z);
+    //   this.add(pine);
+    // }
+    // for (let i = 0; i < 30; i++) {
+    //   let oak = new OakTree(this);
+    //   let x = Math.random() * 100 - 50;
+    //   let z = Math.random() * 200 - 50;
+    //   oak.position.set(x, 0, z);
+    //   this.add(oak);
+    // }
+    // for (let i = 0; i < 30; i++) {
+    //   let elm = new ElmTree(this);
+    //   let x = Math.random() * 100 - 50;
+    //   let z = Math.random() * 100 - 30;
+    //   elm.position.set(x, 0, z);
+    //   this.add(elm);
+    // }
+    // for (let i = 0; i < 5; i++) {
+    //   let x = Math.random() * 200 - 100;
+    //   let z = Math.random() * 200 - 100;
+    //   let rot = Math.random() * 2 * Math.PI;
+    //   let grass = new Grass(this, rot);
+    //   grass.position.set(x, -0.1, z);
+    //   this.add(grass); 
+    // }
+    // let grass1 = new Grass(this, 0);
+    // grass1.position.set(0, -0.1, 0);
+    // this.add(grass1);
+    // let grass2 = new Grass(this, 0);
+    // grass2.position.set(-75, -0.1, 0);
+    // this.add(grass2);
+    // let grass3 = new Grass(this, 0);
+    // grass3.position.set(75, -0.1, 0);
+    // this.add(grass3);
+
     for (let i = 0; i < 5; i++) {
-      let x = Math.random() * 100 - 50;
-      let z = Math.random() * 100 - 30;
-      let rot = Math.random() * 2 * Math.PI;
-      let grass = new Grass(this, rot);
-      grass.position.set(x, -0.1, z);
-      this.add(grass);
-    }
+      let trees = new Trees(this);
+      let x = Math.random() * 200 - 100;
+      let z = Math.random() * 200 - 100;
+      trees.position.set(x, 0, z);
+      this.add(trees);
+  }
+
+    // let grass2 = new Grass(this, 0);
+    // let grass3 = new Grass(this, 0);
     for (let i = 0; i < 8; i++) {
       let x = Math.random() * 50 - 20;
       let z = Math.random() * 50 - 20;
@@ -190,17 +227,103 @@ class SeedScene extends Scene {
     }
   }
 
+
   addToUpdateList(object) {
     this.state.updateList.push(object);
   }
 
+  // blends 2 colors together with the given percent
+    // https://stackoverflow.com/questions/3080421/javascript-color-gradient
+    getGradientColor(start_color, end_color, percent) {
+      // strip the leading # if it's there
+      start_color = start_color.replace(/^\s*#|\s*$/g, '');
+      end_color = end_color.replace(/^\s*#|\s*$/g, '');
+
+      // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+      if(start_color.length == 3){
+        start_color = start_color.replace(/(.)/g, '$1$1');
+      }
+
+      if(end_color.length == 3){
+        end_color = end_color.replace(/(.)/g, '$1$1');
+      }
+
+      // get colors
+      var start_red = parseInt(start_color.substr(0, 2), 16),
+          start_green = parseInt(start_color.substr(2, 2), 16),
+          start_blue = parseInt(start_color.substr(4, 2), 16);
+
+      var end_red = parseInt(end_color.substr(0, 2), 16),
+          end_green = parseInt(end_color.substr(2, 2), 16),
+          end_blue = parseInt(end_color.substr(4, 2), 16);
+
+      // calculate new color
+      var diff_red = end_red - start_red;
+      var diff_green = end_green - start_green;
+      var diff_blue = end_blue - start_blue;
+
+      diff_red = ( (diff_red * percent) + start_red ).toString(16).split('.')[0];
+      diff_green = ( (diff_green * percent) + start_green ).toString(16).split('.')[0];
+      diff_blue = ( (diff_blue * percent) + start_blue ).toString(16).split('.')[0];
+
+      // ensure 2 digits by color
+      if( diff_red.length == 1 ) diff_red = '0' + diff_red
+      if( diff_green.length == 1 ) diff_green = '0' + diff_green
+      if( diff_blue.length == 1 ) diff_blue = '0' + diff_blue
+
+      return '#' + diff_red + diff_green + diff_blue;
+  };
+
+
   update(timeStamp) {
-    const { rotationSpeed, updateList } = this.state;
+    const { startTime, rotationSpeed, updateList } = this.state;
     // this.rotation.y = (rotationSpeed * timeStamp) / 10000;
 
     // let rand = Math.random();
 
     // Call update for each object in the updateList
+     // night mode calculations
+          // calculate start time on game start
+  // let weather = null;
+  // if (Math.random() < 0.5) {
+  //   weather = #7ec0ee;
+  // }
+  if (startTime == null) {
+    this.state.startTime = Date.now() / 2000;
+  } else {
+    const currentTime = Date.now() / 2000;
+    this.timeElapsed = currentTime - this.state.startTime;
+  }
+
+  if (this.timeElapsed >= this.threshold) {
+    this.night = (this.night + 1) % 4;
+    this.state.startTime= Date.now() / 2000;
+    this.timeElapsed = 0;
+  }
+
+  if (this.night == 0) {
+    this.background = new Color(0x7ec0ee);
+    this.fog.color = new Color(0x7ec0ee);
+  } else if (this.night == 1) {
+    // dusk
+    let newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
+    if (newColor !== currColor) {
+        currColor = newColor;
+        this.background = new Color(currColor);
+        this.fog.color = new Color(currColor);
+    }
+  } else if (this.night == 2) {
+    this.background = new Color(0x11223d);
+    this.fog.color = new Color(0x11223d);
+  } else if (this.night == 3) {
+    // daybreak
+    let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
+    if (newColor !== currColor) {
+        currColor = newColor;
+        this.background = new Color(currColor);
+        this.fog.color = new Color(currColor);
+    }
+  }
     for (const obj of updateList) {
       obj.update(timeStamp);
     }

@@ -1,7 +1,7 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import MODEL from './ThinGrass.glb';
+import MODEL from './grass_bigger.glb';
 
 class Grass extends Group {
     constructor(parent, rot) {
