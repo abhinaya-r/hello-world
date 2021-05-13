@@ -175,6 +175,7 @@ class SeedScene extends Scene {
       this.add(fox);
       allFoxes.push(fox);
     }
+    this.animals.push(allFoxes);
 
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
