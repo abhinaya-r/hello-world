@@ -17,13 +17,14 @@ import {
 import { SeedScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
+import SHUTTER from "./components/objects/Music/sounds/camera shutter.mp3";
 
 // STYLE ELEMENTS
 let style =
   '<style type="text/css">' +
-  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: #9dff66 }' +
-  "hr { border: 1px solid #9dff66; width: 80% }" +
-  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: #244514; color: #9dff66; font-family: inherit; cursor: pointer; }" +
+  'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: white }' +
+  "hr { border: 1px solid white; width: 80% }" +
+  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: black; color: white; font-family: inherit; cursor: pointer; }" +
   ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
   "</style>";
 
@@ -38,7 +39,7 @@ document.body.appendChild(display);
 let displayScore = document.createElement("div");
 displayScore.id = "displayscore";
 displayScore.style =
-  "position: absolute; top: 2vh; left: -3vw; width: 10vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #244514dd; color: #9dff66;";
+  "position: absolute; top: 2vh; left: -3vw; width: 10vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #000000bb; color: white;";
 displayScore.innerHTML = "SCORE<br>0";
 display.appendChild(displayScore);
 
@@ -94,7 +95,7 @@ display.appendChild(rectB);
 let target = document.createElement("div");
 target.id = "target";
 target.style =
-  "position: absolute; top: 2vh; right: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: right; padding-right: 5vw; border-radius: 5px; background: #244514dd; color: #9dff66;";
+  "position: absolute; top: 2vh; right: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: right; padding-right: 5vw; border-radius: 5px; background: #000000bb; color: white;";
 display.appendChild(target);
 
 const setTargetAnimal = function () {
@@ -167,7 +168,7 @@ document.body.appendChild(menu);
 let container = document.createElement("div");
 container.id = "container";
 container.style =
-  "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #244514dd; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
+  "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
 container.innerHTML =
   "<br/>" +
   '<h1 style="font-size: 2rem">Hello, World!</h1>' +
@@ -567,6 +568,10 @@ window.addEventListener("keydown", function (event) {
   //   }
   // }
 
+  // camera shutter sound
+  let sound = new Audio(SHUTTER);
+  sound.volume = 0.5;
+
   // if 'I' was released, download the image
   if (event.key == "i") {
     // document.getElementById("recIcon").classList.add("Rec");
@@ -574,6 +579,10 @@ window.addEventListener("keydown", function (event) {
     // setTimeout(() => {photo();
     //                   document.getElementById("recIcon").classList.add("notRec");
     //                   document.getElementById("recIcon").classList.remove("Rec");},1000);
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play();
+    console.log("sound is playing?", sound.isPlaying);
     photo();
   }
 });
