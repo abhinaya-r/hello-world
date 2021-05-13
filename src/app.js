@@ -478,6 +478,10 @@ const endGame = function() {
   document.getElementById("finalscore").innerHTML = score;
 }
 
+// camera shutter sound
+let sound = new Audio(SHUTTER);
+sound.volume = 0.5;
+
 /* take photo */
 const photo = function (filename) {
   // get the image data
@@ -494,6 +498,15 @@ const photo = function (filename) {
   //   alert("Sorry, your browser does not support capturing an image.");
   //   return;
   // }
+
+  // if on a menu page, do nothing
+  if (menu.className === "" || endMenu.className === "") return;
+
+  // play sound
+  sound.pause();
+  sound.currentTime = 0;
+  sound.play();
+  console.log("sound is playing?", sound.isPlaying);
 
   //var animals = scene.getAnimals();
   var animals = scene.animals;
@@ -630,9 +643,7 @@ window.addEventListener("keydown", function (event) {
   //   }
   // }
 
-  // camera shutter sound
-  let sound = new Audio(SHUTTER);
-  sound.volume = 0.5;
+
 
   // if 'I' was released, download the image
   if (event.key == "i") {
@@ -641,10 +652,7 @@ window.addEventListener("keydown", function (event) {
     // setTimeout(() => {photo();
     //                   document.getElementById("recIcon").classList.add("notRec");
     //                   document.getElementById("recIcon").classList.remove("Rec");},1000);
-    sound.pause();
-    sound.currentTime = 0;
-    sound.play();
-    console.log("sound is playing?", sound.isPlaying);
+    
     photo();
   }
 });
