@@ -39,7 +39,7 @@ class Reindeer extends Group {
 
   update(timeStamp) {
     // Advance tween animations, if any exist
-    this.position.y = Math.abs(0.5 * Math.sin(timeStamp / 300)) + 1.35;
+    this.position.y = Math.abs(0.5 * Math.sin(timeStamp / 300));
     // let vec = THREE.Vector3(0, 0, 0);
 
     // console.log("timeStamp: ", Math.floor(timeStamp));
