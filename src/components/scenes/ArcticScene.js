@@ -164,9 +164,9 @@ class ArcticScene extends Scene {
     // Albatross
     let allAlbatross = [];
     for (let i = 0; i < 10; i++) {
-      let x = Math.random() * 100 - 50;
+      let x = Math.random() * 300 - 150;
       let y = Math.random() * 6;
-      let z = Math.random() * 100 - 50;
+      let z = Math.random() * 300 - 150;
       let speed = Math.random() * 0.1;
       let position = new THREE.Vector3(x, y, z);
       let randPoint = new THREE.Vector3(

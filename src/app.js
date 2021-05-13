@@ -24,8 +24,9 @@ let style =
   '<style type="text/css">' +
   'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: white }' +
   "hr { border: 1px solid white; width: 80% }" +
-  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: black; color: white; font-family: inherit; cursor: pointer; }" +
+  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: black; color: white; font-family: inherit; cursor: pointer; margin: 0 20px; }" +
   ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
+  ".tundraCam { background: black !important; stroke: black !important; }"
   "</style>";
 
 document.body.innerHTML += style;
@@ -90,13 +91,20 @@ let rect = document.createElement("div");
 rect.id = "rect";
 rect.style =
   "position: absolute; width: 50px; height: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-rect.innerHTML =
-  '<svg viewBox="0 0 100 100" width="50px"> \
+let rectForest = '<svg viewBox="0 0 100 100" width="50px"> \
 <path d="M25,2 L2,2 L2,25" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M2,75 L2,98 L25,98" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M75,98 L98,98 L98,75" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M98,25 L98,2 L75,2" fill="none" stroke="white" stroke-width="3" /> \
 </svg>';
+let rectTundra = '<svg viewBox="0 0 100 100" width="50px"> \
+<path d="M25,2 L2,2 L2,25" fill="none" stroke="black" stroke-width="3" /> \
+<path d="M2,75 L2,98 L25,98" fill="none" stroke="black" stroke-width="3" /> \
+<path d="M75,98 L98,98 L98,75" fill="none" stroke="black" stroke-width="3" /> \
+<path d="M98,25 L98,2 L75,2" fill="none" stroke="black" stroke-width="3" /> \
+</svg>';
+rect.innerHTML = rectForest;
+  
 display.appendChild(rect);
 
 // big rectangle around little rectangle
@@ -104,13 +112,19 @@ let rectB = document.createElement("div");
 rectB.id = "rectB";
 rectB.style =
   "position: absolute; width: 60vw; height: 60vh; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-rectB.innerHTML =
-  '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+let rectBForest = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
 <path d="M50,2 L2,2 L2,50" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M2,670 L2,718 L50,718" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1278,50 L1278,2 L1230,2" fill="none" stroke="white" stroke-width="5" /> \
 </svg>';
+let rectBTundra = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+<path d="M50,2 L2,2 L2,50" fill="none" stroke="black" stroke-width="5" /> \
+<path d="M2,670 L2,718 L50,718" fill="none" stroke="black" stroke-width="5" /> \
+<path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="black" stroke-width="5" /> \
+<path d="M1278,50 L1278,2 L1230,2" fill="none" stroke="black" stroke-width="5" /> \
+</svg>';
+rectB.innerHTML = rectBForest;
 display.appendChild(rectB);
 
 // display bonus animal
@@ -210,7 +224,7 @@ document.body.appendChild(menu);
 let container = document.createElement("div");
 container.id = "container";
 container.style =
-  "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; margin-bottom: 5%; align-items: center; text-align: center; padding: 10px 30px;";
+  "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 2%; margin-bottom: 2%; align-items: center; text-align: center; padding: 10px 30px;";
 container.innerHTML =
   "<br/>" +
   '<h1 style="font-size: 2rem">Hello, World!</h1>' +
@@ -226,22 +240,27 @@ let ctrls = document.createElement("div");
 ctrls.id = "ctrls";
 ctrls.style = "display: flex; flex-direction: column; text-align: left;";
 ctrls.innerHTML =
-  "<h2>W:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>" +
-  "<h2>A:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
-  "<h2>S:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>" +
-  "<h2>D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
-  "<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>" +
-  "<h2>ESC: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp exit toggle camera</h2>" +
-  "<h2>TAB:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
-  "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
-  "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
+  "<h2>W,A,S,D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move around</h2>" +
+  "<h2>SPACEBAR: toggle camera angle</h2>" +
+  "<h2>ESC:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp exit toggle camera</h2>" +
+  "<h2>G:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
+  "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
+  "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
   "<br/>";
 
 container.appendChild(ctrls);
 
+container.innerHTML += "<hr/><br/><h2>Where would you like to go?</h2><br/>"
+
 const minVec = new THREE.Vector3(-80, -10, -50);
 const maxVec = new THREE.Vector3(80, 10, 100);
 const box = new THREE.Box3(minVec, maxVec);
+
+// button container
+let bc = document.createElement("div");
+bc.id = "bc";
+bc.style = "display: flex; flex-direction: row; width: auto";
+container.appendChild(bc);
 
 // forest start button
 let forestButton = document.createElement("button");
@@ -249,7 +268,7 @@ forestButton.id = "forestButton";
 forestButton.style = "margin-bottom: 20px";
 forestButton.innerHTML = "Explore the Forest";
 
-container.appendChild(forestButton);
+bc.appendChild(forestButton);
 
 // arctic start button
 let arcticButton = document.createElement("button");
@@ -257,7 +276,7 @@ arcticButton.id = "arcticButton";
 arcticButton.style = "margin-bottom: 20px";
 arcticButton.innerHTML = "Explore the Tundra";
 
-container.appendChild(arcticButton);
+bc.appendChild(arcticButton);
 
 // access menu mid-game button
 let menuButton = document.createElement("button");
@@ -275,7 +294,7 @@ let wasHidden = false;
 
 // toggle display
 const handleDisplay = (event) => {
-  if (event.keyCode === 9) {
+  if (event.keyCode === 71) {
     display.className = wasHidden ? "" : "hidden";
     wasHidden = !wasHidden;
   }
@@ -289,6 +308,11 @@ window.onload = function () {
     if(arcticScene) {
       arcticScene = false;
       scene = new SeedScene(camera);
+      if (cameraDot.classList.contains("tundraCam")) {
+        cameraDot.classList.remove("tundraCam");
+        rect.innerHTML = rectForest;
+        rectB.innerHTML = rectBForest;
+      }
       setTargetAnimal();
     }
     menu.className = "hidden";
@@ -299,6 +323,10 @@ window.onload = function () {
     if(!arcticScene) {
       arcticScene = true;
       scene = new ArcticScene(camera);
+      cameraDot.classList.add("tundraCam");
+      rect.innerHTML = rectTundra;
+      rectB.innerHTML = rectBTundra;
+      console.log(cameraDot.classList)
       setTargetAnimal();
     }
     menu.className = "hidden";
