@@ -130,11 +130,11 @@ const setTargetAnimal = function () {
   // else {
   //   targetAnimal = "bear";
   // }
-  let animals = ["stork", "deer", "bear", "fox"];
+  let animals = ["stork", "deer", "bear"];
   let prevTA = targetAnimal;
   let n;
   do {
-    n = Math.floor(Math.random() * 3);
+    n = Math.floor(Math.random() * animals.length);
   } while (animals[n] === prevTA);
   targetAnimal = animals[n];
   // if (targetAnimal === "stork") {
@@ -569,9 +569,9 @@ const photo = function () {
         if (animal.name === "bear") {
           s += 20;
         }
-        if (animal.name === "fox") {
-          s += 50;
-        }
+        // if (animal.name === "fox") {
+        //   s += 50;
+        // }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
           s += Math.floor(h - dist) * 10;
