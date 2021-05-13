@@ -623,26 +623,26 @@ const photo = function () {
   // window.open(url);
 };
 
-window.addEventListener("keydown", function (event) {
+window.addEventListener("keyup", function (event) {
   // Ignore keypresses typed into a text box
   if (event.target.tagName == "INPUT") return;
 
-  if (event.key == "a") {
-    //canvas.restore();
-    if (inAlbum) {
-      // close the album
-    } else {
-      //console.log(album);
-      if (album.length > 0) {
-        var c = album[currentPhoto];
-        var ctx = canvas.getContext("2d");
-        console.log(album[currentPhoto]);
-        console.log(ctx);
-        ctx.drawImage(c, 0, 0);
-        inAlbum = true;
-      }
-    }
-  }
+  // if (event.key == "a") {
+  //   //canvas.restore();
+  //   if (inAlbum) {
+  //     // close the album
+  //   } else {
+  //     //console.log(album);
+  //     if (album.length > 0) {
+  //       var c = album[currentPhoto];
+  //       var ctx = canvas.getContext("2d");
+  //       console.log(album[currentPhoto]);
+  //       console.log(ctx);
+  //       ctx.drawImage(c, 0, 0);
+  //       inAlbum = true;
+  //     }
+  //   }
+  // }
 
   // if(event.key = "ArrowLeft") {
   //   if(inAlbum) {
