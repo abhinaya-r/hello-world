@@ -45,11 +45,15 @@ class SeedScene extends Scene {
     this.fog = new Fog(0xb4cede, 40, 60);
     // this.background = new Color(0x131862);
     // this.fog = new Fog(0x131862, 40, 60);
+    // // sunset
+    // this.background = new Color(0xe6cbb1);
+    // this.fog = new Fog(0xe6cbb1, 40, 60);
+
 
     // for night mode
     this.night = 0;
     this.timeElapsed = -1;
-    this.threshold = 10;
+    this.threshold = 20;
 
     let ground = {};
     ground.textures = {};
@@ -294,11 +298,14 @@ class SeedScene extends Scene {
     const currentTime = Date.now() / 2000;
     this.timeElapsed = currentTime - this.state.startTime;
   }
-
+  // let weather = "#b4cede";
   if (this.timeElapsed >= this.threshold) {
-    this.night = (this.night + 1) % 4;
+    this.night = (this.night + 1) % 6;
     this.state.startTime= Date.now() / 2000;
     this.timeElapsed = 0;
+    // if (Math.random() < 0.5) {
+    //   weather = '#7ec0ee';
+    // }
   }
 
   if (this.night == 0) {
@@ -306,24 +313,63 @@ class SeedScene extends Scene {
     this.fog.color = new Color(0x7ec0ee);
   } else if (this.night == 1) {
     // dusk
-    let newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
+    let newColor = this.getGradientColor('#7ec0ee', '#d1a084', this.timeElapsed/this.threshold);
     if (newColor !== currColor) {
         currColor = newColor;
         this.background = new Color(currColor);
         this.fog.color = new Color(currColor);
     }
   } else if (this.night == 2) {
-    this.background = new Color(0x11223d);
-    this.fog.color = new Color(0x11223d);
-  } else if (this.night == 3) {
-    // daybreak
-    let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
+    let newColor = this.getGradientColor('#d1a084', '#11223d', this.timeElapsed/this.threshold);
     if (newColor !== currColor) {
         currColor = newColor;
         this.background = new Color(currColor);
         this.fog.color = new Color(currColor);
     }
+  } else if (this.night == 3) {
+
+    this.background = new Color(0x11223d);
+    this.fog.color = new Color(0x11223d);
+  } else if (this.night == 4) {
+    let newColor = this.getGradientColor('#11223d', '#e6cbb1', this.timeElapsed/this.threshold);
+    if (newColor !== currColor) {
+        currColor = newColor;
+        this.background = new Color(currColor);
+        this.fog.color = new Color(currColor);
+    }
+  } else if (this.night == 5) {
+    let newColor = this.getGradientColor('#e6cbb1', '#7ec0ee', this.timeElapsed/this.threshold);
+    if (newColor !== currColor) {
+        currColor = newColor;
+        this.background = new Color(currColor);
+        this.fog.color = new Color(currColor);
+    }      
+    // daybreak  
   }
+
+  // if (this.night == 0) {
+  //   this.background = new Color(0x7ec0ee);
+  //   this.fog.color = new Color(0x7ec0ee);
+  // } else if (this.night == 1) {
+  //   // dusk
+  //   let newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
+  //   if (newColor !== currColor) {
+  //       currColor = newColor;
+  //       this.background = new Color(currColor);
+  //       this.fog.color = new Color(currColor);
+  //   }
+  // } else if (this.night == 2) {
+  //   this.background = new Color(0x11223d);
+  //   this.fog.color = new Color(0x11223d);
+  // } else if (this.night == 3) {
+  //   // daybreak
+  //   let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
+  //   if (newColor !== currColor) {
+  //       currColor = newColor;
+  //       this.background = new Color(currColor);
+  //       this.fog.color = new Color(currColor);
+  //   }
+  // }
     for (const obj of updateList) {
       obj.update(timeStamp);
     }
