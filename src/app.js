@@ -458,18 +458,24 @@ const photo = function (filename) {
       // if animal is in view of the camera (within the x/y coords of camera view) then grade by distance from center
       var animal = currentAnimals[j];
       if (inFrame(animal)) {
-        console.log(animal);
-        console.log("animal position: ");
-        console.log(animal.position);
-        console.log("camera position: ");
-        console.log(camera.position);
-        var dist = animal.position.distanceTo(camera.position);
-        console.log("distance: ");
-        console.log(dist);
+        // console.log(animal);
+        // console.log("animal position: ");
+        // console.log(animal.position);
+        // console.log("camera position: ");
+        // console.log(camera.position);
+        // var dist = animal.position.distanceTo(camera.position);
+        // console.log("distance: ");
+        // console.log(dist);
+
+        let aPos = animal.position;
+        let camPos = camera.position;
+        var dist = Math.sqrt(
+          (aPos.x - camPos.x) ** 2 + (aPos.y - camPos.y) ** 2
+        );
 
         var s = 0;
         if (animal.name === "stork") {
-          s += 10;
+          s += 20;
         }
         if (animal.name === "deer") {
           s += 50;
@@ -477,6 +483,9 @@ const photo = function (filename) {
         if (animal.name === "bear") {
           s += 100;
         }
+        // if (animal.name === "fox") {
+        //   s += 50;
+        // }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
           s += Math.floor(h - dist) * 10;
