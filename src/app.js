@@ -501,6 +501,8 @@ const endGame = function () {
 };
 
 // camera shutter sound
+// Sound effects by https://picturetosound.com
+// Youtube: https://www.youtube.com/c/picturetosound
 let sound = new Audio(SHUTTER);
 sound.volume = 0.5;
 
