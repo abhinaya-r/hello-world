@@ -478,8 +478,6 @@ const inFrame = function (animal) {
     }
     console.log(cDir);
   } else {
-    // console.log(oDir);
-    // console.log(cDir);
     var cosT = oDir.dot(cDir) / (oDir.length() * cDir.length());
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
@@ -523,12 +521,6 @@ const inFrame = function (animal) {
       }
     }
   }
-  // console.log("camera direction: ");
-  // console.log(cDir);
-  // console.log("min vals: ");
-  // console.log(minVals);
-  // console.log("max vals: ");
-  // console.log(maxVals);
   return true;
 };
 

@@ -66,7 +66,7 @@ class ArcticScene extends Scene {
     // https://github.com/karenying/drivers-ed/blob/master/src/components/scenes/Washington.js
     this.night = 0;
     this.timeElapsed = -1;
-    this.threshold = 20;
+    this.threshold = 5;
 
     let ground = {};
     ground.textures = {};
@@ -385,7 +385,7 @@ class ArcticScene extends Scene {
     } else if (this.night == 3) {
       let newColor = this.getGradientColor(
         "#11223d",
-        "#e6cbb1",
+        "#f2daee",
         this.timeElapsed / this.threshold
       );
       if (newColor !== currColor) {
@@ -395,7 +395,7 @@ class ArcticScene extends Scene {
       }
     } else if (this.night == 4) {
       let newColor = this.getGradientColor(
-        "#e6cbb1",
+        "#f2daee",
         "#7ec0ee",
         this.timeElapsed / this.threshold
       );
