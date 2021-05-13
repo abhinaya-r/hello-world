@@ -2,7 +2,7 @@ import { Group } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 // import { TWEEN } from "https://cdn.rawgit.com/mrdoob/three.js/r92/examples/js/loaders/GLTFLoader.js";
-import MODEL from "./out.glb";
+import MODEL from "./Reindeer.glb";
 import * as THREE from "three";
 
 class Reindeer extends Group {
@@ -24,8 +24,8 @@ class Reindeer extends Group {
 
     this.name = "reindeer";
     loader.load(MODEL, (gltf) => {
-      this.scale.set(0.036, 0.036, 0.036);
-      this.position.set(x - 10, 1.35, z);
+      this.scale.set(0.5, 0.5, 0.5);
+      this.position.set(x - 10, -1, z);
       this.add(gltf.scene.children[0]);
     });
 

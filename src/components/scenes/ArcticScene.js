@@ -99,7 +99,7 @@ class ArcticScene extends Scene {
       let x = Math.random() * 1000 - 500;
       let z = Math.random() * 1000 - 500;
       let speed = Math.random() * 0.1 + 0.01;
-      let position = new THREE.Vector3(x, 0, z);
+      let position = new THREE.Vector3(x, -1, z);
       let randPoint = new THREE.Vector3(
         Math.random() * 100 - 50,
         0,
