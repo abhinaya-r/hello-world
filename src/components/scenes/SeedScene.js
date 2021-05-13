@@ -55,6 +55,7 @@ class SeedScene extends Scene {
 
 
     // for night mode
+    // https://github.com/karenying/drivers-ed/blob/master/src/components/scenes/Washington.js
     this.night = 0;
     this.timeElapsed = -1;
     this.threshold = 20;
@@ -248,6 +249,7 @@ class SeedScene extends Scene {
   }
 
   // blends 2 colors together with the given percent
+  // from https://github.com/karenying/drivers-ed/blob/master/src/components/scenes/Washington.js
     // https://stackoverflow.com/questions/3080421/javascript-color-gradient
     getGradientColor(start_color, end_color, percent) {
       // strip the leading # if it's there
@@ -318,7 +320,7 @@ class SeedScene extends Scene {
     //   weather = '#7ec0ee';
     // }
   }
-
+ // from https://github.com/karenying/drivers-ed/blob/master/src/components/scenes/Washington.js
   if (this.night == 0) {
     this.background = new Color(0x7ec0ee);
     this.fog.color = new Color(0x7ec0ee);
@@ -350,30 +352,6 @@ class SeedScene extends Scene {
     }      
     // daybreak  
   }
-
-  // if (this.night == 0) {
-  //   this.background = new Color(0x7ec0ee);
-  //   this.fog.color = new Color(0x7ec0ee);
-  // } else if (this.night == 1) {
-  //   // dusk
-  //   let newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
-  //   if (newColor !== currColor) {
-  //       currColor = newColor;
-  //       this.background = new Color(currColor);
-  //       this.fog.color = new Color(currColor);
-  //   }
-  // } else if (this.night == 2) {
-  //   this.background = new Color(0x11223d);
-  //   this.fog.color = new Color(0x11223d);
-  // } else if (this.night == 3) {
-  //   // daybreak
-  //   let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
-  //   if (newColor !== currColor) {
-  //       currColor = newColor;
-  //       this.background = new Color(currColor);
-  //       this.fog.color = new Color(currColor);
-  //   }
-  // }
     for (const obj of updateList) {
       // obj.frustumCulled = true;
       obj.update(timeStamp);
