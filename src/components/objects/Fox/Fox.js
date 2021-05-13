@@ -20,25 +20,9 @@ class Fox extends Group {
     const loader = new GLTFLoader();
 
     this.name = "fox";
-    var material = new MeshStandardMaterial({
-      emissive: 0xffffee,
-      emissiveIntensity: 0,
-      emissiveIntensity: 0,
-      transparent: true,
-      depthOrder: 1, // to render it after other objects
-    });
     loader.load(MODEL, (gltf) => {
-      // gltf.scene.traverse(function (child) {
-      //   if (child.isMesh) {
-      //     // child.material.color.set(0xffffff * Math.random());
-      //     child.material.transparent = true;
-      //     child.material.opacity = 0;
-      //     child.material.emissive = 0xffffee;
-      //     child.material.emissiveIntensity = 0;
-      //   }
-      // });
       this.scale.set(0.2, 0.2, 0.2);
-      this.position.set(x, y, z);
+      this.position.set(x, 0, z);
       this.add(gltf.scene);
     });
 

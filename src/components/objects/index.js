@@ -9,4 +9,6 @@ export * from './OakTree';
 export * from './ElmTree';
 export * from './Grass';
 export * from './Mushroom';
+export * from './Trees';
+
 export * from './Music';
