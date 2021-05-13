@@ -26,8 +26,8 @@ let style =
   "hr { border: 1px solid white; width: 80% }" +
   "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: black; color: white; font-family: inherit; cursor: pointer; margin: 0 20px; }" +
   ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
-  ".tundraCam { background: black !important; stroke: black !important; }"
-  "</style>";
+  ".tundraCam { background: black !important; stroke: black !important; }";
+("</style>");
 
 document.body.innerHTML += style;
 
@@ -91,20 +91,22 @@ let rect = document.createElement("div");
 rect.id = "rect";
 rect.style =
   "position: absolute; width: 50px; height: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-let rectForest = '<svg viewBox="0 0 100 100" width="50px"> \
+let rectForest =
+  '<svg viewBox="0 0 100 100" width="50px"> \
 <path d="M25,2 L2,2 L2,25" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M2,75 L2,98 L25,98" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M75,98 L98,98 L98,75" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M98,25 L98,2 L75,2" fill="none" stroke="white" stroke-width="3" /> \
 </svg>';
-let rectTundra = '<svg viewBox="0 0 100 100" width="50px"> \
+let rectTundra =
+  '<svg viewBox="0 0 100 100" width="50px"> \
 <path d="M25,2 L2,2 L2,25" fill="none" stroke="black" stroke-width="3" /> \
 <path d="M2,75 L2,98 L25,98" fill="none" stroke="black" stroke-width="3" /> \
 <path d="M75,98 L98,98 L98,75" fill="none" stroke="black" stroke-width="3" /> \
 <path d="M98,25 L98,2 L75,2" fill="none" stroke="black" stroke-width="3" /> \
 </svg>';
 rect.innerHTML = rectForest;
-  
+
 display.appendChild(rect);
 
 // big rectangle around little rectangle
@@ -112,13 +114,15 @@ let rectB = document.createElement("div");
 rectB.id = "rectB";
 rectB.style =
   "position: absolute; width: 60vw; height: 60vh; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-let rectBForest = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+let rectBForest =
+  '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
 <path d="M50,2 L2,2 L2,50" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M2,670 L2,718 L50,718" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1278,50 L1278,2 L1230,2" fill="none" stroke="white" stroke-width="5" /> \
 </svg>';
-let rectBTundra = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+let rectBTundra =
+  '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
 <path d="M50,2 L2,2 L2,50" fill="none" stroke="black" stroke-width="5" /> \
 <path d="M2,670 L2,718 L50,718" fill="none" stroke="black" stroke-width="5" /> \
 <path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="black" stroke-width="5" /> \
@@ -148,9 +152,8 @@ const setTargetAnimal = function () {
   var animals;
   if (arcticScene) {
     animals = ["albatross", "reindeer", "seal", "penguin"];
-  }
-  else {
-    animals = ["stork", "deer", "bear", "fox"];
+  } else {
+    animals = ["stork", "deer", "bear"];
   }
 
   let prevTA = targetAnimal;
@@ -250,7 +253,7 @@ ctrls.innerHTML =
 
 container.appendChild(ctrls);
 
-container.innerHTML += "<hr/><br/><h2>Where would you like to go?</h2><br/>"
+container.innerHTML += "<hr/><br/><h2>Where would you like to go?</h2><br/>";
 
 const minVec = new THREE.Vector3(-80, -10, -50);
 const maxVec = new THREE.Vector3(80, 10, 10);
@@ -305,7 +308,7 @@ window.addEventListener("keydown", handleDisplay, false);
 window.onload = function () {
   // start/resume game
   forestButton.addEventListener("click", function () {
-    if(arcticScene) {
+    if (arcticScene) {
       arcticScene = false;
       scene = new SeedScene(camera);
       if (cameraDot.classList.contains("tundraCam")) {
@@ -320,13 +323,13 @@ window.onload = function () {
     menuButton.className = "";
   });
   arcticButton.addEventListener("click", function () {
-    if(!arcticScene) {
+    if (!arcticScene) {
       arcticScene = true;
       scene = new ArcticScene(camera);
       cameraDot.classList.add("tundraCam");
       rect.innerHTML = rectTundra;
       rectB.innerHTML = rectBTundra;
-      console.log(cameraDot.classList)
+      console.log(cameraDot.classList);
       setTargetAnimal();
     }
     menu.className = "hidden";
@@ -338,13 +341,12 @@ window.onload = function () {
     menuButton.className = "hidden";
     display.className = "hidden";
     menu.className = "";
-    if(arcticScene) {
+    if (arcticScene) {
       forestButton.innerHTML = "Switch to the Forest";
-      arcticButton.innerHTML = "Return to the Tundra"
-    }
-    else {
+      arcticButton.innerHTML = "Return to the Tundra";
+    } else {
       forestButton.innerHTML = "Return to the Forest";
-      arcticButton.innerHTML = "Switch to the Tundra"
+      arcticButton.innerHTML = "Switch to the Tundra";
     }
   });
 };
@@ -619,10 +621,9 @@ const photo = function () {
             (aPos.y - controls.getObject().position.y) ** 2
         );
         // console.log("distance: ", dist);
-        
-        
+
         var s = 0;
-        if(arcticScene) {
+        if (arcticScene) {
           if (animal.name === "albatross") {
             s += 50;
           }
@@ -635,8 +636,7 @@ const photo = function () {
           if (animal.name === "reindeer") {
             s += 50;
           }
-        }
-        else {
+        } else {
           if (animal.name === "stork") {
             s += 100;
           }
