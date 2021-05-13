@@ -19,7 +19,7 @@ class Fox extends Group {
     // Load object
     const loader = new GLTFLoader();
 
-    this.name = "bear";
+    this.name = "fox";
     loader.load(MODEL, (gltf) => {
       this.scale.set(0.2, 0.2, 0.2);
       this.position.set(x, 0, z);
