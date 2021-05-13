@@ -14,7 +14,7 @@ import {
   Box3,
 } from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { SeedScene } from "scenes";
+import { SeedScene, ArcticScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import SHUTTER from "./components/objects/Music/sounds/camera shutter.mp3";
@@ -58,6 +58,7 @@ var inAlbum = false;
 var currentPhoto = 0;
 var album = [];
 var targetAnimal;
+var arcticScene = false;
 // var sc = document.getElementById('displayscore');
 // sc.innerHTML = "SCORE<br>" + score;
 
@@ -130,7 +131,14 @@ const setTargetAnimal = function () {
   // else {
   //   targetAnimal = "bear";
   // }
-  let animals = ["stork", "deer", "bear", "fox"];
+  var animals;
+  if (arcticScene) {
+    animals = ["albatross", "reindeer", "seal", "penguin"];
+  }
+  else {
+    animals = ["stork", "deer", "bear", "fox"];
+  }
+
   let prevTA = targetAnimal;
   let n;
   do {
@@ -170,7 +178,8 @@ setTargetAnimal();
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
-const scene = new SeedScene(camera);
+// const scene = new ArcticScene(camera);
+var scene = new SeedScene(camera);
 const renderer = new WebGLRenderer({ antialias: true });
 // let view = new PointerLockControls(camera, renderer);
 
@@ -217,13 +226,13 @@ let ctrls = document.createElement("div");
 ctrls.id = "ctrls";
 ctrls.style = "display: flex; flex-direction: column; text-align: left;";
 ctrls.innerHTML =
-  "<h2>UP ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>" +
-  "<h2>DOWN ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>" +
-  "<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
-  "<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
+  "<h2>W:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>" +
+  "<h2>A:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
+  "<h2>S:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>" +
+  "<h2>D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
   "<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>" +
   "<h2>ESC: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp exit toggle camera</h2>" +
-  "<h2>D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
+  "<h2>TAB:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
   "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
   "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
   "<br/>";
@@ -234,13 +243,21 @@ const minVec = new THREE.Vector3(-80, -10, -50);
 const maxVec = new THREE.Vector3(80, 10, 100);
 const box = new THREE.Box3(minVec, maxVec);
 
-// start button
-let startButton = document.createElement("button");
-startButton.id = "startButton";
-startButton.style = "margin-bottom: 20px";
-startButton.innerHTML = "Start Game";
+// forest start button
+let forestButton = document.createElement("button");
+forestButton.id = "forestButton";
+forestButton.style = "margin-bottom: 20px";
+forestButton.innerHTML = "Explore the Forest";
 
-container.appendChild(startButton);
+container.appendChild(forestButton);
+
+// arctic start button
+let arcticButton = document.createElement("button");
+arcticButton.id = "arcticButton";
+arcticButton.style = "margin-bottom: 20px";
+arcticButton.innerHTML = "Explore the Tundra";
+
+container.appendChild(arcticButton);
 
 // access menu mid-game button
 let menuButton = document.createElement("button");
@@ -258,7 +275,7 @@ let wasHidden = false;
 
 // toggle display
 const handleDisplay = (event) => {
-  if (event.keyCode === 68) {
+  if (event.keyCode === 9) {
     display.className = wasHidden ? "" : "hidden";
     wasHidden = !wasHidden;
   }
@@ -268,7 +285,22 @@ window.addEventListener("keydown", handleDisplay, false);
 // button event handlers
 window.onload = function () {
   // start/resume game
-  startButton.addEventListener("click", function () {
+  forestButton.addEventListener("click", function () {
+    if(arcticScene) {
+      arcticScene = false;
+      scene = new SeedScene(camera);
+      setTargetAnimal();
+    }
+    menu.className = "hidden";
+    display.className = wasHidden ? "hidden" : "";
+    menuButton.className = "";
+  });
+  arcticButton.addEventListener("click", function () {
+    if(!arcticScene) {
+      arcticScene = true;
+      scene = new ArcticScene(camera);
+      setTargetAnimal();
+    }
     menu.className = "hidden";
     display.className = wasHidden ? "hidden" : "";
     menuButton.className = "";
@@ -278,7 +310,14 @@ window.onload = function () {
     menuButton.className = "hidden";
     display.className = "hidden";
     menu.className = "";
-    startButton.innerHTML = "Return to Game";
+    if(arcticScene) {
+      forestButton.innerHTML = "Switch to the Forest";
+      arcticButton.innerHTML = "Return to the Tundra"
+    }
+    else {
+      forestButton.innerHTML = "Return to the Forest";
+      arcticButton.innerHTML = "Switch to the Tundra"
+    }
   });
 };
 
@@ -357,10 +396,10 @@ window.addEventListener("resize", windowResizeHandler, false);
 //HANDLE MOVING CAMERA
 // let control = PointerLockControls(camera);
 const keyMap = {
-  ArrowUp: 1,
-  ArrowDown: -1,
-  ArrowLeft: -1,
-  ArrowRight: 1,
+  w: 1,
+  s: -1,
+  a: -1,
+  d: 1,
 };
 
 const handleImpactEvents = (event) => {
@@ -374,7 +413,7 @@ const handleImpactEvents = (event) => {
     if (camera.position.x < -79) camera.position.x = -79;
     if (camera.position.z > 99) camera.position.z = 99;
     if (camera.position.z < -49) camera.position.z = -49;
-    if (event.key == "ArrowUp" || event.key == "ArrowDown") {
+    if (event.key == "w" || event.key == "s") {
       {
         controls.moveForward(keyMap[event.key]);
       }
@@ -557,19 +596,36 @@ const photo = function () {
             (aPos.y - controls.getObject().position.y) ** 2
         );
         // console.log("distance: ", dist);
-
+        
+        
         var s = 0;
-        if (animal.name === "stork") {
-          s += 100;
+        if(arcticScene) {
+          if (animal.name === "albatross") {
+            s += 50;
+          }
+          if (animal.name === "penguin") {
+            s += 100;
+          }
+          if (animal.name === "seal") {
+            s += 20;
+          }
+          if (animal.name === "reindeer") {
+            s += 50;
+          }
         }
-        if (animal.name === "deer") {
-          s += 50;
-        }
-        if (animal.name === "bear") {
-          s += 20;
-        }
-        if (animal.name === "fox") {
-          s += 50;
+        else {
+          if (animal.name === "stork") {
+            s += 100;
+          }
+          if (animal.name === "deer") {
+            s += 50;
+          }
+          if (animal.name === "bear") {
+            s += 20;
+          }
+          if (animal.name === "fox") {
+            s += 50;
+          }
         }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
