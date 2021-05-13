@@ -525,27 +525,27 @@ const photo = function (filename) {
         // console.log(camera.position);
         // var dist = animal.position.distanceTo(camera.position);
         // console.log("distance: ");
-        // console.log(dist);
 
         let aPos = animal.position;
         let camPos = camera.position;
         var dist = Math.sqrt(
           (aPos.x - camPos.x) ** 2 + (aPos.y - camPos.y) ** 2
         );
+        // console.log("distance: ", dist);
 
         var s = 0;
         if (animal.name === "stork") {
-          s += 20;
+          s += 100;
         }
         if (animal.name === "deer") {
           s += 50;
         }
         if (animal.name === "bear") {
-          s += 100;
+          s += 20;
         }
-        // if (animal.name === "fox") {
-        //   s += 50;
-        // }
+        if (animal.name === "fox") {
+          s += 50;
+        }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
           s += Math.floor(h - dist) * 10;
