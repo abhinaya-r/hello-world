@@ -30,6 +30,12 @@ let style =
 
 document.body.innerHTML += style;
 
+// hide gui
+// let gooey = document.getElementsByClassName("dg main a");
+// Array.prototype.forEach.call(gooey, function (el) {
+//   el.classList.add("hidden");
+// });
+
 // make container for game display
 let display = document.createElement("div");
 display.id = "display";
@@ -47,7 +53,7 @@ display.appendChild(displayScore);
 
 // console.log(document.head.innerHTML);
 var score = 0;
-var photoStorage = 25;
+var photoStorage = 15;
 var inAlbum = false;
 var currentPhoto = 0;
 var album = [];
@@ -65,8 +71,9 @@ var targetAnimal;
 // display number of photos left
 let photosLeft = document.createElement("div");
 photosLeft.id = "photosLeft";
-photosLeft.style = "position: absolute; bottom: 2vh; left: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #000000bb; color: white;";
-photosLeft.innerHTML = "25/25<br>PHOTOS LEFT";
+photosLeft.style =
+  "position: absolute; bottom: 2vh; left: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #000000bb; color: white;";
+photosLeft.innerHTML = "15/15<br>PHOTOS LEFT";
 display.appendChild(photosLeft);
 
 // camera dot
@@ -123,26 +130,38 @@ const setTargetAnimal = function () {
   // else {
   //   targetAnimal = "bear";
   // }
-  var n = Math.floor(Math.random() * 2);
-  if (targetAnimal === "stork") {
-    if (n == 0) {
-      targetAnimal = "deer";
-    } else if (n == 1) {
-      targetAnimal = "bear";
-    }
-  } else if (targetAnimal === "deer") {
-    if (n == 0) {
-      targetAnimal = "stork";
-    } else if (n == 1) {
-      targetAnimal = "bear";
-    }
-  } else {
-    if (n == 0) {
-      targetAnimal = "stork";
-    } else if (n == 1) {
-      targetAnimal = "deer";
-    }
-  }
+  let animals = ["stork", "deer", "bear", "fox"];
+  let prevTA = targetAnimal;
+  let n;
+  do {
+    n = Math.floor(Math.random() * 3);
+  } while (animals[n] === prevTA);
+  targetAnimal = animals[n];
+  // if (targetAnimal === "stork") {
+  //   if (n == 0) {
+  //     targetAnimal = "deer";
+  //   } else if (n == 1) {
+  //     targetAnimal = "bear";
+  //   } else targetAnimal = "fox";
+  // } else if (targetAnimal === "deer") {
+  //   if (n == 0) {
+  //     targetAnimal = "stork";
+  //   } else if (n == 1) {
+  //     targetAnimal = "bear";
+  //   } else targetAnimal = "fox";
+  // } else if (targetAnimal === "fox") {
+  //   if (n == 0) {
+  //     targetAnimal = "stork";
+  //   } else if (n == 1) {
+  //     targetAnimal = "bear";
+  //   } else targetAnimal = "deer";
+  // } else {
+  //   if (n == 0) {
+  //     targetAnimal = "stork";
+  //   } else if (n == 1) {
+  //     targetAnimal = "deer";
+  //   } else targetAnimal = "fox";
+  // }
   // var ta = document.getElementById("target");
   target.innerHTML = "BONUS ANIMAL<br>" + targetAnimal;
   // potentially increment photo storage here
@@ -203,6 +222,7 @@ ctrls.innerHTML =
   "<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
   "<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
   "<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>" +
+  "<h2>ESC: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp exit toggle camera</h2>" +
   "<h2>D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
   "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
   "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
@@ -210,14 +230,14 @@ ctrls.innerHTML =
 
 container.appendChild(ctrls);
 
-const minVec = new THREE.Vector3(-80, -10, -60);
+const minVec = new THREE.Vector3(-80, -10, -50);
 const maxVec = new THREE.Vector3(80, 10, 100);
 const box = new THREE.Box3(minVec, maxVec);
 
 // start button
 let startButton = document.createElement("button");
 startButton.id = "startButton";
-startButton.style="margin-bottom: 20px";
+startButton.style = "margin-bottom: 20px";
 startButton.innerHTML = "Start Game";
 
 container.appendChild(startButton);
@@ -277,20 +297,20 @@ endContainer.style =
   "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; margin-bottom: 5%; align-items: center; text-align: center; padding: 10px 30px;";
 endContainer.innerHTML =
   "<br/>" +
-  '<h2>Thank you for playing</h2><br/>' +
+  "<h2>Thank you for playing</h2><br/>" +
   '<h1 style="font-size: 2rem">Hello, World!</h1><br/>' +
-  '<h2>Your final score is:</h2><br/>' +
+  "<h2>Your final score is:</h2><br/>" +
   '<span id="finalscore" style="font-size: 4rem"></span><br/>' +
   '<h2 id="endblurb">WOW! You are truly a master photographer! 😳🦌📸<h2><br/>' +
-  '<h2>Click the button below to play again!</h2><br/>'
+  "<h2>Click the button below to play again!</h2><br/>";
 endMenu.appendChild(endContainer);
 // restart button
 let restartButton = document.createElement("button");
 restartButton.innerHTML = "Restart Game";
-restartButton.style="margin-bottom: 20px";
-restartButton.onclick = function() {
+restartButton.style = "margin-bottom: 20px";
+restartButton.onclick = function () {
   window.location.reload();
-}
+};
 endContainer.appendChild(restartButton);
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -353,7 +373,7 @@ const handleImpactEvents = (event) => {
     if (camera.position.x > 79) camera.position.x = 79;
     if (camera.position.x < -79) camera.position.x = -79;
     if (camera.position.z > 99) camera.position.z = 99;
-    if (camera.position.z < -59) camera.position.z = -59;
+    if (camera.position.z < -49) camera.position.z = -49;
     if (event.key == "ArrowUp" || event.key == "ArrowDown") {
       {
         controls.moveForward(keyMap[event.key]);
@@ -393,9 +413,10 @@ const inFrame = function (animal) {
   var aX = animal.position.x;
   var aY = animal.position.y;
   var aZ = animal.position.z;
-  var cX = camera.position.x;
-  var cY = camera.position.y;
-  var cZ = camera.position.z;
+  let camPos = controls.getObject().position;
+  var cX = camPos.x;
+  var cY = camPos.y;
+  var cZ = camPos.z;
   var cH = camera.getFilmHeight();
   var cW = camera.getFilmWidth();
   var minVals = new THREE.Vector3(
@@ -472,14 +493,14 @@ const inFrame = function (animal) {
   return true;
 };
 
-const endGame = function() {
+const endGame = function () {
   display.className = "hidden";
   endMenu.className = "";
   document.getElementById("finalscore").innerHTML = score;
-}
+};
 
 /* take photo */
-const photo = function (filename) {
+const photo = function () {
   // get the image data
 
   // take the photo
@@ -514,9 +535,13 @@ const photo = function (filename) {
         // console.log("distance: ");
 
         let aPos = animal.position;
-        let camPos = camera.position;
+        // let camPos = camera.position;
+
+        // console.log("x: ", controls.getObject().position.x);
+        // console.log("y: ", controls.getObject().position.y);
         var dist = Math.sqrt(
-          (aPos.x - camPos.x) ** 2 + (aPos.y - camPos.y) ** 2
+          (aPos.x - controls.getObject().position.x) ** 2 +
+            (aPos.y - controls.getObject().position.y) ** 2
         );
         // console.log("distance: ", dist);
 
@@ -555,7 +580,7 @@ const photo = function (filename) {
   sc.innerHTML = "SCORE<br>" + score;
 
   photoStorage--;
-  photosLeft.innerHTML = photoStorage + "/25<br>PHOTOS LEFT"
+  photosLeft.innerHTML = photoStorage + "/15<br>PHOTOS LEFT";
   if (photoStorage <= 0) {
     endGame();
   }
