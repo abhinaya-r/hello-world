@@ -157,28 +157,25 @@ class SeedScene extends Scene {
     // console.log(this.animals);
 
     // Fox
-    // let allFoxes = [];
-    // for (let i = 0; i < 20; i++) {
-    //   // let x = Math.random() * 1000 - 500;
-    //   // let y = 0;
-    //   // let z = Math.random() * 1000 - 500;
-    //   let x = 0;
-    //   let y = 0;
-    //   let z = 10;
-    //   let speed = Math.random() * 0.08 + 0.02;
-    //   let position = new THREE.Vector3(x, y, z);
-    //   let randPoint = new THREE.Vector3(
-    //     Math.random() * 100 - 50,
-    //     y,
-    //     Math.random() * 100 - 50
-    //   );
-    //   let direction = randPoint.clone().sub(position);
-    //   // console.log("direction: ", direction);
-    //   let fox = new Fox(this, x, y, z, speed, direction);
-    //   fox.lookAt(direction);
-    //   this.add(fox);
-    //   allFoxes.push(fox);
-    // }
+    let allFoxes = [];
+    for (let i = 0; i < 20; i++) {
+      let x = Math.random() * 500 - 250;
+      let y = 0;
+      let z = Math.random() * 500 - 250;
+      let speed = Math.random() * 0.08 + 0.03;
+      let position = new THREE.Vector3(x, y, z);
+      let randPoint = new THREE.Vector3(
+        Math.random() * 100 - 50,
+        y,
+        Math.random() * 100 - 50
+      );
+      let direction = randPoint.clone().sub(position);
+      // console.log("direction: ", direction);
+      let fox = new Fox(this, x, y, z, speed, direction);
+      fox.lookAt(direction);
+      this.add(fox);
+      allFoxes.push(fox);
+    }
 
     // pine.setPos(-1000, 0, 0);
     const lights = new BasicLights();
