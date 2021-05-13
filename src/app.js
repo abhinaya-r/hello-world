@@ -497,6 +497,7 @@ const endGame = function () {
   display.className = "hidden";
   endMenu.className = "";
   document.getElementById("finalscore").innerHTML = score;
+  controls.unlock();
 };
 
 // camera shutter sound
@@ -668,8 +669,6 @@ window.addEventListener("keydown", function (event) {
   //   }
   // }
 
-
-
   // if 'I' was released, download the image
   if (event.key == "i") {
     // document.getElementById("recIcon").classList.add("Rec");
@@ -677,7 +676,7 @@ window.addEventListener("keydown", function (event) {
     // setTimeout(() => {photo();
     //                   document.getElementById("recIcon").classList.add("notRec");
     //                   document.getElementById("recIcon").classList.remove("Rec");},1000);
-    
+
     photo();
   }
 });
