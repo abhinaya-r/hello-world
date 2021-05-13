@@ -14,7 +14,7 @@ import {
   Box3,
 } from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { SeedScene } from "scenes";
+import { SeedScene, ArcticScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import SHUTTER from "./components/objects/Music/sounds/camera shutter.mp3";
@@ -24,8 +24,9 @@ let style =
   '<style type="text/css">' +
   'body, p, h1, h2, h3, a { font-family: "Roboto Mono", monospace; font-weight: 400; padding: 0px; margin: 0px; color: white }' +
   "hr { border: 1px solid white; width: 80% }" +
-  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: black; color: white; font-family: inherit; cursor: pointer; }" +
+  "button { font-size: 1.75rem; padding: 10px 20px; border: none; border-radius: 5px; background: black; color: white; font-family: inherit; cursor: pointer; margin: 0 20px; }" +
   ".hidden { visibility: hidden; width: 0px; height: 0px;}" +
+  ".tundraCam { background: black !important; stroke: black !important; }"
   "</style>";
 
 document.body.innerHTML += style;
@@ -58,6 +59,7 @@ var inAlbum = false;
 var currentPhoto = 0;
 var album = [];
 var targetAnimal;
+var arcticScene = false;
 // var sc = document.getElementById('displayscore');
 // sc.innerHTML = "SCORE<br>" + score;
 
@@ -89,13 +91,20 @@ let rect = document.createElement("div");
 rect.id = "rect";
 rect.style =
   "position: absolute; width: 50px; height: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-rect.innerHTML =
-  '<svg viewBox="0 0 100 100" width="50px"> \
+let rectForest = '<svg viewBox="0 0 100 100" width="50px"> \
 <path d="M25,2 L2,2 L2,25" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M2,75 L2,98 L25,98" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M75,98 L98,98 L98,75" fill="none" stroke="white" stroke-width="3" /> \
 <path d="M98,25 L98,2 L75,2" fill="none" stroke="white" stroke-width="3" /> \
 </svg>';
+let rectTundra = '<svg viewBox="0 0 100 100" width="50px"> \
+<path d="M25,2 L2,2 L2,25" fill="none" stroke="black" stroke-width="3" /> \
+<path d="M2,75 L2,98 L25,98" fill="none" stroke="black" stroke-width="3" /> \
+<path d="M75,98 L98,98 L98,75" fill="none" stroke="black" stroke-width="3" /> \
+<path d="M98,25 L98,2 L75,2" fill="none" stroke="black" stroke-width="3" /> \
+</svg>';
+rect.innerHTML = rectForest;
+  
 display.appendChild(rect);
 
 // big rectangle around little rectangle
@@ -103,13 +112,19 @@ let rectB = document.createElement("div");
 rectB.id = "rectB";
 rectB.style =
   "position: absolute; width: 60vw; height: 60vh; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-rectB.innerHTML =
-  '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+let rectBForest = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
 <path d="M50,2 L2,2 L2,50" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M2,670 L2,718 L50,718" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="white" stroke-width="5" /> \
 <path d="M1278,50 L1278,2 L1230,2" fill="none" stroke="white" stroke-width="5" /> \
 </svg>';
+let rectBTundra = '<svg viewBox="0 0 1280 720" width="60vw" height="60vh"> \
+<path d="M50,2 L2,2 L2,50" fill="none" stroke="black" stroke-width="5" /> \
+<path d="M2,670 L2,718 L50,718" fill="none" stroke="black" stroke-width="5" /> \
+<path d="M1230,718 L1278,718 L1278,670" fill="none" stroke="black" stroke-width="5" /> \
+<path d="M1278,50 L1278,2 L1230,2" fill="none" stroke="black" stroke-width="5" /> \
+</svg>';
+rectB.innerHTML = rectBForest;
 display.appendChild(rectB);
 
 // display bonus animal
@@ -130,7 +145,14 @@ const setTargetAnimal = function () {
   // else {
   //   targetAnimal = "bear";
   // }
-  let animals = ["stork", "deer", "bear"];
+  var animals;
+  if (arcticScene) {
+    animals = ["albatross", "reindeer", "seal", "penguin"];
+  }
+  else {
+    animals = ["stork", "deer", "bear", "fox"];
+  }
+
   let prevTA = targetAnimal;
   let n;
   do {
@@ -170,7 +192,8 @@ setTargetAnimal();
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
-const scene = new SeedScene(camera);
+// const scene = new ArcticScene(camera);
+var scene = new SeedScene(camera);
 const renderer = new WebGLRenderer({ antialias: true });
 // let view = new PointerLockControls(camera, renderer);
 
@@ -201,7 +224,7 @@ document.body.appendChild(menu);
 let container = document.createElement("div");
 container.id = "container";
 container.style =
-  "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; margin-bottom: 5%; align-items: center; text-align: center; padding: 10px 30px;";
+  "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 2%; margin-bottom: 2%; align-items: center; text-align: center; padding: 10px 30px;";
 container.innerHTML =
   "<br/>" +
   '<h1 style="font-size: 2rem">Hello, World!</h1>' +
@@ -217,30 +240,43 @@ let ctrls = document.createElement("div");
 ctrls.id = "ctrls";
 ctrls.style = "display: flex; flex-direction: column; text-align: left;";
 ctrls.innerHTML =
-  "<h2>UP ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move forward</h2>" +
-  "<h2>DOWN ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move backward</h2>" +
-  "<h2>LEFT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move left</h2>" +
-  "<h2>RIGHT ARROW:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move right</h2>" +
-  "<h2>SPACEBAR:&nbsp&nbsp&nbsp toggle camera angle</h2>" +
-  "<h2>ESC: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp exit toggle camera</h2>" +
-  "<h2>D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
-  "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
-  "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
+  "<h2>W,A,S,D:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp move around</h2>" +
+  "<h2>SPACEBAR: toggle camera angle</h2>" +
+  "<h2>ESC:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp exit toggle camera</h2>" +
+  "<h2>G:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp toggle game display</h2>" +
+  "<h2>I:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp take picture</h2>" +
+  "<h2>M:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp play/pause music</h2>" +
   "<br/>";
 
 container.appendChild(ctrls);
+
+container.innerHTML += "<hr/><br/><h2>Where would you like to go?</h2><br/>"
 
 const minVec = new THREE.Vector3(-80, -10, -50);
 const maxVec = new THREE.Vector3(80, 10, 10);
 const box = new THREE.Box3(minVec, maxVec);
 
-// start button
-let startButton = document.createElement("button");
-startButton.id = "startButton";
-startButton.style = "margin-bottom: 20px";
-startButton.innerHTML = "Start Game";
+// button container
+let bc = document.createElement("div");
+bc.id = "bc";
+bc.style = "display: flex; flex-direction: row; width: auto";
+container.appendChild(bc);
 
-container.appendChild(startButton);
+// forest start button
+let forestButton = document.createElement("button");
+forestButton.id = "forestButton";
+forestButton.style = "margin-bottom: 20px";
+forestButton.innerHTML = "Explore the Forest";
+
+bc.appendChild(forestButton);
+
+// arctic start button
+let arcticButton = document.createElement("button");
+arcticButton.id = "arcticButton";
+arcticButton.style = "margin-bottom: 20px";
+arcticButton.innerHTML = "Explore the Tundra";
+
+bc.appendChild(arcticButton);
 
 // access menu mid-game button
 let menuButton = document.createElement("button");
@@ -258,7 +294,7 @@ let wasHidden = false;
 
 // toggle display
 const handleDisplay = (event) => {
-  if (event.keyCode === 68) {
+  if (event.keyCode === 71) {
     display.className = wasHidden ? "" : "hidden";
     wasHidden = !wasHidden;
   }
@@ -268,7 +304,31 @@ window.addEventListener("keydown", handleDisplay, false);
 // button event handlers
 window.onload = function () {
   // start/resume game
-  startButton.addEventListener("click", function () {
+  forestButton.addEventListener("click", function () {
+    if(arcticScene) {
+      arcticScene = false;
+      scene = new SeedScene(camera);
+      if (cameraDot.classList.contains("tundraCam")) {
+        cameraDot.classList.remove("tundraCam");
+        rect.innerHTML = rectForest;
+        rectB.innerHTML = rectBForest;
+      }
+      setTargetAnimal();
+    }
+    menu.className = "hidden";
+    display.className = wasHidden ? "hidden" : "";
+    menuButton.className = "";
+  });
+  arcticButton.addEventListener("click", function () {
+    if(!arcticScene) {
+      arcticScene = true;
+      scene = new ArcticScene(camera);
+      cameraDot.classList.add("tundraCam");
+      rect.innerHTML = rectTundra;
+      rectB.innerHTML = rectBTundra;
+      console.log(cameraDot.classList)
+      setTargetAnimal();
+    }
     menu.className = "hidden";
     display.className = wasHidden ? "hidden" : "";
     menuButton.className = "";
@@ -278,7 +338,14 @@ window.onload = function () {
     menuButton.className = "hidden";
     display.className = "hidden";
     menu.className = "";
-    startButton.innerHTML = "Return to Game";
+    if(arcticScene) {
+      forestButton.innerHTML = "Switch to the Forest";
+      arcticButton.innerHTML = "Return to the Tundra"
+    }
+    else {
+      forestButton.innerHTML = "Return to the Forest";
+      arcticButton.innerHTML = "Switch to the Tundra"
+    }
   });
 };
 
@@ -357,10 +424,10 @@ window.addEventListener("resize", windowResizeHandler, false);
 //HANDLE MOVING CAMERA
 // let control = PointerLockControls(camera);
 const keyMap = {
-  ArrowUp: 1,
-  ArrowDown: -1,
-  ArrowLeft: -1,
-  ArrowRight: 1,
+  w: 1,
+  s: -1,
+  a: -1,
+  d: 1,
 };
 
 const handleImpactEvents = (event) => {
@@ -374,7 +441,7 @@ const handleImpactEvents = (event) => {
     if (camera.position.x < -79) camera.position.x = -79;
     if (camera.position.z > 9) camera.position.z = 9;
     if (camera.position.z < -49) camera.position.z = -49;
-    if (event.key == "ArrowUp" || event.key == "ArrowDown") {
+    if (event.key == "w" || event.key == "s") {
       {
         controls.moveForward(keyMap[event.key]);
       }
@@ -439,8 +506,6 @@ const inFrame = function (animal) {
     }
     console.log(cDir);
   } else {
-    // console.log(oDir);
-    // console.log(cDir);
     var cosT = oDir.dot(cDir) / (oDir.length() * cDir.length());
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
@@ -484,12 +549,6 @@ const inFrame = function (animal) {
       }
     }
   }
-  // console.log("camera direction: ");
-  // console.log(cDir);
-  // console.log("min vals: ");
-  // console.log(minVals);
-  // console.log("max vals: ");
-  // console.log(maxVals);
   return true;
 };
 
@@ -560,20 +619,37 @@ const photo = function () {
             (aPos.y - controls.getObject().position.y) ** 2
         );
         // console.log("distance: ", dist);
-
+        
+        
         var s = 0;
-        if (animal.name === "stork") {
-          s += 100;
+        if(arcticScene) {
+          if (animal.name === "albatross") {
+            s += 50;
+          }
+          if (animal.name === "penguin") {
+            s += 100;
+          }
+          if (animal.name === "seal") {
+            s += 20;
+          }
+          if (animal.name === "reindeer") {
+            s += 50;
+          }
         }
-        if (animal.name === "deer") {
-          s += 50;
+        else {
+          if (animal.name === "stork") {
+            s += 100;
+          }
+          if (animal.name === "deer") {
+            s += 50;
+          }
+          if (animal.name === "bear") {
+            s += 20;
+          }
+          if (animal.name === "fox") {
+            s += 50;
+          }
         }
-        if (animal.name === "bear") {
-          s += 20;
-        }
-        // if (animal.name === "fox") {
-        //   s += 50;
-        // }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
           s += Math.floor(h - dist) * 10;
@@ -626,26 +702,26 @@ const photo = function () {
   // window.open(url);
 };
 
-window.addEventListener("keydown", function (event) {
+window.addEventListener("keyup", function (event) {
   // Ignore keypresses typed into a text box
   if (event.target.tagName == "INPUT") return;
 
-  if (event.key == "a") {
-    //canvas.restore();
-    if (inAlbum) {
-      // close the album
-    } else {
-      //console.log(album);
-      if (album.length > 0) {
-        var c = album[currentPhoto];
-        var ctx = canvas.getContext("2d");
-        console.log(album[currentPhoto]);
-        console.log(ctx);
-        ctx.drawImage(c, 0, 0);
-        inAlbum = true;
-      }
-    }
-  }
+  // if (event.key == "a") {
+  //   //canvas.restore();
+  //   if (inAlbum) {
+  //     // close the album
+  //   } else {
+  //     //console.log(album);
+  //     if (album.length > 0) {
+  //       var c = album[currentPhoto];
+  //       var ctx = canvas.getContext("2d");
+  //       console.log(album[currentPhoto]);
+  //       console.log(ctx);
+  //       ctx.drawImage(c, 0, 0);
+  //       inAlbum = true;
+  //     }
+  //   }
+  // }
 
   // if(event.key = "ArrowLeft") {
   //   if(inAlbum) {
