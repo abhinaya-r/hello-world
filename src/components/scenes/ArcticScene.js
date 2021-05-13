@@ -73,7 +73,7 @@ class ArcticScene extends Scene {
 
     // ground material
     ground.material = new THREE.MeshStandardMaterial({
-      color: 0xD6ECEF, //0x3c3c3c,
+      color: 0xd6ecef, //0x3c3c3c,
       // specular: 0x404761, //0x3c3c3c//,
       metalness: 0.3,
     });
@@ -153,7 +153,7 @@ class ArcticScene extends Scene {
       let direction = randPoint.clone().sub(position);
 
       let penguin = new Penguin(this, x, z, speed, direction);
-      penguin.lookAt(direction);
+      penguin.lookAt(direction.clone().multiplyScalar(-1));
 
       this.add(penguin);
       allPenguins.push(penguin);
@@ -200,7 +200,7 @@ class ArcticScene extends Scene {
       let direction = randPoint.clone().sub(position);
       // console.log("direction: ", direction);
       let seal = new Seal(this, x, y, z, speed, direction);
-      seal.lookAt(direction);
+      seal.lookAt(direction.clone().multiplyScalar(-1));
       this.add(seal);
       allSeals.push(seal);
     }
@@ -257,12 +257,12 @@ class ArcticScene extends Scene {
     }
 
     for (let i = 0; i < 5; i++) {
-        let icebergs = new Iceberg2(this);
-        let x = Math.random() * 200 - 100;
-        let z = Math.random() * 200 - 100;
-        icebergs.position.set(x, 0, z);
-        this.add(icebergs);
-      }
+      let icebergs = new Iceberg2(this);
+      let x = Math.random() * 200 - 100;
+      let z = Math.random() * 200 - 100;
+      icebergs.position.set(x, 0, z);
+      this.add(icebergs);
+    }
 
     // let grass2 = new Grass(this, 0);
     // let grass3 = new Grass(this, 0);
@@ -276,14 +276,14 @@ class ArcticScene extends Scene {
       this.add(ice);
     }
     for (let i = 0; i < 4; i++) {
-        let x = Math.random() * 50 - 20;
-        let z = Math.random() * 50 - 20;
-        let rot = Math.random() * 2 * Math.PI;
-        let sc = Math.random() * 0.03 + 0.05;
-        let ice = new IcebergSmall2(this, rot, sc);
-        ice.position.set(x, 0, z);
-        this.add(ice);
-      }
+      let x = Math.random() * 50 - 20;
+      let z = Math.random() * 50 - 20;
+      let rot = Math.random() * 2 * Math.PI;
+      let sc = Math.random() * 0.03 + 0.05;
+      let ice = new IcebergSmall2(this, rot, sc);
+      ice.position.set(x, 0, z);
+      this.add(ice);
+    }
   }
 
   addToUpdateList(object) {

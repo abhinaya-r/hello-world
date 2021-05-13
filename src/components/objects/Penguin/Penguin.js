@@ -21,7 +21,7 @@ class Penguin extends Group {
     this.name = "penguin";
     loader.load(MODEL, (gltf) => {
       this.scale.set(0.004, 0.004, 0.004);
-      this.rotation.set(0, Math.PI, 0)
+      // this.rotation.set(0, Math.PI, 0)
       this.position.set(x, 0, z);
       this.add(gltf.scene);
     });

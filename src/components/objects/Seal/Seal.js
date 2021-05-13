@@ -23,7 +23,7 @@ class Seal extends Group {
     loader.load(MODEL, (gltf) => {
       this.scale.set(0.008, 0.008, 0.008);
       this.position.set(x, 0, z);
-      this.rotation.set(0, Math.PI/2, 0);
+      // this.rotation.set(0, Math.PI/2, 0);
       let model = gltf.scene;
       let animations = gltf.animations;
       this.add(model);
