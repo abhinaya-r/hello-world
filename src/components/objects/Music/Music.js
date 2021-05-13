@@ -1,4 +1,4 @@
-import BGM from "./sounds/acww 1am.mp3";
+import BGM from "./sounds/acww 1am.mp3"; // sound credits to Animal Crossing: Wild World (Nintendo)
 import { Group } from "three";
 import * as THREE from "three";
 
