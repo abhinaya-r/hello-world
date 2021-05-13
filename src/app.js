@@ -231,7 +231,7 @@ ctrls.innerHTML =
 container.appendChild(ctrls);
 
 const minVec = new THREE.Vector3(-80, -10, -50);
-const maxVec = new THREE.Vector3(80, 10, 100);
+const maxVec = new THREE.Vector3(80, 10, 10);
 const box = new THREE.Box3(minVec, maxVec);
 
 // start button
@@ -372,7 +372,7 @@ const handleImpactEvents = (event) => {
     const scale = 1;
     if (camera.position.x > 79) camera.position.x = 79;
     if (camera.position.x < -79) camera.position.x = -79;
-    if (camera.position.z > 99) camera.position.z = 99;
+    if (camera.position.z > 9) camera.position.z = 9;
     if (camera.position.z < -49) camera.position.z = -49;
     if (event.key == "ArrowUp" || event.key == "ArrowDown") {
       {
