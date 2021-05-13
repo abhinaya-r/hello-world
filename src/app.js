@@ -37,6 +37,7 @@ display.style =
   "width: 100vw; height: 100vh; position: absolute; background: radial-gradient(circle at 50%, #ffffff00 50vh, #000000dd 90vh)";
 document.body.appendChild(display);
 
+// display score
 let displayScore = document.createElement("div");
 displayScore.id = "displayscore";
 displayScore.style =
@@ -46,7 +47,7 @@ display.appendChild(displayScore);
 
 // console.log(document.head.innerHTML);
 var score = 0;
-var photoStorage = 8;
+var photoStorage = 25;
 var inAlbum = false;
 var currentPhoto = 0;
 var album = [];
@@ -60,6 +61,13 @@ var targetAnimal;
 // '#recIcon.notRec{background-color: darkred;}' +
 // '#recIcon {width: 30px;height: 30px;margin: 0px;font-size: 0;background-color: red;border: 0;border-radius: 35px;outline: none;position: fixed;left: 95px;top: 15px;}' +
 // '@keyframes pulse{0%{box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);}65%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);}90%{box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);}}</style>'
+
+// display number of photos left
+let photosLeft = document.createElement("div");
+photosLeft.id = "photosLeft";
+photosLeft.style = "position: absolute; bottom: 2vh; left: -3vw; width: 20vw; height:auto; font-size: 2rem; text-align: left; padding-left: 5vw; border-radius: 5px; background: #000000bb; color: white;";
+photosLeft.innerHTML = "25/25<br>PHOTOS LEFT";
+display.appendChild(photosLeft);
 
 // camera dot
 let cameraDot = document.createElement("div");
@@ -97,6 +105,7 @@ rectB.innerHTML =
 </svg>';
 display.appendChild(rectB);
 
+// display bonus animal
 let target = document.createElement("div");
 target.id = "target";
 target.style =
@@ -166,14 +175,14 @@ head.appendChild(link);
 let menu = document.createElement("div");
 menu.id = "menu";
 menu.style =
-  "width: 100vw; height: 100vh; background: #d1effe77; position: absolute;";
+  "width: 100vw; height: 100vh; background: #d1effe77; position: absolute; overflow: scroll;";
 document.body.appendChild(menu);
 
 // menu box
 let container = document.createElement("div");
 container.id = "container";
 container.style =
-  "width: 80vw; height: 80vh; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; align-items: center; text-align: center; padding: 10px 30px; overflow: scroll;";
+  "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; margin-bottom: 5%; align-items: center; text-align: center; padding: 10px 30px;";
 container.innerHTML =
   "<br/>" +
   '<h1 style="font-size: 2rem">Hello, World!</h1>' +
@@ -208,6 +217,7 @@ const box = new THREE.Box3(minVec, maxVec);
 // start button
 let startButton = document.createElement("button");
 startButton.id = "startButton";
+startButton.style="margin-bottom: 20px";
 startButton.innerHTML = "Start Game";
 
 container.appendChild(startButton);
@@ -251,6 +261,37 @@ window.onload = function () {
     startButton.innerHTML = "Return to Game";
   });
 };
+
+// ENDGAME MENU
+// semitransparent bg
+let endMenu = document.createElement("div");
+endMenu.id = "endMenu";
+endMenu.className = "hidden";
+endMenu.style =
+  "width: 100vw; height: 100vh; background: #d1effe77; position: absolute; overflow: scroll;";
+document.body.appendChild(endMenu);
+// container
+let endContainer = document.createElement("div");
+endContainer.id = "endContainer";
+endContainer.style =
+  "width: 80vw; height: auto; display: flex; flex-direction: column; background: #000000bb; border-radius: 10px; margin: auto; margin-top: 5%; margin-bottom: 5%; align-items: center; text-align: center; padding: 10px 30px;";
+endContainer.innerHTML =
+  "<br/>" +
+  '<h2>Thank you for playing</h2><br/>' +
+  '<h1 style="font-size: 2rem">Hello, World!</h1><br/>' +
+  '<h2>Your final score is:</h2><br/>' +
+  '<span id="finalscore" style="font-size: 4rem"></span><br/>' +
+  '<h2 id="endblurb">WOW! You are truly a master photographer! 😳🦌📸<h2><br/>' +
+  '<h2>Click the button below to play again!</h2><br/>'
+endMenu.appendChild(endContainer);
+// restart button
+let restartButton = document.createElement("button");
+restartButton.innerHTML = "Restart Game";
+restartButton.style="margin-bottom: 20px";
+restartButton.onclick = function() {
+  window.location.reload();
+}
+endContainer.appendChild(restartButton);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -431,6 +472,12 @@ const inFrame = function (animal) {
   return true;
 };
 
+const endGame = function() {
+  display.className = "hidden";
+  endMenu.className = "";
+  document.getElementById("finalscore").innerHTML = score;
+}
+
 /* take photo */
 const photo = function (filename) {
   // get the image data
@@ -508,6 +555,7 @@ const photo = function (filename) {
   sc.innerHTML = "SCORE<br>" + score;
 
   photoStorage--;
+  photosLeft.innerHTML = photoStorage + "/25<br>PHOTOS LEFT"
   if (photoStorage <= 0) {
     endGame();
   }
