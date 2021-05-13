@@ -13,6 +13,7 @@ import {
   Grass,
   Mushroom,
   Trees
+  Music,
 } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -31,6 +32,9 @@ class SeedScene extends Scene {
   constructor(camera) {
     // Call parent Scene() constructor
     super();
+
+    this.animals = [];
+    // console.log(this.animals);
 
     // Init state
     this.state = {
@@ -73,6 +77,9 @@ class SeedScene extends Scene {
     ground.mesh.receiveShadow = true;
     this.add(ground.mesh); // add ground to scene
 
+    // MUSIC
+    let music = new Music(this, camera);
+
     // DEER
     let allDeer = [];
     for (let i = 0; i < 30; i++) {
@@ -97,14 +104,14 @@ class SeedScene extends Scene {
       this.add(deer);
       allDeer.push(deer);
     }
+    this.animals.push(allDeer);
+    // console.log(this.animals);
 
     // BEAR
     let allBears = [];
     for (let i = 0; i < 30; i++) {
-      // let x = Math.random() * 10000 - 5000;
-      // let z = Math.random() * 10000 - 5000;
-      let x = Math.random() * 2000 - 1000;
-      let z = Math.random() * 2000 - 1000;
+      let x = Math.random() * 1000 - 500;
+      let z = Math.random() * 1000 - 500;
       let speed = Math.random() * 0.05;
       let position = new THREE.Vector3(x, 0, z);
       let randPoint = new THREE.Vector3(
@@ -120,6 +127,8 @@ class SeedScene extends Scene {
       this.add(bear);
       allBears.push(bear);
     }
+    this.animals.push(allBears);
+    // console.log(this.animals);
 
     // Stork
     // let stork = new Stork(this, 0, 0, 0.5, new Vector3(0, 0, 0));
@@ -127,13 +136,13 @@ class SeedScene extends Scene {
     let allStorks = [];
     for (let i = 0; i < 10; i++) {
       let x = Math.random() * 100 - 50;
-      let y = Math.random() * 10;
+      let y = Math.random() * 6;
       let z = Math.random() * 100 - 50;
       let speed = Math.random() * 0.1;
       let position = new THREE.Vector3(x, y, z);
       let randPoint = new THREE.Vector3(
         Math.random() * 50 - 25,
-        Math.random() * 10,
+        Math.random() * 5 + 5,
         Math.random() * 50 - 25
       );
       let direction = randPoint.clone().sub(position);
@@ -143,6 +152,8 @@ class SeedScene extends Scene {
       this.add(stork);
       allStorks.push(stork);
     }
+    this.animals.push(allStorks);
+    // console.log(this.animals);
 
     // Fox
     // let allFoxes = [];
@@ -371,9 +382,14 @@ class SeedScene extends Scene {
   //   }
   // }
     for (const obj of updateList) {
+      // obj.frustumCulled = true;
       obj.update(timeStamp);
     }
   }
 }
+
+SeedScene.getAnimals = function () {
+  return this.animals;
+};
 
 export default SeedScene;
