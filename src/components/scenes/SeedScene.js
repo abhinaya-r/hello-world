@@ -17,15 +17,6 @@ import {
 } from "objects";
 import { BasicLights } from "lights";
 import * as THREE from "three";
-// import { PineTree } from "../objects/PineTree";
-// import Scene from "../../../coursejs/scene.js";
-// let currColor = null;
-// if (Math.random() < 0.5) {
-//   let currColor = "#b4cede";
-// }
-// else {
-//   currColor = "#7ec0ee";
-// }
 let currColor = "#b4cede";
 
 class SeedScene extends Scene {
@@ -34,11 +25,9 @@ class SeedScene extends Scene {
     super();
 
     this.animals = [];
-    // console.log(this.animals);
 
     // Init state
     this.state = {
-      // gui: new Dat.GUI(), // Create GUI for scene
       rotationSpeed: 0,
       updateList: [],
       startTime: null,
@@ -47,11 +36,6 @@ class SeedScene extends Scene {
     // Set background to a nice color
     this.background = new Color(0xb4cede);
     this.fog = new Fog(0xb4cede, 40, 60);
-    // this.background = new Color(0x131862);
-    // this.fog = new Fog(0x131862, 40, 60);
-    // // sunset
-    // this.background = new Color(0xe6cbb1);
-    // this.fog = new Fog(0xe6cbb1, 40, 60);
 
     // for night mode
     // https://github.com/karenying/drivers-ed/blob/master/src/components/scenes/Washington.js
@@ -83,10 +67,6 @@ class SeedScene extends Scene {
     // DEER
     let allDeer = [];
     for (let i = 0; i < 30; i++) {
-      // let visibleTime = Math.floor(Math.random() * 10000 - 3000);
-      // let stopTime = visibleTime + Math.floor(Math.random() * 100);
-      // let x = Math.random() * 10000 - 5000;
-      // let z = Math.random() * 10000 - 5000;
       let x = Math.random() * 1000 - 500;
       let z = Math.random() * 1000 - 500;
       let speed = Math.random() * 0.1 + 0.01;
@@ -105,7 +85,6 @@ class SeedScene extends Scene {
       allDeer.push(deer);
     }
     this.animals.push(allDeer);
-    // console.log(this.animals);
 
     // BEAR
     let allBears = [];
@@ -128,11 +107,8 @@ class SeedScene extends Scene {
       allBears.push(bear);
     }
     this.animals.push(allBears);
-    // console.log(this.animals);
 
     // Stork
-    // let stork = new Stork(this, 0, 0, 0.5, new Vector3(0, 0, 0));
-    // this.add(stork);
     let allStorks = [];
     for (let i = 0; i < 10; i++) {
       let x = Math.random() * 100 - 50;
@@ -153,7 +129,6 @@ class SeedScene extends Scene {
       allStorks.push(stork);
     }
     this.animals.push(allStorks);
-    // console.log(this.animals);
 
     // Fox
     // let allFoxes = [];
@@ -291,10 +266,6 @@ class SeedScene extends Scene {
 
   update(timeStamp) {
     const { startTime, rotationSpeed, updateList } = this.state;
-    // this.rotation.y = (rotationSpeed * timeStamp) / 10000;
-
-    // let rand = Math.random();
-
     // Call update for each object in the updateList
     // night mode calculations
     // calculate start time on game start

@@ -13,7 +13,6 @@ import {
   Matrix3,
   Box3,
 } from "three";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SeedScene, ArcticScene } from "scenes";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
@@ -30,12 +29,6 @@ let style =
 ("</style>");
 
 document.body.innerHTML += style;
-
-// hide gui
-// let gooey = document.getElementsByClassName("dg main a");
-// Array.prototype.forEach.call(gooey, function (el) {
-//   el.classList.add("hidden");
-// });
 
 // make container for game display
 let display = document.createElement("div");
@@ -139,16 +132,6 @@ target.style =
 display.appendChild(target);
 
 const setTargetAnimal = function () {
-  // var n = Math.floor(Math.random()*3);
-  // if (n == 0) {
-  //   targetAnimal = "stork";
-  // }
-  // else if (n == 1) {
-  //   targetAnimal = "deer";
-  // }
-  // else {
-  //   targetAnimal = "bear";
-  // }
   var animals;
   if (arcticScene) {
     animals = ["albatross", "reindeer", "seal", "penguin"];
@@ -162,32 +145,6 @@ const setTargetAnimal = function () {
     n = Math.floor(Math.random() * animals.length);
   } while (animals[n] === prevTA);
   targetAnimal = animals[n];
-  // if (targetAnimal === "stork") {
-  //   if (n == 0) {
-  //     targetAnimal = "deer";
-  //   } else if (n == 1) {
-  //     targetAnimal = "bear";
-  //   } else targetAnimal = "fox";
-  // } else if (targetAnimal === "deer") {
-  //   if (n == 0) {
-  //     targetAnimal = "stork";
-  //   } else if (n == 1) {
-  //     targetAnimal = "bear";
-  //   } else targetAnimal = "fox";
-  // } else if (targetAnimal === "fox") {
-  //   if (n == 0) {
-  //     targetAnimal = "stork";
-  //   } else if (n == 1) {
-  //     targetAnimal = "bear";
-  //   } else targetAnimal = "deer";
-  // } else {
-  //   if (n == 0) {
-  //     targetAnimal = "stork";
-  //   } else if (n == 1) {
-  //     targetAnimal = "deer";
-  //   } else targetAnimal = "fox";
-  // }
-  // var ta = document.getElementById("target");
   target.innerHTML = "BONUS ANIMAL<br>" + targetAnimal;
   // potentially increment photo storage here
 };
@@ -393,20 +350,13 @@ document.body.appendChild(canvas);
 // Set up controls
 // const controls = new OrbitControls(camera, canvas);
 const controls = new PointerLockControls(camera, canvas);
-// controls.lock();
 controls.connect();
-// controls.enableDamping = true;
-// controls.enablePan = false;
-// // controls.minDistance = 4;
-// // controls.maxDistance = 16;
-// controls.update();
 
 var oDir = new THREE.Vector3(); // original direction of controls
 controls.getDirection(oDir);
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-  // controls.update();
   renderer.render(scene, camera);
   scene.update && scene.update(timeStamp);
   window.requestAnimationFrame(onAnimationFrameHandler);
@@ -424,7 +374,6 @@ windowResizeHandler();
 window.addEventListener("resize", windowResizeHandler, false);
 
 //HANDLE MOVING CAMERA
-// let control = PointerLockControls(camera);
 const keyMap = {
   w: 1,
   s: -1,
@@ -511,11 +460,6 @@ const inFrame = function (animal) {
     var cosT = oDir.dot(cDir) / (oDir.length() * cDir.length());
     var axis = oDir.clone().cross(cDir).normalize();
     var angle = Math.acos(cosT);
-    // console.log(cosT);
-    // console.log("axis");
-    // console.log(axis);
-    // console.log("angle");
-    // console.log(angle);
     // var sinT = Math.sqrt(1-cosT*cosT);
     // const C = 1-cosT;
     // const rotMat = new Matrix3();
@@ -593,34 +537,20 @@ const photo = function () {
   sound.play();
   console.log("sound is playing?", sound.isPlaying);
 
-  //var animals = scene.getAnimals();
   var animals = scene.animals;
   var targetFound = false;
-  //console.log(camera.getFilmWidth());
   for (var i = 0; i < animals.length; i++) {
     var currentAnimals = animals[i];
     for (var j = 0; j < currentAnimals.length; j++) {
       // if animal is in view of the camera (within the x/y coords of camera view) then grade by distance from center
       var animal = currentAnimals[j];
       if (inFrame(animal)) {
-        // console.log(animal);
-        // console.log("animal position: ");
-        // console.log(animal.position);
-        // console.log("camera position: ");
-        // console.log(camera.position);
-        // var dist = animal.position.distanceTo(camera.position);
-        // console.log("distance: ");
-
         let aPos = animal.position;
-        // let camPos = camera.position;
 
-        // console.log("x: ", controls.getObject().position.x);
-        // console.log("y: ", controls.getObject().position.y);
         var dist = Math.sqrt(
           (aPos.x - controls.getObject().position.x) ** 2 +
             (aPos.y - controls.getObject().position.y) ** 2
         );
-        // console.log("distance: ", dist);
 
         var s = 0;
         if (arcticScene) {
@@ -646,16 +576,10 @@ const photo = function () {
           if (animal.name === "bear") {
             s += 20;
           }
-          if (animal.name === "fox") {
-            s += 50;
-          }
         }
         var h = camera.getFilmHeight();
         if (h - dist > 0) {
           s += Math.floor(h - dist) * 10;
-          // console.log(currentAnimals[j]);
-          // console.log(dist);
-          // console.log(h);
         }
         if (animal.name === targetAnimal) {
           s *= 3;
@@ -667,7 +591,6 @@ const photo = function () {
   }
   if (targetFound) setTargetAnimal();
 
-  //console.log(score);
   var sc = document.getElementById("displayscore");
   sc.innerHTML = "SCORE<br>" + score;
 
